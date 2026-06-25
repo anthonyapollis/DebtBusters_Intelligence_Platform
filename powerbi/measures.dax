@@ -1,0 +1,279 @@
+-- ============================================================
+-- DebtBusters Intelligence Platform — Power BI DAX Measures
+-- Paste into Power BI Desktop → Enter Data → or directly in
+-- the model view under the relevant table
+-- ============================================================
+
+
+-- ============================================================
+-- TABLE: _Measures_Lead  (create a blank table for measures)
+-- ============================================================
+
+Total Leads =
+COUNTROWS( fact_lead )
+
+Qualified Leads =
+CALCULATE( COUNTROWS( fact_lead ), fact_lead[qualified_flag] = TRUE() )
+
+Assessed Leads =
+CALCULATE( COUNTROWS( fact_lead ), fact_lead[assessed_flag] = TRUE() )
+
+Converted Leads =
+CALCULATE( COUNTROWS( fact_lead ), fact_lead[converted_flag] = TRUE() )
+
+Lead Qualification Rate =
+DIVIDE( [Qualified Leads], [Total Leads], 0 )
+
+Lead Conversion Rate =
+DIVIDE( [Converted Leads], [Total Leads], 0 )
+
+Assessment Conversion Rate =
+DIVIDE( [Converted Leads], [Assessed Leads], 0 )
+
+Total Lead Cost =
+SUM( fact_lead[cost_per_lead] )
+
+Cost Per Lead =
+DIVIDE( [Total Lead Cost], [Total Leads], 0 )
+
+Cost Per Converted Client =
+DIVIDE( [Total Lead Cost], [Converted Leads], 0 )
+
+-- MoM Lead Growth
+Lead Growth MoM =
+VAR CurrentMonth = CALCULATE( [Total Leads], DATESMTD( dim_date[date] ) )
+VAR PriorMonth   = CALCULATE( [Total Leads], DATEADD( dim_date[date], -1, MONTH ) )
+RETURN DIVIDE( CurrentMonth - PriorMonth, PriorMonth, 0 )
+
+-- Rolling 3-Month Leads
+Leads Rolling 3M =
+CALCULATE( [Total Leads], DATESINPERIOD( dim_date[date], LASTDATE( dim_date[date] ), -3, MONTH ) )
+
+
+-- ============================================================
+-- TABLE: _Measures_Assessment
+-- ============================================================
+
+Total Assessments =
+COUNTROWS( fact_assessment )
+
+Over-Indebted Clients =
+CALCULATE( COUNTROWS( fact_assessment ), fact_assessment[over_indebted_flag] = TRUE() )
+
+Over-Indebted Rate =
+DIVIDE( [Over-Indebted Clients], [Total Assessments], 0 )
+
+Avg Gross Income =
+AVERAGE( fact_assessment[gross_income] )
+
+Avg Net Income =
+AVERAGE( fact_assessment[net_income] )
+
+Avg Total Debt Balance =
+AVERAGE( fact_assessment[total_debt_balance] )
+
+Total Debt Under Management =
+SUM( fact_assessment[total_debt_balance] )
+
+Avg Debt-to-Income Ratio =
+AVERAGE( fact_assessment[debt_to_income_ratio] )
+
+Avg Disposable Income =
+AVERAGE( fact_assessment[disposable_income] )
+
+Avg Creditors Per Client =
+AVERAGE( fact_assessment[number_of_creditors] )
+
+Avg Monthly Debt Instalment =
+AVERAGE( fact_assessment[total_monthly_debt_instalment] )
+
+
+-- ============================================================
+-- TABLE: _Measures_Cases
+-- ============================================================
+
+Total Cases =
+COUNTROWS( fact_debt_review_case )
+
+Active Cases =
+CALCULATE( COUNTROWS( fact_debt_review_case ), fact_debt_review_case[is_active] = TRUE() )
+
+Completed Cases =
+CALCULATE( COUNTROWS( fact_debt_review_case ), fact_debt_review_case[is_completed] = TRUE() )
+
+Withdrawn Cases =
+CALCULATE( COUNTROWS( fact_debt_review_case ), fact_debt_review_case[is_withdrawn] = TRUE() )
+
+Clearances Issued =
+CALCULATE( COUNTROWS( fact_debt_review_case ), fact_debt_review_case[clearance_issued_flag] = TRUE() )
+
+Case Completion Rate =
+DIVIDE( [Completed Cases], [Total Cases], 0 )
+
+Case Withdrawal Rate =
+DIVIDE( [Withdrawn Cases], [Total Cases], 0 )
+
+Avg Days in Stage =
+AVERAGE( fact_debt_review_case[days_in_stage] )
+
+Avg Days to Acceptance =
+AVERAGE( fact_debt_review_case[days_to_acceptance] )
+
+Cases Opened MTD =
+CALCULATE( [Total Cases], DATESMTD( dim_date[date] ) )
+
+Cases Opened YTD =
+CALCULATE( [Total Cases], DATESYTD( dim_date[date] ) )
+
+-- Court Order Approval Rate
+Court Order Granted Rate =
+DIVIDE(
+    CALCULATE( COUNTROWS( fact_debt_review_case ),
+               fact_debt_review_case[court_order_status] = "Granted" ),
+    CALCULATE( COUNTROWS( fact_debt_review_case ),
+               fact_debt_review_case[court_order_status] <> "Not Required" ),
+    0
+)
+
+
+-- ============================================================
+-- TABLE: _Measures_Payment
+-- ============================================================
+
+Total Expected Payments =
+SUM( fact_payment[expected_payment_amount] )
+
+Total Actual Payments =
+SUM( fact_payment[actual_payment_amount] )
+
+Total Arrears =
+SUM( fact_payment[arrears_amount] )
+
+Total Distribution =
+SUM( fact_payment[distribution_amount] )
+
+Collection Rate =
+DIVIDE( [Total Actual Payments], [Total Expected Payments], 0 )
+
+Missed Payments =
+CALCULATE( COUNTROWS( fact_payment ), fact_payment[missed_payment_flag] = TRUE() )
+
+Total Payments =
+COUNTROWS( fact_payment )
+
+Missed Payment Rate =
+DIVIDE( [Missed Payments], [Total Payments], 0 )
+
+Payment Shortfall =
+[Total Expected Payments] - [Total Actual Payments]
+
+-- MoM Collection Rate Change
+Collection Rate MoM Change =
+VAR Current = CALCULATE( [Collection Rate], DATESMTD( dim_date[date] ) )
+VAR Prior   = CALCULATE( [Collection Rate], DATEADD( dim_date[date], -1, MONTH ) )
+RETURN Current - Prior
+
+-- Arrears Band Flag
+Clients In Arrears =
+CALCULATE(
+    DISTINCTCOUNT( fact_payment[client_key] ),
+    fact_payment[arrears_amount] > 0
+)
+
+
+-- ============================================================
+-- TABLE: _Measures_Repayment
+-- ============================================================
+
+Total Monthly Saving =
+SUM( fact_repayment_plan[monthly_saving] )
+
+Total Estimated Saving =
+SUM( fact_repayment_plan[total_saving_estimated] )
+
+Avg Monthly Saving Per Client =
+AVERAGE( fact_repayment_plan[monthly_saving] )
+
+Total Plans =
+COUNTROWS( fact_repayment_plan )
+
+Accepted Plans =
+CALCULATE( COUNTROWS( fact_repayment_plan ), fact_repayment_plan[accepted_flag] = TRUE() )
+
+Creditor Acceptance Rate =
+DIVIDE( [Accepted Plans], [Total Plans], 0 )
+
+Avg Interest Rate Reduction =
+AVERAGEX(
+    FILTER( fact_repayment_plan, fact_repayment_plan[accepted_flag] = TRUE() ),
+    fact_repayment_plan[interest_rate_before] - fact_repayment_plan[interest_rate_after]
+)
+
+Avg Instalment Reduction Pct =
+AVERAGE( fact_repayment_plan[reduction_pct] )
+
+
+-- ============================================================
+-- TABLE: _Measures_Credit
+-- ============================================================
+
+Avg Credit Score =
+AVERAGE( fact_credit_monitoring[credit_score] )
+
+Avg Score Change =
+AVERAGE( fact_credit_monitoring[score_change] )
+
+Clients Improving Score =
+CALCULATE(
+    DISTINCTCOUNT( fact_credit_monitoring[client_key] ),
+    fact_credit_monitoring[score_change] > 0
+)
+
+Clients Declining Score =
+CALCULATE(
+    DISTINCTCOUNT( fact_credit_monitoring[client_key] ),
+    fact_credit_monitoring[score_change] < -20
+)
+
+High Risk Clients =
+CALCULATE(
+    DISTINCTCOUNT( fact_credit_monitoring[client_key] ),
+    fact_credit_monitoring[credit_risk_band] IN { "High Risk", "Very High Risk" }
+)
+
+Avg Credit Utilisation =
+AVERAGE( fact_credit_monitoring[total_utilisation_pct] )
+
+Total Judgements =
+SUM( fact_credit_monitoring[judgements_count] )
+
+
+-- ============================================================
+-- TABLE: _Measures_Executive (cross-domain KPIs)
+-- ============================================================
+
+Revenue Proxy (Monthly Fees) =
+-- Approximation: R650/month per active case
+[Active Cases] * 650
+
+Client Lifetime Value Estimate =
+-- Average 48-month journey, R650/month fee
+AVERAGEX(
+    FILTER( fact_debt_review_case, fact_debt_review_case[is_completed] = TRUE() ),
+    fact_debt_review_case[days_in_stage] / 30 * 650
+)
+
+Debt Cleared Total =
+-- Settled debt approximation via completed plans
+CALCULATE(
+    SUM( fact_repayment_plan[total_saving_estimated] ),
+    fact_repayment_plan[accepted_flag] = TRUE()
+)
+
+Overall NPS Proxy =
+-- % clearance certificates issued vs completed cases
+DIVIDE( [Clearances Issued], [Completed Cases], 0 ) * 100
+
+Funnel Efficiency =
+-- Lead → Active Case ratio
+DIVIDE( [Active Cases], [Total Leads], 0 )
