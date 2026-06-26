@@ -128,4 +128,30 @@ Google Analytics / CRM / Call Centre / Credit Bureau / PDA Payments
 
 ---
 
+## Deliverables
+
+| Artefact | Description |
+|---|---|
+| `ebook/DebtBusters_Intelligence_Platform_Ebook_v6.docx` | Full platform narrative — 28 embedded figures, each with Audience / What / Why / Solutions analysis |
+| `charts/` | 14 business charts + 8 ML validation charts + 6 platform mockups (28 total) |
+| `excel/DebtBusters_Intelligence_Report.xlsx` | Executive KPI report |
+| `excel/ML_Validation_Report.xlsx` | Full ML validation workbook |
+| `sql/create_schema.sql` | Kimball star schema DDL |
+| `powerbi/measures.dax` | All Power BI DAX measures |
+
+### Chart Index
+| # | Chart | Category |
+|---|---|---|
+| Fig 1–6 | ADF Pipeline, Databricks Notebook, MLflow, Star Schema, Delta Schema, SQL Result | Platform |
+| Fig 7–18 | Lead Funnel, Channel Performance, DTI by Province, Case Pipeline, Collection Rate, Credit Scores, Creditor Payments, Product Mix, Repayment Savings, Creditor Acceptance, Province Bubble, Executive Dashboard | Business |
+| Fig 19 | Client Retention Curve (Kaplan-Meier by DTI Band) | Operational |
+| Fig 20 | Seasonal Collection Rate Heatmap (Month × Year) | Operational |
+| Fig 21–24 | ROC Curves, Feature Importance, Confusion Matrices, Cross-Validation | ML Validation |
+| Fig 25 | Feature Correlation Matrix | ML Analytical |
+| Fig 26 | Prediction Score Distributions (class separation) | ML Analytical |
+| Fig 27 | Credit Score Forecast — Predicted vs Actual (3/6/12M) | ML Analytical |
+| Fig 28 | Client Risk Segmentation (Income × DTI × Risk Quartile) | ML Analytical |
+
+---
+
 *Anthony Apollis · Portfolio Project 2026*

@@ -1565,7 +1565,7 @@ charts_structured = [
     # ── ML VALIDATION CHARTS ──────────────────────────────────────────────────
 
     ("ml_01_roc_curves.png",
-     "Figure 21: ML Validation — ROC Curves for All 5 Models",  # noqa
+     "Figure 21: ML Validation — ROC Curves for All 5 Models",
      "Data Scientists, CTO, Risk Officer, and technical hiring managers reviewing model performance.",
      "Each coloured curve = one ML model. X-axis = False Positive Rate (FPR — incorrectly flagging "
      "low-risk clients as high-risk). Y-axis = True Positive Rate (TPR — correctly identifying "
