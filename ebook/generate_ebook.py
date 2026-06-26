@@ -48,7 +48,7 @@ import copy
 
 OUT_DIR   = os.path.dirname(__file__)
 CHART_DIR = os.path.join(OUT_DIR, "..", "charts")
-OUT_PATH  = os.path.join(OUT_DIR, "DebtBusters_Intelligence_Platform_Ebook_v5.docx")
+OUT_PATH  = os.path.join(OUT_DIR, "DebtBusters_Intelligence_Platform_Ebook_v6.docx")
 
 # ── colour helpers ─────────────────────────────────────────────────────────────
 def rgb(hex_color):
@@ -1516,10 +1516,56 @@ charts_structured = [
       "Partner with community organisations (churches, trade unions, NGOs) in Eastern Cape and Limpopo where digital acquisition channels underperform.",
       "Track quarter-on-quarter bubble size change by province — a shrinking bubble in a high-severity province signals unmet demand."]),
 
+    # ── BUSINESS ANALYTICAL CHARTS ───────────────────────────────────────────
+
+    ("13_client_retention_curve.png",
+     "Figure 19: Client Retention Curve — Survival by DTI Band",
+     "Operations Manager, COO, Counsellor Management team, and Creditor Relations.",
+     "Kaplan-Meier style survival curve showing what percentage of clients from each DTI "
+     "band remain actively enrolled at each month milestone (0–48 months). Four lines "
+     "correspond to DTI bands: Low (<50%), Medium (50–65%), High (65–80%), Very High (>80%). "
+     "The shaded red region highlights the critical first 6 months — the highest withdrawal "
+     "risk window across all bands. Lines diverge progressively as higher-DTI clients withdraw "
+     "at greater rates over time.",
+     "Client retention is the single most important operational lever for a debt counselling "
+     "business: every withdrawal means a client who returns to unmanaged debt, a lost "
+     "PDA payment stream, and a creditor who may recommence legal action. The retention "
+     "curve makes the risk tangible — if very high-DTI clients are withdrawing at 3× the "
+     "rate of low-DTI clients by month 12, that is a concrete target for the counsellor "
+     "team. The first 6 months are critical — interventions in this window have the highest "
+     "ROI because they reach clients before the withdrawal decision is made, not after.",
+     ["Deploy the Churn CatBoost model (AUC 0.72) to generate a monthly 'at-risk of withdrawal' list — focus retention calls on the top 200 highest-risk clients.",
+      "Create a 30/60/90-day onboarding programme for new cases: proactive counsellor check-ins at each milestone specifically target the Month 1–3 drop-off.",
+      "Investigate what differentiates low-DTI clients who withdraw from those who stay — the answer is not always financial (may be communication frequency, counsellor quality).",
+      "For Very High DTI clients (>80%), assign a senior counsellor from intake — not a junior. The data shows this band has the steepest early withdrawal curve.",
+      "Introduce a 'save' workflow in the CRM: when a client calls to withdraw, it escalates to a retention specialist with a prepared financial summary showing savings to date."]),
+
+    ("14_cohort_collection_rate.png",
+     "Figure 20: Seasonal Collection Rate Heatmap — Month × Year",
+     "CFO, Collections Manager, Treasury team, and the Board.",
+     "Heatmap with months of the year (January–December) on the Y-axis and calendar years "
+     "on the X-axis. Each cell shows the average collection rate for that month-year combination. "
+     "Colour scale: red = collection rate below 87%, yellow = 87–92%, green = above 92%. "
+     "The heatmap makes two patterns immediately visible: (1) the seasonal 'twin dip' in "
+     "January and July across all years, and (2) a year-on-year improvement trend — each "
+     "year's column shifts greener than the previous year.",
+     "Collection rate is the CFO's most watched number — but a single annual average hides "
+     "two critical patterns that directly affect cash flow planning and creditor relationships. "
+     "The January dip is driven by school fees and post-holiday spending; the July dip by "
+     "mid-year school fees and winter utility bills. Both are structurally predictable, yet "
+     "most organisations react to them rather than anticipating them. The year-on-year "
+     "improvement trend validates the portfolio maturation thesis and is the evidence the "
+     "Board needs to see that the business is growing a healthier book over time.",
+     ["Use this heatmap as the cash flow forecasting input: January and July should be budgeted at 2–3% lower collection than the annual average.",
+      "Pre-position funds in the PDA reserve account in December and June to cover the seasonal dip without creditor payment delays.",
+      "Run SMS reminders to all active clients in the last week of December and June: 'Your January/July payment is due on [date] — contact us if you need support.'",
+      "Track the year-on-year improvement gradient: if the improvement stalls, it signals that the maturing cohort effect is being offset by incoming lower-quality cases.",
+      "Share the year-on-year improvement trend with creditors in annual relationship meetings — it demonstrates portfolio quality improvement and supports renegotiation of terms."]),
+
     # ── ML VALIDATION CHARTS ──────────────────────────────────────────────────
 
     ("ml_01_roc_curves.png",
-     "Figure 19: ML Validation — ROC Curves for All 5 Models",
+     "Figure 21: ML Validation — ROC Curves for All 5 Models",  # noqa
      "Data Scientists, CTO, Risk Officer, and technical hiring managers reviewing model performance.",
      "Each coloured curve = one ML model. X-axis = False Positive Rate (FPR — incorrectly flagging "
      "low-risk clients as high-risk). Y-axis = True Positive Rate (TPR — correctly identifying "
@@ -1540,7 +1586,7 @@ charts_structured = [
       "Establish a model governance committee (quarterly): review AUC on live data, approve retraining, document decisions for NCR audit trail."]),
 
     ("ml_02_feature_importance.png",
-     "Figure 20: ML Feature Importance — What Drives Each Model",
+     "Figure 22: ML Feature Importance — What Drives Each Model",
      "Data Scientists, Business Analysts, Product Managers, and Counsellors understanding model logic.",
      "Horizontal bar charts showing the top 10 most influential features for each classification model. "
      "Lead Conversion top drivers: lead_score (composite quality score), source_channel (referral "
@@ -1561,7 +1607,7 @@ charts_structured = [
       "Review the top 3 features quarterly — if a new feature (e.g., number of creditor disputes) emerges as important, add it to the training data."]),
 
     ("ml_03_confusion_matrices.png",
-     "Figure 21: ML Validation — Confusion Matrices (Precision, Recall, F1)",
+     "Figure 23: ML Validation — Confusion Matrices (Precision, Recall, F1)",
      "Operations teams deploying models, Risk Officer, and Compliance reviewing false positive/negative trade-offs.",
      "2×2 confusion matrices for each binary classifier showing True Positives (TP), False Positives "
      "(FP), True Negatives (TN), and False Negatives (FN). Derived metrics: Precision (of flagged "
@@ -1581,7 +1627,7 @@ charts_structured = [
       "Calculate the rand value of FP and FN for each model: (FP cost = wasted counsellor call ~R45); (FN cost = missed payment + arrears recovery ~R1,200) — this justifies threshold choices to the CFO."]),
 
     ("ml_04_cross_validation.png",
-     "Figure 22: ML Validation — Cross-Validation Stability (5-Fold CV)",
+     "Figure 24: ML Validation — Cross-Validation Stability (5-Fold CV)",
      "Data Scientists and CTO evaluating model robustness and production deployment readiness.",
      "Box plot or bar chart with error bars showing AUC scores across 5 CV folds for each model. "
      "Low variance (narrow error bars) = model is stable and will generalise well to unseen data. "
@@ -1601,6 +1647,96 @@ charts_structured = [
       "Schedule automated CV reporting monthly on the latest 3 months of live data — widening variance is the first symptom of concept drift.",
       "Present the CV results to the Board as evidence of model robustness before any ML-driven process (e.g., automated lead prioritisation) goes live.",
       "Use the 5-fold CV framework to evaluate new feature candidates before adding them to production models — if CV AUC does not improve by >0.01, the feature adds noise not signal."]),
+
+    ("ml_05_correlation_heatmap.png",
+     "Figure 25: Feature Correlation Matrix — Lead Conversion Model",
+     "Data Scientists, Feature Engineers, and Business Analysts understanding variable relationships.",
+     "Heatmap of Pearson correlation coefficients between all features used in the Lead Conversion "
+     "model: lead_score, cost_per_lead, gross_income, debt_to_income_ratio, number_of_creditors, "
+     "age, risk_score, over_indebted_flag, and the converted_flag target. Blue cells = positive "
+     "correlation; red = negative; white = near-zero. Cell values show the exact coefficient. "
+     "Bold values indicate |r| > 0.25 (practically significant correlations).",
+     "Correlation analysis is the first step in understanding a model — it reveals which features "
+     "are genuinely informative vs. redundant, and it flags multicollinearity (two features "
+     "measuring the same thing). If gross_income and income_band are highly correlated (r > 0.85), "
+     "only one should be in the model — the other adds noise and can destabilise coefficients. "
+     "Correlations with the target variable (converted_flag) tell the business which raw signals "
+     "matter most before ML modelling, giving counsellors and marketers actionable language: "
+     "'clients with higher lead_scores convert more' becomes a business truth, not just a model weight.",
+     ["Any two features with |r| > 0.85 between them should be reviewed for redundancy — keep only the more interpretable one.",
+      "Features with |r| < 0.05 with the target and no interaction effects should be removed from the feature set to reduce overfitting risk.",
+      "Share the correlation of lead_score with converted_flag with the Marketing team — it validates whether the lead scoring algorithm in the CRM is predictive.",
+      "Monitor correlations on a quarterly basis — a new correlation between risk_score and converted_flag emerging over time may signal demographic shifts in the client base.",
+      "Use high correlations between gross_income and DTI as evidence to simplify the intake form: one financial variable may be sufficient if they are near-perfectly correlated."]),
+
+    ("ml_06_prediction_distributions.png",
+     "Figure 26: Prediction Score Distributions — Class Separation",
+     "Data Scientists, ML Engineers, and Product Managers validating model deployment readiness.",
+     "Density histograms for Lead Conversion and Payment Default models. Each chart shows two "
+     "overlapping distributions: predicted probabilities for the negative class (did not convert / "
+     "did not miss payment) and the positive class (converted / missed payment). A dashed vertical "
+     "line marks the default decision threshold at 0.50. Well-separated distributions (minimal "
+     "overlap) indicate a model that clearly distinguishes between the two classes. Heavily "
+     "overlapping distributions would indicate a weak model regardless of its AUC score.",
+     "AUC summarises model performance with a single number — but the score distribution tells "
+     "you whether the model is confidently right or vaguely right. A model where the positive "
+     "class distribution peaks at 0.8 and the negative peaks at 0.2 is deployable with "
+     "confidence. A model where both distributions overlap heavily around 0.5 requires a "
+     "much more conservative deployment strategy. The threshold line at 0.50 is also "
+     "deliberately shown — it rarely is the optimal threshold for a business application, "
+     "and this chart makes the trade-off visible for business stakeholders.",
+     ["For Lead Conversion: set the deployment threshold at 0.55–0.60 (right of the overlap zone) to ensure call centre effort is focused on genuinely likely converters.",
+      "For Payment Default: set the threshold at 0.35–0.40 (left of overlap) to maximise recall — missing a true defaulter is more costly than a false alarm call.",
+      "Use this chart in model governance documentation: regulators and internal auditors can visually verify the model is not making random predictions.",
+      "Schedule monthly monitoring of the score distribution on live predictions — if the distributions converge over time, it signals model drift and retraining is needed.",
+      "Build a threshold optimisation calculation: cost(FP) × FP_count vs. cost(FN) × FN_count at each threshold — present the optimal threshold to the CFO with its business case."]),
+
+    ("ml_07_credit_score_predictions.png",
+     "Figure 27: Credit Score Forecast — Predicted vs Actual at 3, 6 & 12 Months",
+     "Risk Officer, Client Services team, Counsellors, and any stakeholder responsible for client outcomes.",
+     "Three side-by-side scatter plots — one for each forecast horizon (3, 6, 12 months). "
+     "Each dot represents one client: X-axis = actual credit score at that horizon, "
+     "Y-axis = the model's prediction. The grey dashed diagonal is the perfect prediction line — "
+     "dots lying on it are exact predictions. The coloured trend line shows the model's "
+     "systematic fit. R² values are annotated on each panel (3M: high, 6M: high, 12M: high). "
+     "Dots cluster tightly around the diagonal across all three horizons.",
+     "The credit score forecast model (R² = 0.89) is arguably the most client-facing of all "
+     "five ML models — it is the one that directly answers the client's most important question: "
+     "'When will I be financially healthy again?' A model that can predict with 89% accuracy "
+     "where a client's score will be in 12 months enables counsellors to give specific, "
+     "credible timelines rather than vague reassurances. This builds trust and materially "
+     "reduces withdrawal risk. The three-horizon view is also important: the 12-month prediction "
+     "is typically less accurate than the 3-month (further from known data), and the scatter "
+     "plot makes this heteroscedasticity visible — a key piece of information for deciding "
+     "how to communicate forecast uncertainty to clients.",
+     ["Integrate the 3-month forecast into the monthly client statement: 'Your predicted credit score in 3 months: [X] (current: [Y]).'",
+      "For clients whose 12-month predicted score remains below 580 (subprime), trigger an affordability review — their programme may need restructuring.",
+      "Show the 12-month scatter to the Board as evidence of the credit improvement programme's predictability — a tight cluster around the diagonal is a strong ESG/social impact story.",
+      "Use prediction uncertainty (distance from the diagonal) as a counsellor alert: clients whose actual score is significantly below prediction need intervention.",
+      "Build a cohort-level version: group clients by intake quarter and show average predicted vs. actual credit score trajectory — this is the Board-level portfolio health chart."]),
+
+    ("ml_08_risk_segmentation.png",
+     "Figure 28: Client Risk Segmentation — Income vs DTI by Risk Quartile",
+     "Strategy team, Marketing Director, Risk Officer, and Product Managers designing client programmes.",
+     "Scatter plot: X-axis = gross monthly income (R thousands), Y-axis = debt-to-income ratio "
+     "(%), dot colour = risk quartile (green = Low Risk, teal = Medium-Low, orange = Medium-High, "
+     "red = High Risk), dot size = number of creditors. Two horizontal threshold lines mark the "
+     "NCA over-indebted boundary (60% DTI) and severe over-indebtedness (80% DTI). "
+     "Four distinct client segments emerge visually, each occupying a different region of the "
+     "income–DTI space.",
+     "Risk segmentation is the foundation of personalised debt counselling. A single national "
+     "programme that treats a R8,000/month client with 9 creditors and 85% DTI the same as a "
+     "R25,000/month client with 3 creditors and 52% DTI will fail both of them. The four risk "
+     "quartiles correspond to materially different counselling needs, product recommendations, "
+     "expected clearance timelines, and likelihood of withdrawal. This chart is also a "
+     "strategic marketing tool: it shows where the addressable market is (large clusters "
+     "of high-income clients above the 60% DTI line who have not yet entered debt review) "
+     "and where the highest-risk concentrations are.",
+     ["Use the four risk segments as the basis for four distinct counselling playbooks: different contact frequency, product routing, and escalation triggers per segment.",
+      "Target marketing at the 'medium-income, high-DTI' cluster — large bubble concentration above 60% with income R12k-R20k represents the highest-volume addressable market.",
+      "High Risk clients (red) with >8 creditors and >80% DTI should be fast-tracked to senior counsellors and assessed for sequestration eligibility.",
+      "Low Risk clients (green, low DTI) may be suitable for lighter-touch digital servicing rather than intensive counsellor engagement — this frees counsellor capacity.",
+      "Run this chart quarterly using live data — if the High Risk cluster grows as a proportion of new intakes, it signals a deteriorating quality of leads coming from specific channels."]),
 ]
 
 

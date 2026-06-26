@@ -391,6 +391,179 @@ ax.spines[["top","right"]].set_visible(False)
 savefig("ml_04_cross_validation")
 
 # ══════════════════════════════════════════════════════════════════════════════
+# CHART ML-05: Feature Correlation Heatmap
+# ══════════════════════════════════════════════════════════════════════════════
+print("Generating ml_05_correlation_heatmap…")
+import matplotlib.colors as mcolors_ml
+import matplotlib.ticker as mticker_ml
+
+corr_cols = ["lead_score","cost_per_lead","gross_income","debt_to_income_ratio",
+             "number_of_creditors","age","risk_score","over_indebted_flag","converted_flag"]
+corr_df = df1[[c for c in corr_cols if c in df1.columns]].dropna()
+corr_mat = corr_df.corr()
+
+disp_labels = [c.replace("_"," ").replace("over indebted","over-indebted").title()
+               for c in corr_mat.columns]
+
+cmap_div = mcolors_ml.LinearSegmentedColormap.from_list(
+    "div", [CONFLUENT["red"], "#F5F5F5", CONFLUENT["blue"]])
+
+fig, ax = plt.subplots(figsize=(10, 8))
+fig.patch.set_facecolor(DEBTBUSTERS["light_grey"])
+ax.set_facecolor("#FFFFFF")
+
+im = ax.imshow(corr_mat.values, cmap=cmap_div, vmin=-1, vmax=1, aspect="auto")
+plt.colorbar(im, ax=ax, label="Pearson Correlation Coefficient", fraction=0.046, pad=0.04)
+
+ax.set_xticks(range(len(disp_labels)))
+ax.set_yticks(range(len(disp_labels)))
+ax.set_xticklabels(disp_labels, rotation=40, ha="right", fontsize=9)
+ax.set_yticklabels(disp_labels, fontsize=9)
+
+for i in range(len(corr_mat)):
+    for j in range(len(corr_mat)):
+        val = corr_mat.values[i, j]
+        txt_col = "white" if abs(val) > 0.5 else DEBTBUSTERS["navy"]
+        fw = "bold" if abs(val) > 0.25 else "normal"
+        ax.text(j, i, f"{val:.2f}", ha="center", va="center",
+                fontsize=8, color=txt_col, fontweight=fw)
+
+ax.set_title("Feature Correlation Matrix — Lead Conversion Model\n"
+             "(Blue = positive correlation, Red = negative, bold = |r| > 0.25)",
+             fontsize=13, fontweight="bold", color=DEBTBUSTERS["navy"])
+plt.tight_layout()
+savefig("ml_05_correlation_heatmap")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CHART ML-06: Prediction Score Distributions
+# ══════════════════════════════════════════════════════════════════════════════
+print("Generating ml_06_prediction_distributions…")
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+fig.patch.set_facecolor(DEBTBUSTERS["light_grey"])
+fig.suptitle("Prediction Score Distributions — Class Separation\n"
+             "(Well-separated peaks = model can clearly distinguish positive from negative)",
+             fontsize=13, fontweight="bold", color=DEBTBUSTERS["navy"])
+
+pairs = [
+    ("Lead Conversion",  y1_proba, y1_te.values, CONFLUENT["green"],  CONFLUENT["red"],
+     "Converted (positive)", "Not Converted (negative)"),
+    ("Payment Default",  y2_proba, y2_te.values, CONFLUENT["red"],    CONFLUENT["teal"],
+     "Missed Payment (positive)", "Payment Made (negative)"),
+]
+for ax, (name, proba, y_act, col_pos, col_neg, lbl_pos, lbl_neg) in zip(axes, pairs):
+    ax.set_facecolor("#FFFFFF")
+    ax.hist(proba[y_act==0], bins=45, alpha=0.65, color=col_neg, density=True,
+            label=f"{lbl_neg} (n={int((y_act==0).sum()):,})",
+            edgecolor="white", linewidth=0.3)
+    ax.hist(proba[y_act==1], bins=45, alpha=0.65, color=col_pos, density=True,
+            label=f"{lbl_pos} (n={int((y_act==1).sum()):,})",
+            edgecolor="white", linewidth=0.3)
+    ax.axvline(0.5, color=DEBTBUSTERS["navy"], linestyle="--", linewidth=1.8,
+               label="Default threshold (0.50)")
+    ax.set_xlabel("Predicted Probability", fontsize=10)
+    ax.set_ylabel("Density", fontsize=10)
+    ax.set_title(f"{name}", fontsize=12, fontweight="bold", color=DEBTBUSTERS["navy"])
+    ax.legend(fontsize=9)
+    ax.spines[["top","right"]].set_visible(False)
+
+plt.tight_layout()
+savefig("ml_06_prediction_distributions")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CHART ML-07: Credit Score Forecast — Predicted vs Actual (3 horizons)
+# ══════════════════════════════════════════════════════════════════════════════
+print("Generating ml_07_credit_score_predictions…")
+r4 = results["Credit Score Forecast"]
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+fig.patch.set_facecolor(DEBTBUSTERS["light_grey"])
+fig.suptitle("Credit Score Forecast — Predicted vs Actual at 3, 6 & 12 Months\n"
+             "(Each dot = one client; closer to diagonal = more accurate prediction)",
+             fontsize=13, fontweight="bold", color=DEBTBUSTERS["navy"])
+
+horizons = [("3 Months", CONFLUENT["blue"]),
+            ("6 Months", CONFLUENT["teal"]),
+            ("12 Months", CONFLUENT["purple"])]
+
+rng_samp = np.random.default_rng(42)
+for ax, (i, (label, color)) in zip(axes, enumerate(horizons)):
+    n_samp = min(2000, len(r4["y_te"]))
+    idx = rng_samp.choice(len(r4["y_te"]), n_samp, replace=False)
+    actual = r4["y_te"][idx, i]
+    pred   = r4["y_pred"][idx, i]
+    r2_val = r4["r2"][i]
+
+    ax.set_facecolor("#FFFFFF")
+    ax.scatter(actual, pred, alpha=0.2, s=5, color=color)
+    lo, hi = 300, 850
+    ax.plot([lo, hi], [lo, hi], "--", color=DEBTBUSTERS["mid_grey"],
+            linewidth=1.5, label="Perfect prediction")
+    coef = np.polyfit(actual, pred, 1)
+    x_fit = np.array([actual.min(), actual.max()])
+    ax.plot(x_fit, np.polyval(coef, x_fit), "-", color=color,
+            linewidth=2, alpha=0.85, label=f"Trend line")
+    ax.set_xlim(lo, hi); ax.set_ylim(lo, hi)
+    ax.set_xlabel("Actual Credit Score", fontsize=10)
+    ax.set_ylabel("Predicted Credit Score", fontsize=10)
+    ax.set_title(f"Forecast: {label}", fontsize=11, fontweight="bold",
+                 color=DEBTBUSTERS["navy"])
+    ax.text(0.05, 0.90, f"R² = {r2_val:.3f}", transform=ax.transAxes,
+            fontsize=13, fontweight="bold", color=color)
+    ax.legend(fontsize=8)
+    ax.spines[["top","right"]].set_visible(False)
+
+plt.tight_layout()
+savefig("ml_07_credit_score_predictions")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CHART ML-08: Client Risk Segmentation Scatter
+# ══════════════════════════════════════════════════════════════════════════════
+print("Generating ml_08_risk_segmentation…")
+seg_df = assess.merge(
+    clients[["client_id","risk_score"]].drop_duplicates("client_id"),
+    on="client_id", how="left"
+).dropna(subset=["risk_score","gross_income","debt_to_income_ratio","number_of_creditors"])
+seg_df = seg_df.sample(min(5000, len(seg_df)), random_state=42)
+seg_df["risk_q"] = pd.qcut(seg_df["risk_score"], q=4,
+                            labels=["Low Risk","Medium-Low","Medium-High","High Risk"])
+
+risk_colors = [CONFLUENT["green"], CONFLUENT["teal"], CONFLUENT["orange"], CONFLUENT["red"]]
+risk_labels = ["Low Risk","Medium-Low","Medium-High","High Risk"]
+
+fig, ax = plt.subplots(figsize=(12, 7))
+fig.patch.set_facecolor(DEBTBUSTERS["light_grey"])
+ax.set_facecolor("#FFFFFF")
+
+for label, color in zip(risk_labels, risk_colors):
+    sub = seg_df[seg_df["risk_q"] == label]
+    ax.scatter(
+        sub["gross_income"] / 1000,
+        sub["debt_to_income_ratio"] * 100,
+        c=color, alpha=0.45,
+        s=sub["number_of_creditors"].clip(1, 20) * 7,
+        label=f"{label}  (n={len(sub):,})",
+        edgecolors="white", linewidth=0.3
+    )
+
+ax.axhline(60, color=DEBTBUSTERS["navy"], linestyle="--", linewidth=1.4,
+           label="NCA over-indebted threshold (60% DTI)")
+ax.axhline(80, color=CONFLUENT["red"], linestyle=":", linewidth=1.2, alpha=0.6,
+           label="Severe over-indebtedness (80% DTI)")
+ax.set_xlabel("Gross Monthly Income (R Thousands)", fontsize=11)
+ax.set_ylabel("Debt-to-Income Ratio (%)", fontsize=11)
+ax.set_title("Client Risk Segmentation — Income vs DTI by Risk Quartile\n"
+             "(Bubble size = number of creditors; colour = computed risk score quartile)",
+             fontsize=13, fontweight="bold", color=DEBTBUSTERS["navy"])
+ax.xaxis.set_major_formatter(mticker_ml.FuncFormatter(lambda x, _: f"R{x:.0f}k"))
+ax.legend(fontsize=9, loc="upper right")
+ax.spines[["top","right"]].set_visible(False)
+ax.annotate("Confluent | DebtBusters Intelligence Platform",
+            xy=(1, 0), xycoords="axes fraction", fontsize=7,
+            color=DEBTBUSTERS["mid_grey"], ha="right", va="bottom",
+            xytext=(0, -22), textcoords="offset points")
+plt.tight_layout()
+savefig("ml_08_risk_segmentation")
+
+# ══════════════════════════════════════════════════════════════════════════════
 # EXCEL Validation Report
 # ══════════════════════════════════════════════════════════════════════════════
 print("\nWriting ML Validation Excel report…")

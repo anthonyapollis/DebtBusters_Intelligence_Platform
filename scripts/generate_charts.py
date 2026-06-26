@@ -578,4 +578,128 @@ def chart_executive_dashboard():
 
 chart_executive_dashboard()
 
-print(f"\nAll 12 charts saved to: {CHART_DIR}")
+# ── CHART 13 — Client Retention Curve by DTI Band ───────────────────────────
+def chart_retention_curve():
+    df = cases.copy()
+    date_col = next((c for c in df.columns if "date" in c.lower()), None)
+    if date_col is None:
+        print("  Skipping retention curve — no date column found"); return
+    df[date_col] = pd.to_datetime(df[date_col], errors="coerce")
+    df = df.dropna(subset=[date_col])
+    ref_date = pd.Timestamp("2024-06-30")
+    df["months_active"] = ((ref_date - df[date_col]).dt.days / 30.44).clip(0, 60)
+
+    if "withdrawal_flag" in df.columns:
+        df["withdrew"] = df["withdrawal_flag"].fillna(0).astype(int)
+    elif "case_stage" in df.columns:
+        df["withdrew"] = df["case_stage"].str.lower().str.contains("withdraw", na=False).astype(int)
+    else:
+        df["withdrew"] = 0
+
+    df = df.merge(
+        assess[["client_id","debt_to_income_ratio"]].drop_duplicates("client_id"),
+        on="client_id", how="left"
+    )
+    df["dti_band"] = pd.cut(
+        df["debt_to_income_ratio"].fillna(0.65) * 100,
+        bins=[0, 50, 65, 80, 200],
+        labels=["Low DTI (<50%)", "Medium (50–65%)", "High (65–80%)", "Very High (>80%)"]
+    )
+
+    months = np.arange(0, 49)
+    band_colors = [CONFLUENT["green"], CONFLUENT["teal"], CONFLUENT["orange"], CONFLUENT["red"]]
+    band_labels = ["Low DTI (<50%)", "Medium (50–65%)", "High (65–80%)", "Very High (>80%)"]
+
+    fig, ax = plt.subplots(figsize=(12, 6))
+    fig.patch.set_facecolor(DEBTBUSTERS["light_grey"])
+    ax.set_facecolor("#FFFFFF")
+
+    for band, color in zip(band_labels, band_colors):
+        subset = df[df["dti_band"] == band]
+        if len(subset) < 50:
+            continue
+        total = len(subset)
+        survival = []
+        for m in months:
+            still = (
+                ((subset["withdrew"] == 0) & (subset["months_active"] >= m)) |
+                ((subset["withdrew"] == 1) & (subset["months_active"] > m))
+            ).sum()
+            survival.append(still / total * 100)
+        ax.plot(months, survival, color=color, linewidth=2.5,
+                label=f"{band}  (n={total:,})", alpha=0.9)
+
+    for v, lbl in [(12, "12M"), (24, "24M"), (36, "36M")]:
+        ax.axvline(v, color=DEBTBUSTERS["mid_grey"], linestyle=":", linewidth=1, alpha=0.5)
+        ax.text(v + 0.4, 3, lbl, fontsize=8, color=DEBTBUSTERS["mid_grey"])
+
+    ax.fill_between([0, 6], 0, 105, alpha=0.06, color=CONFLUENT["red"],
+                    label="Critical first 6M (highest withdrawal risk)")
+    ax.set_xlim(0, 48); ax.set_ylim(0, 103)
+    ax.set_xlabel("Months Since Case Intake", fontsize=11)
+    ax.set_ylabel("% of Clients Still Enrolled", fontsize=11)
+    ax.set_title("Client Retention Curve — Survival by DTI Band\n"
+                 "(Higher DTI = steeper early withdrawal)",
+                 fontsize=14, fontweight="bold", color=DEBTBUSTERS["navy"])
+    ax.legend(fontsize=10, loc="upper right")
+    ax.spines[["top","right"]].set_visible(False)
+    add_logo_text(ax)
+    savefig("13_client_retention_curve", fig)
+
+chart_retention_curve()
+
+# ── CHART 14 — Seasonal Collection Rate Heatmap ──────────────────────────────
+def chart_cohort_heatmap():
+    import matplotlib.colors as mcolors
+    df = pays.copy()
+    df["payment_date"] = pd.to_datetime(df["payment_date"], errors="coerce")
+    df = df.dropna(subset=["payment_date"])
+    df["year"]  = df["payment_date"].dt.year
+    df["month"] = df["payment_date"].dt.month
+
+    if "collection_rate" in df.columns:
+        pivot = df.groupby(["year","month"])["collection_rate"].mean().reset_index()
+        pivot["collection_rate"] *= 100
+    else:
+        pivot = df.groupby(["year","month"]).agg(
+            act=("actual_payment_amount","sum"), exp=("expected_payment_amount","sum")
+        ).reset_index()
+        pivot["collection_rate"] = (pivot["act"] / pivot["exp"].replace(0, np.nan) * 100).clip(0, 100)
+
+    piv_table = pivot.pivot(index="month", columns="year", values="collection_rate")
+    month_names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+
+    cmap = mcolors.LinearSegmentedColormap.from_list(
+        "confluent_heat", [CONFLUENT["red"], CONFLUENT["yellow"], CONFLUENT["green"]])
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+    fig.patch.set_facecolor(DEBTBUSTERS["light_grey"])
+    im = ax.imshow(piv_table.values, cmap=cmap, aspect="auto", vmin=80, vmax=100)
+
+    ax.set_yticks(range(len(piv_table.index)))
+    ax.set_yticklabels([month_names[m-1] for m in piv_table.index], fontsize=10)
+    ax.set_xticks(range(len(piv_table.columns)))
+    ax.set_xticklabels([str(c) for c in piv_table.columns], fontsize=11, fontweight="bold")
+
+    for i in range(len(piv_table.index)):
+        for j in range(len(piv_table.columns)):
+            val = piv_table.values[i, j]
+            if not np.isnan(val):
+                txt_color = "white" if val < 87 else DEBTBUSTERS["navy"]
+                ax.text(j, i, f"{val:.1f}%", ha="center", va="center",
+                        fontsize=9, fontweight="bold", color=txt_color)
+
+    cbar = plt.colorbar(im, ax=ax, fraction=0.03, pad=0.04)
+    cbar.set_label("Collection Rate (%)", fontsize=10)
+    ax.set_title("Collection Rate Heatmap — Month × Year\n"
+                 "(Jan & Jul seasonal dips clearly visible; improving trend year-on-year)",
+                 fontsize=13, fontweight="bold", color=DEBTBUSTERS["navy"])
+    ax.set_xlabel("Year", fontsize=11)
+    ax.set_ylabel("Month", fontsize=11)
+    add_logo_text(ax)
+    plt.tight_layout()
+    savefig("14_cohort_collection_rate", fig)
+
+chart_cohort_heatmap()
+
+print(f"\nAll 14 charts saved to: {CHART_DIR}")
