@@ -37,23 +37,9 @@ clients = load("clients")
 assess  = load("assessments")
 pays    = load("payments")
 credit  = load("credit_monitoring")
+leads   = load("leads")
 
-# ── Compute province-level stats ──────────────────────────────────────────────
-assess_prov = assess.merge(
-    clients[["client_id","province","risk_score"]].drop_duplicates("client_id"),
-    on="client_id", how="left"
-)
-prov = assess_prov.groupby("province").agg(
-    clients       = ("assessment_id","count"),
-    avg_dti       = ("debt_to_income_ratio","mean"),
-    avg_debt      = ("total_debt_balance","mean"),
-    over_indebted = ("over_indebted_flag","sum"),
-    avg_risk      = ("risk_score","mean"),
-).reset_index()
-prov["over_indebted_rate"] = prov["over_indebted"] / prov["clients"] * 100
-prov["avg_dti_pct"]        = prov["avg_dti"] * 100
-
-# Standardise province names used in the data
+# ── Province name standardiser ────────────────────────────────────────────────
 NAME_MAP = {
     "GP":"Gauteng","WC":"Western Cape","KZN":"KwaZulu-Natal",
     "EC":"Eastern Cape","LP":"Limpopo","MP":"Mpumalanga",
@@ -64,8 +50,87 @@ NAME_MAP = {
     "Free State":"Free State","North West":"North West",
     "Northern Cape":"Northern Cape",
 }
-prov["province"] = prov["province"].map(NAME_MAP).fillna(prov["province"])
+clients["province"] = clients["province"].map(NAME_MAP).fillna(clients["province"])
+
+cli_slim = clients[["client_id","province","risk_score"]].drop_duplicates("client_id")
+
+# ── 1. Core assessment stats ──────────────────────────────────────────────────
+assess_prov = assess.merge(cli_slim, on="client_id", how="left")
+prov = assess_prov.groupby("province").agg(
+    clients       = ("assessment_id","count"),
+    avg_dti       = ("debt_to_income_ratio","mean"),
+    avg_debt      = ("total_debt_balance","mean"),
+    over_indebted = ("over_indebted_flag","sum"),
+    avg_risk      = ("risk_score","mean"),
+    avg_income    = ("gross_income","mean"),
+    avg_creditors = ("number_of_creditors","mean"),
+    avg_disposable= ("disposable_income","mean"),
+).reset_index()
+prov["over_indebted_rate"] = prov["over_indebted"] / prov["clients"] * 100
+prov["avg_dti_pct"]        = prov["avg_dti"] * 100
 prov = prov.set_index("province")
+
+# ── 2. Lead conversion rate by province ──────────────────────────────────────
+leads_prov = leads.merge(cli_slim[["client_id","province"]], on="client_id", how="left")
+leads_prov["province"] = leads_prov["province"].map(NAME_MAP).fillna(leads_prov["province"])
+conv = leads_prov.groupby("province").agg(
+    total_leads  = ("lead_id","count"),
+    converted    = ("converted_flag","sum"),
+    qualified    = ("qualified_flag","sum"),
+).reset_index()
+conv["conversion_rate"]    = conv["converted"]  / conv["total_leads"] * 100
+conv["qualification_rate"] = conv["qualified"]   / conv["total_leads"] * 100
+conv = conv.set_index("province")
+prov = prov.join(conv[["total_leads","conversion_rate","qualification_rate"]], how="left")
+
+# ── 3. Payment performance by province ───────────────────────────────────────
+pays_prov = pays.merge(cli_slim[["client_id","province"]], on="client_id", how="left")
+pays_prov["province"] = pays_prov["province"].map(NAME_MAP).fillna(pays_prov["province"])
+pay_stats = pays_prov.groupby("province").agg(
+    avg_collection_rate  = ("collection_rate","mean"),
+    missed_payment_rate  = ("missed_payment_flag","mean"),
+    total_arrears        = ("arrears_amount","sum"),
+    total_payments       = ("actual_payment_amount","sum"),
+).reset_index().set_index("province")
+pay_stats["avg_collection_rate"]  *= 100
+pay_stats["missed_payment_rate"]  *= 100
+prov = prov.join(pay_stats, how="left")
+
+# ── 4. Credit score improvement by province ───────────────────────────────────
+credit["monitoring_date"] = pd.to_datetime(credit["monitoring_date"])
+credit_cli = credit.merge(cli_slim[["client_id","province"]], on="client_id", how="left")
+credit_cli["province"] = credit_cli["province"].map(NAME_MAP).fillna(credit_cli["province"])
+
+earliest = credit_cli.sort_values("monitoring_date").groupby("client_id").first()[["credit_score","province"]].rename(columns={"credit_score":"score_intake"})
+latest   = credit_cli.sort_values("monitoring_date").groupby("client_id").last()[["credit_score"]].rename(columns={"credit_score":"score_latest"})
+score_df = earliest.join(latest).reset_index()
+score_df["score_improvement"] = score_df["score_latest"] - score_df["score_intake"]
+
+credit_prov = score_df.groupby("province").agg(
+    avg_score_intake     = ("score_intake","mean"),
+    avg_score_latest     = ("score_latest","mean"),
+    avg_score_improvement= ("score_improvement","mean"),
+).reset_index().set_index("province")
+prov = prov.join(credit_prov, how="left")
+
+# ── 5. Credit utilisation from latest monitoring ──────────────────────────────
+util_prov = credit_cli.sort_values("monitoring_date").groupby("client_id").last().reset_index()
+util_prov["province"] = util_prov["province"].map(NAME_MAP).fillna(util_prov["province"])
+util_stats = util_prov.groupby("province").agg(
+    avg_utilisation     = ("total_utilisation_pct","mean"),
+    avg_accts_arrears   = ("accounts_in_arrears","mean"),
+).reset_index().set_index("province")
+prov = prov.join(util_stats, how="left")
+
+# ── 6. Province ranks ─────────────────────────────────────────────────────────
+for col, ascending in [
+    ("clients",True), ("avg_dti_pct",True), ("avg_debt",True),
+    ("conversion_rate",False), ("avg_collection_rate",False),
+    ("avg_score_improvement",False), ("missed_payment_rate",True),
+    ("avg_income",False),
+]:
+    if col in prov.columns:
+        prov[f"rank_{col}"] = prov[col].rank(ascending=ascending, method="min").astype(int)
 
 # ── Approximate SA province polygon coordinates (lon, lat) ───────────────────
 POLYGONS = {
@@ -308,13 +373,12 @@ print(f"  Saved: 16_sa_risk_profile_map.png")
 plt.close("all")
 
 # ══════════════════════════════════════════════════════════════════════════════
-# INTERACTIVE MAP — Folium
+# INTERACTIVE MAP — Folium (4 layers, rich popups, province polygon fills)
 # ══════════════════════════════════════════════════════════════════════════════
 print("Generating sa_interactive_map.html…")
-import folium
-from folium.plugins import MarkerCluster
+import folium, json
 
-# Province centroids for folium markers
+# Province centroids [lat, lon]
 CENTROIDS = {
     "Limpopo":      (-23.5, 29.0),
     "Mpumalanga":   (-25.8, 30.2),
@@ -327,13 +391,169 @@ CENTROIDS = {
     "Western Cape": (-33.8, 20.0),
 }
 
-m = folium.Map(
-    location=[-29.0, 25.0], zoom_start=6,
-    tiles="CartoDB positron",
-    width="100%", height="100%"
-)
+# ── Colour helpers ────────────────────────────────────────────────────────────
+def dti_color(v):
+    if v >= 75:   return "#E8363B"
+    elif v >= 68: return "#F57C2D"
+    elif v >= 62: return "#F5C842"
+    else:         return "#52B748"
 
-# Nav bar + title (pointer-events:none on title so it never blocks map clicks)
+def interp_color(v, lo, hi, low_c="#52B748", mid_c="#F5C842", hi_c="#E8363B"):
+    t = max(0.0, min(1.0, (v - lo) / (hi - lo + 1e-9)))
+    if t < 0.5:
+        r0,g0,b0 = int(low_c[1:3],16),int(low_c[3:5],16),int(low_c[5:7],16)
+        r1,g1,b1 = int(mid_c[1:3],16),int(mid_c[3:5],16),int(mid_c[5:7],16)
+        t2 = t * 2
+    else:
+        r0,g0,b0 = int(mid_c[1:3],16),int(mid_c[3:5],16),int(mid_c[5:7],16)
+        r1,g1,b1 = int(hi_c[1:3],16),int(hi_c[3:5],16),int(hi_c[5:7],16)
+        t2 = (t - 0.5) * 2
+    return "#{:02X}{:02X}{:02X}".format(
+        int(r0 + (r1-r0)*t2), int(g0 + (g1-g0)*t2), int(b0 + (b1-b0)*t2))
+
+def bar(val, lo, hi, color):
+    pct = max(0, min(100, (val - lo) / (hi - lo + 1e-9) * 100))
+    return (f'<div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;">'
+            f'<div style="background:{color};width:{pct:.0f}%;height:6px;border-radius:3px;"></div></div>')
+
+def badge(txt, color):
+    return (f'<span style="background:{color}22;border:1px solid {color};color:{color};'
+            f'font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">{txt}</span>')
+
+# ── Build rich popup HTML ─────────────────────────────────────────────────────
+def build_popup(pname, r):
+    dti     = r.get("avg_dti_pct", 0)
+    n       = int(r.get("clients", 0))
+    debt    = r.get("avg_debt", 0)
+    oi      = r.get("over_indebted_rate", 0)
+    risk    = r.get("avg_risk", 0)
+    income  = r.get("avg_income", 0)
+    creds   = r.get("avg_creditors", 0)
+    disp    = r.get("avg_disposable", 0)
+    conv    = r.get("conversion_rate", 0)
+    qual    = r.get("qualification_rate", 0)
+    leads_n = int(r.get("total_leads", 0))
+    coll    = r.get("avg_collection_rate", 0)
+    miss    = r.get("missed_payment_rate", 0)
+    s_in    = r.get("avg_score_intake", 0)
+    s_lat   = r.get("avg_score_latest", 0)
+    s_imp   = r.get("avg_score_improvement", 0)
+    util    = r.get("avg_utilisation", 0)
+    acca    = r.get("avg_accts_arrears", 0)
+    rk_n    = int(r.get("rank_clients", 0))
+    rk_dti  = int(r.get("rank_avg_dti_pct", 0))
+    rk_conv = int(r.get("rank_conversion_rate", 0))
+    rk_coll = int(r.get("rank_avg_collection_rate", 0))
+    rk_imp  = int(r.get("rank_avg_score_improvement", 0))
+    rk_inc  = int(r.get("rank_avg_income", 0))
+
+    sev_label = ("SEVERE" if dti>=75 else "HIGH" if dti>=68 else "ELEVATED" if dti>=62 else "MANAGEABLE")
+    sev_color = dti_color(dti)
+
+    html = f"""
+<div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">
+  <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;
+              border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">
+    <div style="font-size:16px;font-weight:800;">{pname}</div>
+    <div style="display:flex;gap:6px;margin-top:4px;">
+      {badge(f'DTI {sev_label}', sev_color)}
+      {badge(f'#{rk_n} by volume', '#1E88E5')}
+      {badge(f'#{rk_imp} credit recovery', '#00A99D')}
+    </div>
+  </div>
+
+  <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;
+              letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;
+              padding-bottom:3px;">Financial Stress</div>
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>
+        <td style="text-align:right;font-weight:700;">{n:,}</td></tr>
+    <tr><td style="color:#666;">Leads Generated</td>
+        <td style="text-align:right;font-weight:700;">{leads_n:,}</td></tr>
+    <tr><td style="color:#666;">Avg DTI</td>
+        <td style="text-align:right;font-weight:700;color:{sev_color};">{dti:.1f}%</td></tr>
+  </table>
+  {bar(dti, 50, 85, sev_color)}
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>
+        <td style="text-align:right;font-weight:700;color:#E8363B;">{oi:.1f}%</td></tr>
+    <tr><td style="color:#666;">Avg Total Debt</td>
+        <td style="text-align:right;font-weight:700;">R{debt:,.0f}</td></tr>
+    <tr><td style="color:#666;">Avg Gross Income</td>
+        <td style="text-align:right;font-weight:700;">R{income:,.0f}/mo</td></tr>
+    <tr><td style="color:#666;">Avg Disposable Income</td>
+        <td style="text-align:right;font-weight:700;">R{disp:,.0f}/mo</td></tr>
+    <tr><td style="color:#666;">Avg No. of Creditors</td>
+        <td style="text-align:right;font-weight:700;">{creds:.1f}</td></tr>
+    <tr><td style="color:#666;">ML Risk Score</td>
+        <td style="text-align:right;font-weight:700;color:{'#E8363B' if risk>0.6 else '#F57C2D' if risk>0.45 else '#52B748'};">{risk:.3f}</td></tr>
+  </table>
+
+  <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;
+              letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;
+              padding-bottom:3px;">Lead & Conversion</div>
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>
+        <td style="text-align:right;font-weight:700;color:#1E88E5;">{conv:.1f}%</td></tr>
+  </table>
+  {bar(conv, 0, 30, '#1E88E5')}
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;">Qualification Rate</td>
+        <td style="text-align:right;font-weight:700;">{qual:.1f}%</td></tr>
+    <tr><td style="color:#666;">Rank (conversion)</td>
+        <td style="text-align:right;font-weight:700;">#{rk_conv} of 9</td></tr>
+  </table>
+
+  <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;
+              letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;
+              padding-bottom:3px;">Payment Performance</div>
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>
+        <td style="text-align:right;font-weight:700;color:{'#52B748' if coll>=85 else '#F57C2D'};">{coll:.1f}%</td></tr>
+  </table>
+  {bar(coll, 60, 100, '#52B748' if coll>=85 else '#F57C2D')}
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;">Missed Payment Rate</td>
+        <td style="text-align:right;font-weight:700;color:#E8363B;">{miss:.1f}%</td></tr>
+    <tr><td style="color:#666;">Rank (collection)</td>
+        <td style="text-align:right;font-weight:700;">#{rk_coll} of 9</td></tr>
+  </table>
+
+  <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;
+              letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;
+              padding-bottom:3px;">Credit Recovery</div>
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>
+        <td style="text-align:right;font-weight:700;">{s_in:.0f}</td></tr>
+    <tr><td style="color:#666;">Latest Score</td>
+        <td style="text-align:right;font-weight:700;">{s_lat:.0f}</td></tr>
+    <tr><td style="color:#666;">Score Improvement</td>
+        <td style="text-align:right;font-weight:700;color:{'#52B748' if s_imp>0 else '#E8363B'};">{'+'if s_imp>0 else ''}{s_imp:.1f} pts</td></tr>
+  </table>
+  {bar(max(s_imp,0), 0, 80, '#00A99D')}
+  <table style="width:100%;font-size:12px;border-collapse:collapse;">
+    <tr><td style="color:#666;">Credit Utilisation</td>
+        <td style="text-align:right;font-weight:700;color:{'#E8363B' if util>75 else '#52B748'};">{util:.1f}%</td></tr>
+    <tr><td style="color:#666;">Avg Accounts in Arrears</td>
+        <td style="text-align:right;font-weight:700;">{acca:.1f}</td></tr>
+    <tr><td style="color:#666;">Rank (credit recovery)</td>
+        <td style="text-align:right;font-weight:700;">#{rk_imp} of 9</td></tr>
+  </table>
+
+  <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;
+      background:{'#FFF0F0' if dti>=70 else '#F0FFF4'};
+      border-left:3px solid {'#E8363B' if dti>=70 else '#52B748'};">
+    {'&#9888; High priority — DTI above 70%, focus counsellor capacity here' if dti>=70
+     else '&#10003; Within manageable range — maintain and optimise'}
+  </div>
+</div>"""
+    return html
+
+# ── Base map ──────────────────────────────────────────────────────────────────
+m = folium.Map(location=[-29.0, 25.0], zoom_start=6,
+               tiles="CartoDB positron", width="100%", height="100%")
+
+# ── Nav bar (injected once on the base map) ───────────────────────────────────
 nav_html = """
 <style>
 #db-nav{position:fixed;top:0;left:0;right:0;z-index:99999;
@@ -367,98 +587,181 @@ nav_html = """
 """
 m.get_root().html.add_child(folium.Element(nav_html))
 
-# Colour function
-def risk_color(dti_pct):
-    if dti_pct >= 75:   return "#E8363B"
-    elif dti_pct >= 68: return "#F57C2D"
-    elif dti_pct >= 62: return "#F5C842"
-    else:               return "#52B748"
+# ── Layer 1: DTI Severity (default ON) ───────────────────────────────────────
+dti_layer = folium.FeatureGroup(name="&#128308; DTI Severity", show=True)
+for pname, coords in POLYGONS.items():
+    if pname not in prov.index: continue
+    val   = prov.loc[pname, "avg_dti_pct"]
+    color = dti_color(val)
+    folium.Polygon(
+        locations=[[lat, lon] for lon, lat in coords],
+        color="white", weight=1.5, fill=True,
+        fill_color=color, fill_opacity=0.55,
+        tooltip=f"{pname}: DTI {val:.1f}%",
+    ).add_to(dti_layer)
+dti_layer.add_to(m)
 
+# ── Layer 2: Credit Recovery (OFF by default) ─────────────────────────────────
+credit_layer = folium.FeatureGroup(name="&#128153; Credit Recovery", show=False)
+imp_vals = prov["avg_score_improvement"].dropna()
+for pname, coords in POLYGONS.items():
+    if pname not in prov.index: continue
+    val   = prov.loc[pname, "avg_score_improvement"]
+    color = interp_color(val, imp_vals.min(), imp_vals.max(),
+                         low_c="#E8363B", mid_c="#F5C842", hi_c="#52B748")
+    folium.Polygon(
+        locations=[[lat, lon] for lon, lat in coords],
+        color="white", weight=1.5, fill=True,
+        fill_color=color, fill_opacity=0.55,
+        tooltip=f"{pname}: +{val:.1f} credit pts",
+    ).add_to(credit_layer)
+credit_layer.add_to(m)
+
+# ── Layer 3: Payment Performance (OFF by default) ─────────────────────────────
+pay_layer = folium.FeatureGroup(name="&#128200; Collection Rate", show=False)
+coll_vals = prov["avg_collection_rate"].dropna()
+for pname, coords in POLYGONS.items():
+    if pname not in prov.index: continue
+    val   = prov.loc[pname, "avg_collection_rate"]
+    color = interp_color(val, coll_vals.min(), coll_vals.max(),
+                         low_c="#E8363B", mid_c="#F5C842", hi_c="#52B748")
+    folium.Polygon(
+        locations=[[lat, lon] for lon, lat in coords],
+        color="white", weight=1.5, fill=True,
+        fill_color=color, fill_opacity=0.55,
+        tooltip=f"{pname}: {val:.1f}% collection",
+    ).add_to(pay_layer)
+pay_layer.add_to(m)
+
+# ── Layer 4: Lead Conversion (OFF by default) ─────────────────────────────────
+conv_layer = folium.FeatureGroup(name="&#128270; Lead Conversion", show=False)
+conv_vals = prov["conversion_rate"].dropna()
+for pname, coords in POLYGONS.items():
+    if pname not in prov.index: continue
+    val   = prov.loc[pname, "conversion_rate"]
+    color = interp_color(val, conv_vals.min(), conv_vals.max(),
+                         low_c="#E8363B", mid_c="#F5C842", hi_c="#52B748")
+    folium.Polygon(
+        locations=[[lat, lon] for lon, lat in coords],
+        color="white", weight=1.5, fill=True,
+        fill_color=color, fill_opacity=0.55,
+        tooltip=f"{pname}: {val:.1f}% conversion",
+    ).add_to(conv_layer)
+conv_layer.add_to(m)
+
+# ── CircleMarkers — one per province, rich popup, sized by client volume ──────
+marker_layer = folium.FeatureGroup(name="&#9679; Province Bubbles", show=True)
 for pname, (lat, lon) in CENTROIDS.items():
-    if pname not in prov.index:
-        continue
-    r = prov.loc[pname]
-    dti    = r["avg_dti_pct"]
-    n      = int(r["clients"])
-    debt   = r["avg_debt"]
-    oi     = r["over_indebted_rate"]
-    risk   = r["avg_risk"]
-    color  = risk_color(dti)
-    radius = max(15, min(60, n / 500))
-
-    popup_html = f"""
-    <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">
-      <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">
-        {pname}
-      </h4>
-      <table style="width:100%; font-size:12px;">
-        <tr><td><b>Clients assessed</b></td><td style="text-align:right">{n:,}</td></tr>
-        <tr><td><b>Average DTI</b></td>
-            <td style="text-align:right; color:{'#E8363B' if dti>=70 else '#52B748'}">{dti:.1f}%</td></tr>
-        <tr><td><b>Average Debt</b></td>
-            <td style="text-align:right">R{debt:,.0f}</td></tr>
-        <tr><td><b>Over-Indebted</b></td>
-            <td style="text-align:right">{oi:.1f}%</td></tr>
-        <tr><td><b>Avg Risk Score</b></td>
-            <td style="text-align:right">{risk:.3f}</td></tr>
-      </table>
-      <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;
-                  font-size:11px; color:#555;">
-        {'⚠️ High priority province — DTI above 70%' if dti >= 70
-         else '✅ Within manageable DTI range'}
-      </div>
-    </div>
-    """
+    if pname not in prov.index: continue
+    r      = prov.loc[pname].to_dict()
+    dti    = r.get("avg_dti_pct", 0)
+    n      = int(r.get("clients", 0))
+    color  = dti_color(dti)
+    radius = max(14, min(58, n / 500))
 
     folium.CircleMarker(
-        location=[lat, lon],
-        radius=radius,
-        color="white",
-        weight=2,
-        fill=True,
-        fill_color=color,
-        fill_opacity=0.85,
-        popup=folium.Popup(popup_html, max_width=260),
-        tooltip=f"{pname}: DTI {dti:.1f}% | {n:,} clients",
-    ).add_to(m)
+        location=[lat, lon], radius=radius,
+        color="white", weight=2,
+        fill=True, fill_color=color, fill_opacity=0.85,
+        popup=folium.Popup(build_popup(pname, r), max_width=330),
+        tooltip=f"<b>{pname}</b> — DTI {dti:.1f}% | {n:,} clients | Click for full stats",
+    ).add_to(marker_layer)
 
-    # pointer-events:none is critical — lets clicks pass through to CircleMarker popup
+    # Label — pointer-events:none so clicks reach the CircleMarker
     folium.Marker(
         location=[lat, lon],
         icon=folium.DivIcon(
-            html=f'<div style="font-size:9px; font-weight:bold; color:white; '
-                 f'text-shadow:1px 1px 2px #000; text-align:center; '
-                 f'width:60px; margin-left:-30px; pointer-events:none;">'
-                 f'{ABBR.get(pname,pname[:2])}<br>{dti:.0f}%</div>',
-            icon_size=(60, 30),
+            html=(f'<div style="font-size:9px;font-weight:800;color:white;'
+                  f'text-shadow:1px 1px 3px #000;text-align:center;'
+                  f'width:64px;margin-left:-32px;pointer-events:none;">'
+                  f'{ABBR.get(pname, pname[:2])}<br>{dti:.0f}%</div>'),
+            icon_size=(64, 30),
         )
-    ).add_to(m)
+    ).add_to(marker_layer)
+marker_layer.add_to(m)
 
-# Legend
+# ── Layer control ─────────────────────────────────────────────────────────────
+folium.LayerControl(collapsed=False, position="topright").add_to(m)
+
+# ── Province ranking table (bottom-right panel) ───────────────────────────────
+rank_rows = ""
+for pname in prov.sort_values("clients", ascending=False).index:
+    r   = prov.loc[pname]
+    dti = r.get("avg_dti_pct", 0)
+    n   = int(r.get("clients", 0))
+    imp = r.get("avg_score_improvement", 0)
+    col = dti_color(dti)
+    rank_rows += (
+        f'<tr><td style="font-weight:600;font-size:11px;">{ABBR.get(pname,pname[:2])}</td>'
+        f'<td style="text-align:right;font-size:11px;">{n:,}</td>'
+        f'<td style="text-align:right;font-size:11px;color:{col};">{dti:.1f}%</td>'
+        f'<td style="text-align:right;font-size:11px;color:{"#52B748" if imp>0 else "#E8363B"};">{"+" if imp>0 else ""}{imp:.0f}</td>'
+        f'</tr>'
+    )
+
+rank_panel = f"""
+<div style="position:fixed;bottom:20px;right:20px;z-index:9999;
+     background:white;border-radius:10px;padding:12px 14px;
+     border-left:4px solid #0A1E3D;font-family:'Segoe UI',Arial,sans-serif;
+     box-shadow:0 4px 16px rgba(0,0,0,0.2);min-width:220px;">
+  <div style="font-size:11px;font-weight:800;color:#0A1E3D;
+              margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;">
+    Province Rankings
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <thead>
+      <tr style="border-bottom:1px solid #e8e8e8;">
+        <th style="text-align:left;font-size:10px;color:#888;padding-bottom:4px;">Province</th>
+        <th style="text-align:right;font-size:10px;color:#888;">Clients</th>
+        <th style="text-align:right;font-size:10px;color:#888;">DTI</th>
+        <th style="text-align:right;font-size:10px;color:#888;">Cr+</th>
+      </tr>
+    </thead>
+    <tbody>{rank_rows}</tbody>
+  </table>
+  <div style="font-size:9px;color:#aaa;margin-top:6px;">
+    Cr+ = avg credit score improvement pts
+  </div>
+</div>
+"""
+m.get_root().html.add_child(folium.Element(rank_panel))
+
+# ── Legend ────────────────────────────────────────────────────────────────────
 legend_html = """
-<div style="position:fixed; bottom:30px; left:20px; z-index:1000;
-     background:white; padding:12px 16px; border-radius:8px;
-     border-left:4px solid #E8363B; font-family:Calibri,Arial,sans-serif;
-     box-shadow:0 2px 8px rgba(0,0,0,0.2); font-size:12px;">
-  <b style="color:#0A1E3D; display:block; margin-bottom:8px;">Average DTI by Province</b>
-  <div><span style="background:#E8363B; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>&ge;75% — Severe</div>
-  <div><span style="background:#F57C2D; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>68–75% — High</div>
-  <div><span style="background:#F5C842; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>62–68% — Elevated</div>
-  <div><span style="background:#52B748; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>&lt;62% — Manageable</div>
-  <div style="margin-top:6px; font-size:10px; color:#888;">Bubble size = client volume<br>Click bubble for full stats</div>
+<div style="position:fixed;bottom:20px;left:20px;z-index:9999;
+     background:white;padding:12px 16px;border-radius:10px;
+     border-left:4px solid #E8363B;font-family:'Segoe UI',Arial,sans-serif;
+     box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:12px;min-width:190px;">
+  <b style="color:#0A1E3D;display:block;margin-bottom:8px;font-size:12px;">
+    DTI Severity (Active Layer)
+  </b>
+  <div style="margin:3px 0;"><span style="background:#E8363B;width:12px;height:12px;
+    display:inline-block;border-radius:50%;margin-right:7px;"></span>&#8805;75% — Severe</div>
+  <div style="margin:3px 0;"><span style="background:#F57C2D;width:12px;height:12px;
+    display:inline-block;border-radius:50%;margin-right:7px;"></span>68–75% — High</div>
+  <div style="margin:3px 0;"><span style="background:#F5C842;width:12px;height:12px;
+    display:inline-block;border-radius:50%;margin-right:7px;"></span>62–68% — Elevated</div>
+  <div style="margin:3px 0;"><span style="background:#52B748;width:12px;height:12px;
+    display:inline-block;border-radius:50%;margin-right:7px;"></span>&lt;62% — Manageable</div>
+  <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;
+              font-size:10px;color:#888;line-height:1.5;">
+    Bubble size = client volume<br>
+    <b>Click bubble</b> for 12 province metrics<br>
+    Toggle layers top-right &#9654;
+  </div>
 </div>
 """
 m.get_root().html.add_child(folium.Element(legend_html))
 
+# ── Save ──────────────────────────────────────────────────────────────────────
 html_path = os.path.join(CHART_DIR, "sa_interactive_map.html")
 m.save(html_path)
-print(f"  Saved: sa_interactive_map.html")
+print(f"  Saved: sa_interactive_map.html ({os.path.getsize(html_path)//1024} KB)")
 
-# Mirror to public/ so Netlify and the landing page iframe both stay current
+import shutil
 PUBLIC_DIR = os.path.join(os.path.dirname(__file__), "..", "public")
 os.makedirs(PUBLIC_DIR, exist_ok=True)
 pub_path = os.path.join(PUBLIC_DIR, "map.html")
-import shutil
 shutil.copy2(html_path, pub_path)
 print(f"  Mirrored: public/map.html")
 
