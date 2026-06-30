@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_8cd9bbe73af862c9996989dad39c9b8d {
+                #map_44d8f20297fcc99dca671a5beb612d89 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -111,34 +111,37 @@
 <div style="position:fixed;bottom:20px;left:20px;z-index:9999;
      background:white;padding:12px 16px;border-radius:10px;
      border-left:4px solid #E8363B;font-family:'Segoe UI',Arial,sans-serif;
-     box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:12px;min-width:190px;">
-  <b style="color:#0A1E3D;display:block;margin-bottom:8px;font-size:12px;">
-    DTI Severity (Active Layer)
+     box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:12px;min-width:210px;">
+  <b style="color:#0A1E3D;display:block;margin-bottom:6px;font-size:12px;">
+    DTI Severity (Relative Scale)
   </b>
-  <div style="margin:3px 0;"><span style="background:#E8363B;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>&#8805;75% — Severe</div>
-  <div style="margin:3px 0;"><span style="background:#F57C2D;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>68–75% — High</div>
-  <div style="margin:3px 0;"><span style="background:#F5C842;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>62–68% — Elevated</div>
-  <div style="margin:3px 0;"><span style="background:#52B748;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>&lt;62% — Manageable</div>
-  <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;
-              font-size:10px;color:#888;line-height:1.5;">
+  <div style="font-size:10px;color:#888;margin-bottom:8px;line-height:1.4;">
+    What is DTI? <b>Debt-to-Income Ratio</b> — total monthly
+    debt repayments as a % of gross income. Above 60% = legally
+    over-indebted under the NCA. All provinces: 68.0–68.5%.
+    Colours show <i>relative</i> position within this range.
+  </div>
+  <div style="background:linear-gradient(to right,#52B748,#F5C842,#E8363B);
+              height:8px;border-radius:4px;margin-bottom:4px;"></div>
+  <div style="display:flex;justify-content:space-between;font-size:10px;color:#666;">
+    <span>68.0% Lower</span><span>68.5% Higher</span>
+  </div>
+  <div style="margin-top:10px;padding-top:8px;border-top:1px solid #eee;
+              font-size:10px;color:#888;line-height:1.6;">
     Bubble size = client volume<br>
     <b>Click bubble</b> for 12 province metrics<br>
-    Toggle layers top-right &#9654;
+    Toggle 4 map layers top-right &#9654;
   </div>
 </div>
     
-            <div class="folium-map" id="map_8cd9bbe73af862c9996989dad39c9b8d" ></div>
+            <div class="folium-map" id="map_44d8f20297fcc99dca671a5beb612d89" ></div>
         
 </body>
 <script>
     
     
-            var map_8cd9bbe73af862c9996989dad39c9b8d = L.map(
-                "map_8cd9bbe73af862c9996989dad39c9b8d",
+            var map_44d8f20297fcc99dca671a5beb612d89 = L.map(
+                "map_44d8f20297fcc99dca671a5beb612d89",
                 {
                     center: [-29.0, 25.0],
                     crs: L.CRS.EPSG3857,
@@ -155,7 +158,7 @@
 
         
     
-            var tile_layer_ada47abd47debcf6ea48190598b792bc = L.tileLayer(
+            var tile_layer_3d774956224c0100eb7041fd156c4d1f = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -172,24 +175,24 @@
             );
         
     
-            tile_layer_ada47abd47debcf6ea48190598b792bc.addTo(map_8cd9bbe73af862c9996989dad39c9b8d);
+            tile_layer_3d774956224c0100eb7041fd156c4d1f.addTo(map_44d8f20297fcc99dca671a5beb612d89);
         
     
-            var feature_group_b053ff4e4090f4c507d61b5c75bbd545 = L.featureGroup(
+            var feature_group_5edf035ca655d88fcfdb4daebc5139e6 = L.featureGroup(
                 {
 }
             );
         
     
-            var polygon_d13e559aa42c5f12b3924bf778b85b7a = L.polygon(
+            var polygon_a48ac01740701beb7ce8130a5e1fa451 = L.polygon(
                 [[-22.2, 26.5], [-22.2, 31.8], [-23.5, 32.0], [-24.8, 31.5], [-25.0, 30.5], [-25.2, 29.5], [-24.8, 28.5], [-24.5, 27.5], [-24.0, 26.5], [-23.5, 26.0], [-22.8, 26.0]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EB5F3C", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_d13e559aa42c5f12b3924bf778b85b7a.bindTooltip(
+            polygon_a48ac01740701beb7ce8130a5e1fa451.bindTooltip(
                 `<div>
-                     Limpopo: DTI 68.4%
+                     Limpopo: DTI 68.4% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -197,15 +200,15 @@
             );
         
     
-            var polygon_a99c062ffb2ebde5acf8b2999998232c = L.polygon(
+            var polygon_5d12383aae2fb913e51a7f916fe8ad5e = L.polygon(
                 [[-24.8, 28.5], [-24.8, 31.5], [-25.5, 32.0], [-26.5, 32.5], [-27.2, 31.5], [-27.5, 30.5], [-26.5, 29.5], [-26.0, 28.5]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#DBC542", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_a99c062ffb2ebde5acf8b2999998232c.bindTooltip(
+            polygon_5d12383aae2fb913e51a7f916fe8ad5e.bindTooltip(
                 `<div>
-                     Mpumalanga: DTI 68.2%
+                     Mpumalanga: DTI 68.2% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -213,15 +216,15 @@
             );
         
     
-            var polygon_98f32e2edd4bdb0f4fd9c30b89575d58 = L.polygon(
+            var polygon_98d32154a953c0a483f7d1c11e7554de = L.polygon(
                 [[-25.5, 27.0], [-25.5, 28.5], [-26.0, 28.5], [-26.5, 29.0], [-26.8, 28.0], [-26.8, 27.0], [-26.3, 26.7], [-25.8, 27.0]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AEC044", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_98f32e2edd4bdb0f4fd9c30b89575d58.bindTooltip(
+            polygon_98d32154a953c0a483f7d1c11e7554de.bindTooltip(
                 `<div>
-                     Gauteng: DTI 68.1%
+                     Gauteng: DTI 68.1% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -229,15 +232,15 @@
             );
         
     
-            var polygon_031bf58c5e7a14bf124f0e03a0459645 = L.polygon(
+            var polygon_926169714ac2629f8a26dfdebfa22f44 = L.polygon(
                 [[-25.5, 22.0], [-23.0, 24.5], [-22.8, 26.0], [-22.2, 26.5], [-24.0, 26.5], [-24.5, 26.0], [-26.3, 26.7], [-26.8, 27.0], [-27.2, 25.5], [-28.0, 24.5], [-27.5, 23.5], [-27.0, 22.0]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8363B", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_031bf58c5e7a14bf124f0e03a0459645.bindTooltip(
+            polygon_926169714ac2629f8a26dfdebfa22f44.bindTooltip(
                 `<div>
-                     North West: DTI 68.5%
+                     North West: DTI 68.5% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -245,15 +248,15 @@
             );
         
     
-            var polygon_4606c20597f3deb30eb98345cea53d7b = L.polygon(
+            var polygon_d5809a8becc61dd04e1e22e1f325b165 = L.polygon(
                 [[-28.0, 24.5], [-27.2, 25.5], [-26.8, 27.0], [-26.8, 28.0], [-26.5, 29.0], [-27.5, 30.5], [-29.0, 30.5], [-30.5, 29.5], [-31.0, 28.5], [-31.0, 27.0], [-30.0, 25.5], [-29.5, 24.0], [-28.5, 24.0]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F5C842", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#52B748", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_4606c20597f3deb30eb98345cea53d7b.bindTooltip(
+            polygon_d5809a8becc61dd04e1e22e1f325b165.bindTooltip(
                 `<div>
-                     Free State: DTI 68.0%
+                     Free State: DTI 68.0% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -261,15 +264,15 @@
             );
         
     
-            var polygon_3c6df3e07f140c9d18f1024c4f32503f = L.polygon(
+            var polygon_a56103cec87a1d9aefc81ce9709751e8 = L.polygon(
                 [[-26.5, 29.5], [-27.5, 30.5], [-27.2, 31.5], [-26.5, 32.5], [-28.0, 32.9], [-29.5, 32.8], [-31.5, 31.5], [-31.5, 30.0], [-30.5, 29.5], [-29.0, 30.5], [-27.5, 30.5]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F3B441", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_3c6df3e07f140c9d18f1024c4f32503f.bindTooltip(
+            polygon_a56103cec87a1d9aefc81ce9709751e8.bindTooltip(
                 `<div>
-                     KwaZulu-Natal: DTI 68.3%
+                     KwaZulu-Natal: DTI 68.3% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -277,15 +280,15 @@
             );
         
     
-            var polygon_40e6e5186bdbaad7909c90913ab36736 = L.polygon(
+            var polygon_9b91b00499abeda41ac616bd5eaad77a = L.polygon(
                 [[-29.5, 24.0], [-30.0, 25.5], [-31.0, 27.0], [-31.0, 28.5], [-30.5, 29.5], [-31.5, 30.0], [-31.5, 31.5], [-33.5, 30.0], [-34.0, 28.5], [-34.0, 26.5], [-33.5, 25.0], [-34.0, 22.5], [-33.5, 22.0], [-32.0, 23.0], [-30.5, 23.5], [-30.0, 24.0]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F19F40", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_40e6e5186bdbaad7909c90913ab36736.bindTooltip(
+            polygon_9b91b00499abeda41ac616bd5eaad77a.bindTooltip(
                 `<div>
-                     Eastern Cape: DTI 68.3%
+                     Eastern Cape: DTI 68.3% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -293,15 +296,15 @@
             );
         
     
-            var polygon_4bb6cc6437a7fdecd2cc53b0ecb9ed14 = L.polygon(
+            var polygon_71ea483b4d253e31f75a7233026d6da7 = L.polygon(
                 [[-28.5, 16.5], [-27.5, 17.5], [-26.5, 20.0], [-25.5, 22.0], [-27.0, 22.0], [-27.5, 23.5], [-28.0, 24.5], [-28.5, 24.0], [-30.0, 24.0], [-30.5, 23.5], [-32.0, 23.0], [-34.0, 22.5], [-34.5, 19.0], [-33.5, 17.5], [-30.5, 16.5]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#7EBB46", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_4bb6cc6437a7fdecd2cc53b0ecb9ed14.bindTooltip(
+            polygon_71ea483b4d253e31f75a7233026d6da7.bindTooltip(
                 `<div>
-                     Northern Cape: DTI 68.0%
+                     Northern Cape: DTI 68.0% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -309,15 +312,15 @@
             );
         
     
-            var polygon_2cc784e10f01bd415bba5fa77811284d = L.polygon(
+            var polygon_f1f676a529b4962b0580f031ee1be83e = L.polygon(
                 [[-33.5, 17.5], [-34.5, 19.0], [-34.0, 22.5], [-33.5, 25.0], [-34.5, 23.5], [-35.0, 20.5], [-34.8, 18.5], [-34.5, 17.0]],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_b053ff4e4090f4c507d61b5c75bbd545);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F1A240", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_5edf035ca655d88fcfdb4daebc5139e6);
         
     
-            polygon_2cc784e10f01bd415bba5fa77811284d.bindTooltip(
+            polygon_f1f676a529b4962b0580f031ee1be83e.bindTooltip(
                 `<div>
-                     Western Cape: DTI 68.3%
+                     Western Cape: DTI 68.3% (SA range 68.0–68.5%)
                  </div>`,
                 {
   "sticky": true,
@@ -325,22 +328,22 @@
             );
         
     
-            feature_group_b053ff4e4090f4c507d61b5c75bbd545.addTo(map_8cd9bbe73af862c9996989dad39c9b8d);
+            feature_group_5edf035ca655d88fcfdb4daebc5139e6.addTo(map_44d8f20297fcc99dca671a5beb612d89);
         
     
-            var feature_group_e0662c8871312736064883875947e416 = L.featureGroup(
+            var feature_group_0710bbbf8e27783173dec6907243d78f = L.featureGroup(
                 {
 }
             );
         
     
-            var polygon_4865d681c81b6edd6b384f86c4fe166d = L.polygon(
+            var polygon_bc560f4718a39e9a7b894d19829952f5 = L.polygon(
                 [[-22.2, 26.5], [-22.2, 31.8], [-23.5, 32.0], [-24.8, 31.5], [-25.0, 30.5], [-25.2, 29.5], [-24.8, 28.5], [-24.5, 27.5], [-24.0, 26.5], [-23.5, 26.0], [-22.8, 26.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F0933F", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_4865d681c81b6edd6b384f86c4fe166d.bindTooltip(
+            polygon_bc560f4718a39e9a7b894d19829952f5.bindTooltip(
                 `<div>
                      Limpopo: +0.0 credit pts
                  </div>`,
@@ -350,13 +353,13 @@
             );
         
     
-            var polygon_01dd9a7132891a7cf33ad5057fab9757 = L.polygon(
+            var polygon_1580d898f5e9be4b8786ad5f04d7e2d8 = L.polygon(
                 [[-24.8, 28.5], [-24.8, 31.5], [-25.5, 32.0], [-26.5, 32.5], [-27.2, 31.5], [-27.5, 30.5], [-26.5, 29.5], [-26.0, 28.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EF8D3F", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_01dd9a7132891a7cf33ad5057fab9757.bindTooltip(
+            polygon_1580d898f5e9be4b8786ad5f04d7e2d8.bindTooltip(
                 `<div>
                      Mpumalanga: +-0.0 credit pts
                  </div>`,
@@ -366,13 +369,13 @@
             );
         
     
-            var polygon_62b973b61b1626635e1d047169228569 = L.polygon(
+            var polygon_e9fd276c2faaefd92f1e70d290fefecb = L.polygon(
                 [[-25.5, 27.0], [-25.5, 28.5], [-26.0, 28.5], [-26.5, 29.0], [-26.8, 28.0], [-26.8, 27.0], [-26.3, 26.7], [-25.8, 27.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EE7D3E", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_62b973b61b1626635e1d047169228569.bindTooltip(
+            polygon_e9fd276c2faaefd92f1e70d290fefecb.bindTooltip(
                 `<div>
                      Gauteng: +-0.2 credit pts
                  </div>`,
@@ -382,13 +385,13 @@
             );
         
     
-            var polygon_387fd055614b51d65ce6df3f1d1def3b = L.polygon(
+            var polygon_0230550682eb45e5d494c3b141b93fe5 = L.polygon(
                 [[-25.5, 22.0], [-23.0, 24.5], [-22.8, 26.0], [-22.2, 26.5], [-24.0, 26.5], [-24.5, 26.0], [-26.3, 26.7], [-26.8, 27.0], [-27.2, 25.5], [-28.0, 24.5], [-27.5, 23.5], [-27.0, 22.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2AB40", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_387fd055614b51d65ce6df3f1d1def3b.bindTooltip(
+            polygon_0230550682eb45e5d494c3b141b93fe5.bindTooltip(
                 `<div>
                      North West: +0.2 credit pts
                  </div>`,
@@ -398,13 +401,13 @@
             );
         
     
-            var polygon_16a666be7b9fa67f45fc118e345b3298 = L.polygon(
+            var polygon_8b4703ab3dca7f36c2bd330fde3c1953 = L.polygon(
                 [[-28.0, 24.5], [-27.2, 25.5], [-26.8, 27.0], [-26.8, 28.0], [-26.5, 29.0], [-27.5, 30.5], [-29.0, 30.5], [-30.5, 29.5], [-31.0, 28.5], [-31.0, 27.0], [-30.0, 25.5], [-29.5, 24.0], [-28.5, 24.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#52B747", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_16a666be7b9fa67f45fc118e345b3298.bindTooltip(
+            polygon_8b4703ab3dca7f36c2bd330fde3c1953.bindTooltip(
                 `<div>
                      Free State: +1.5 credit pts
                  </div>`,
@@ -414,13 +417,13 @@
             );
         
     
-            var polygon_d8f7f0d0c8ac150fda1271863c10eeb9 = L.polygon(
+            var polygon_42482a074b531f98085b5d4d690065e6 = L.polygon(
                 [[-26.5, 29.5], [-27.5, 30.5], [-27.2, 31.5], [-26.5, 32.5], [-28.0, 32.9], [-29.5, 32.8], [-31.5, 31.5], [-31.5, 30.0], [-30.5, 29.5], [-29.0, 30.5], [-27.5, 30.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F19E40", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_d8f7f0d0c8ac150fda1271863c10eeb9.bindTooltip(
+            polygon_42482a074b531f98085b5d4d690065e6.bindTooltip(
                 `<div>
                      KwaZulu-Natal: +0.1 credit pts
                  </div>`,
@@ -430,13 +433,13 @@
             );
         
     
-            var polygon_658d39e2a177771b51b9591331707523 = L.polygon(
+            var polygon_a24bb0b2358e34129f20d5728b458521 = L.polygon(
                 [[-29.5, 24.0], [-30.0, 25.5], [-31.0, 27.0], [-31.0, 28.5], [-30.5, 29.5], [-31.5, 30.0], [-31.5, 31.5], [-33.5, 30.0], [-34.0, 28.5], [-34.0, 26.5], [-33.5, 25.0], [-34.0, 22.5], [-33.5, 22.0], [-32.0, 23.0], [-30.5, 23.5], [-30.0, 24.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EC643D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_658d39e2a177771b51b9591331707523.bindTooltip(
+            polygon_a24bb0b2358e34129f20d5728b458521.bindTooltip(
                 `<div>
                      Eastern Cape: +-0.3 credit pts
                  </div>`,
@@ -446,13 +449,13 @@
             );
         
     
-            var polygon_6da110d0dbafb395e3d71d8a4dc13cb0 = L.polygon(
+            var polygon_e4b23bec3fceba63579791f96f720d3a = L.polygon(
                 [[-28.5, 16.5], [-27.5, 17.5], [-26.5, 20.0], [-25.5, 22.0], [-27.0, 22.0], [-27.5, 23.5], [-28.0, 24.5], [-28.5, 24.0], [-30.0, 24.0], [-30.5, 23.5], [-32.0, 23.0], [-34.0, 22.5], [-34.5, 19.0], [-33.5, 17.5], [-30.5, 16.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8363B", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_6da110d0dbafb395e3d71d8a4dc13cb0.bindTooltip(
+            polygon_e4b23bec3fceba63579791f96f720d3a.bindTooltip(
                 `<div>
                      Northern Cape: +-0.7 credit pts
                  </div>`,
@@ -462,13 +465,13 @@
             );
         
     
-            var polygon_6ac62cb6909bbb34723236c943358ff8 = L.polygon(
+            var polygon_9382acc237d539b16a1995ce98f0a09f = L.polygon(
                 [[-33.5, 17.5], [-34.5, 19.0], [-34.0, 22.5], [-33.5, 25.0], [-34.5, 23.5], [-35.0, 20.5], [-34.8, 18.5], [-34.5, 17.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F2AD40", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_e0662c8871312736064883875947e416);
+            ).addTo(feature_group_0710bbbf8e27783173dec6907243d78f);
         
     
-            polygon_6ac62cb6909bbb34723236c943358ff8.bindTooltip(
+            polygon_9382acc237d539b16a1995ce98f0a09f.bindTooltip(
                 `<div>
                      Western Cape: +0.2 credit pts
                  </div>`,
@@ -478,19 +481,19 @@
             );
         
     
-            var feature_group_c684a37db41b91020116286840166a90 = L.featureGroup(
+            var feature_group_d6dcf9c3c3908aec1760c06d2688e465 = L.featureGroup(
                 {
 }
             );
         
     
-            var polygon_90af289ca54712a488d1384864cb57d5 = L.polygon(
+            var polygon_847ae5f66b84105562c96c6c42714c47 = L.polygon(
                 [[-22.2, 26.5], [-22.2, 31.8], [-23.5, 32.0], [-24.8, 31.5], [-25.0, 30.5], [-25.2, 29.5], [-24.8, 28.5], [-24.5, 27.5], [-24.0, 26.5], [-23.5, 26.0], [-22.8, 26.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#A1BF45", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_90af289ca54712a488d1384864cb57d5.bindTooltip(
+            polygon_847ae5f66b84105562c96c6c42714c47.bindTooltip(
                 `<div>
                      Limpopo: 81.8% collection
                  </div>`,
@@ -500,13 +503,13 @@
             );
         
     
-            var polygon_67ce0e4e48af6b8ee521994004be2197 = L.polygon(
+            var polygon_fe97a2aea349a2e34a65c12c7f223b17 = L.polygon(
                 [[-24.8, 28.5], [-24.8, 31.5], [-25.5, 32.0], [-26.5, 32.5], [-27.2, 31.5], [-27.5, 30.5], [-26.5, 29.5], [-26.0, 28.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8363B", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_67ce0e4e48af6b8ee521994004be2197.bindTooltip(
+            polygon_fe97a2aea349a2e34a65c12c7f223b17.bindTooltip(
                 `<div>
                      Mpumalanga: 81.5% collection
                  </div>`,
@@ -516,13 +519,13 @@
             );
         
     
-            var polygon_a10819452834a29a91e941b87ff0b9c5 = L.polygon(
+            var polygon_1560b67d9ed4ca1930cd4c808a3e6508 = L.polygon(
                 [[-25.5, 27.0], [-25.5, 28.5], [-26.0, 28.5], [-26.5, 29.0], [-26.8, 28.0], [-26.8, 27.0], [-26.3, 26.7], [-25.8, 27.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#52B747", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_a10819452834a29a91e941b87ff0b9c5.bindTooltip(
+            polygon_1560b67d9ed4ca1930cd4c808a3e6508.bindTooltip(
                 `<div>
                      Gauteng: 81.8% collection
                  </div>`,
@@ -532,13 +535,13 @@
             );
         
     
-            var polygon_e1e713383ab380ccca481a9225918371 = L.polygon(
+            var polygon_dffb7426876ecdf72da0a949c475c896 = L.polygon(
                 [[-25.5, 22.0], [-23.0, 24.5], [-22.8, 26.0], [-22.2, 26.5], [-24.0, 26.5], [-24.5, 26.0], [-26.3, 26.7], [-26.8, 27.0], [-27.2, 25.5], [-28.0, 24.5], [-27.5, 23.5], [-27.0, 22.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EC663D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_e1e713383ab380ccca481a9225918371.bindTooltip(
+            polygon_dffb7426876ecdf72da0a949c475c896.bindTooltip(
                 `<div>
                      North West: 81.6% collection
                  </div>`,
@@ -548,13 +551,13 @@
             );
         
     
-            var polygon_c5bc2db50a1da3d8bb72238c1a5b9e8f = L.polygon(
+            var polygon_d1dc5ee311ce0733359525b4c797d054 = L.polygon(
                 [[-28.0, 24.5], [-27.2, 25.5], [-26.8, 27.0], [-26.8, 28.0], [-26.5, 29.0], [-27.5, 30.5], [-29.0, 30.5], [-30.5, 29.5], [-31.0, 28.5], [-31.0, 27.0], [-30.0, 25.5], [-29.5, 24.0], [-28.5, 24.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#CFC443", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_c5bc2db50a1da3d8bb72238c1a5b9e8f.bindTooltip(
+            polygon_d1dc5ee311ce0733359525b4c797d054.bindTooltip(
                 `<div>
                      Free State: 81.7% collection
                  </div>`,
@@ -564,13 +567,13 @@
             );
         
     
-            var polygon_02ae69b3897fd73d38477871ef34df24 = L.polygon(
+            var polygon_066151c323ae5351a4c69b802ac9a112 = L.polygon(
                 [[-26.5, 29.5], [-27.5, 30.5], [-27.2, 31.5], [-26.5, 32.5], [-28.0, 32.9], [-29.5, 32.8], [-31.5, 31.5], [-31.5, 30.0], [-30.5, 29.5], [-29.0, 30.5], [-27.5, 30.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9BBE45", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_02ae69b3897fd73d38477871ef34df24.bindTooltip(
+            polygon_066151c323ae5351a4c69b802ac9a112.bindTooltip(
                 `<div>
                      KwaZulu-Natal: 81.8% collection
                  </div>`,
@@ -580,13 +583,13 @@
             );
         
     
-            var polygon_b6adcf1d30bfdc427eb01f294dec3d50 = L.polygon(
+            var polygon_6d9cf43e1271c5cf4d5ae5a2bb1dbc91 = L.polygon(
                 [[-29.5, 24.0], [-30.0, 25.5], [-31.0, 27.0], [-31.0, 28.5], [-30.5, 29.5], [-31.5, 30.0], [-31.5, 31.5], [-33.5, 30.0], [-34.0, 28.5], [-34.0, 26.5], [-33.5, 25.0], [-34.0, 22.5], [-33.5, 22.0], [-32.0, 23.0], [-30.5, 23.5], [-30.0, 24.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#87BC46", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_b6adcf1d30bfdc427eb01f294dec3d50.bindTooltip(
+            polygon_6d9cf43e1271c5cf4d5ae5a2bb1dbc91.bindTooltip(
                 `<div>
                      Eastern Cape: 81.8% collection
                  </div>`,
@@ -596,13 +599,13 @@
             );
         
     
-            var polygon_b0f3a48c888902816efdc5e26e8bf60e = L.polygon(
+            var polygon_3fa2774c4ca51a4a36d307e77bfa6a6b = L.polygon(
                 [[-28.5, 16.5], [-27.5, 17.5], [-26.5, 20.0], [-25.5, 22.0], [-27.0, 22.0], [-27.5, 23.5], [-28.0, 24.5], [-28.5, 24.0], [-30.0, 24.0], [-30.5, 23.5], [-32.0, 23.0], [-34.0, 22.5], [-34.5, 19.0], [-33.5, 17.5], [-30.5, 16.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#62B847", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_b0f3a48c888902816efdc5e26e8bf60e.bindTooltip(
+            polygon_3fa2774c4ca51a4a36d307e77bfa6a6b.bindTooltip(
                 `<div>
                      Northern Cape: 81.8% collection
                  </div>`,
@@ -612,13 +615,13 @@
             );
         
     
-            var polygon_b52dfce7b42e816fe1261587c72a3724 = L.polygon(
+            var polygon_4494487d4285e905799e364454ec149d = L.polygon(
                 [[-33.5, 17.5], [-34.5, 19.0], [-34.0, 22.5], [-33.5, 25.0], [-34.5, 23.5], [-35.0, 20.5], [-34.8, 18.5], [-34.5, 17.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EE793E", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_c684a37db41b91020116286840166a90);
+            ).addTo(feature_group_d6dcf9c3c3908aec1760c06d2688e465);
         
     
-            polygon_b52dfce7b42e816fe1261587c72a3724.bindTooltip(
+            polygon_4494487d4285e905799e364454ec149d.bindTooltip(
                 `<div>
                      Western Cape: 81.6% collection
                  </div>`,
@@ -628,19 +631,19 @@
             );
         
     
-            var feature_group_67bee12f25cadd4d043aa38c2199580a = L.featureGroup(
+            var feature_group_4b801026a6d4c69c0aea6ff3c86c574f = L.featureGroup(
                 {
 }
             );
         
     
-            var polygon_0b217f6298b11e9e951b86d2d45d9b57 = L.polygon(
+            var polygon_8a32666730c59f844e986bb2611beccc = L.polygon(
                 [[-22.2, 26.5], [-22.2, 31.8], [-23.5, 32.0], [-24.8, 31.5], [-25.0, 30.5], [-25.2, 29.5], [-24.8, 28.5], [-24.5, 27.5], [-24.0, 26.5], [-23.5, 26.0], [-22.8, 26.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EE793E", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_0b217f6298b11e9e951b86d2d45d9b57.bindTooltip(
+            polygon_8a32666730c59f844e986bb2611beccc.bindTooltip(
                 `<div>
                      Limpopo: 15.4% conversion
                  </div>`,
@@ -650,13 +653,13 @@
             );
         
     
-            var polygon_1861e2034cdf51a4f6a61f1d8e150b54 = L.polygon(
+            var polygon_7d3691046ae3d5dcd19b067e2b78a982 = L.polygon(
                 [[-24.8, 28.5], [-24.8, 31.5], [-25.5, 32.0], [-26.5, 32.5], [-27.2, 31.5], [-27.5, 30.5], [-26.5, 29.5], [-26.0, 28.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EC643D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_1861e2034cdf51a4f6a61f1d8e150b54.bindTooltip(
+            polygon_7d3691046ae3d5dcd19b067e2b78a982.bindTooltip(
                 `<div>
                      Mpumalanga: 15.4% conversion
                  </div>`,
@@ -666,13 +669,13 @@
             );
         
     
-            var polygon_bdee38f87fd2a717aee66b730851eac9 = L.polygon(
+            var polygon_665142c97b41cdc4c44819e7b0ade43b = L.polygon(
                 [[-25.5, 27.0], [-25.5, 28.5], [-26.0, 28.5], [-26.5, 29.0], [-26.8, 28.0], [-26.8, 27.0], [-26.3, 26.7], [-25.8, 27.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8363B", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_bdee38f87fd2a717aee66b730851eac9.bindTooltip(
+            polygon_665142c97b41cdc4c44819e7b0ade43b.bindTooltip(
                 `<div>
                      Gauteng: 15.3% conversion
                  </div>`,
@@ -682,13 +685,13 @@
             );
         
     
-            var polygon_7f3fbec978955be94e44cad871b88279 = L.polygon(
+            var polygon_9c91a71c97aeda57ddb9da9984a0c081 = L.polygon(
                 [[-25.5, 22.0], [-23.0, 24.5], [-22.8, 26.0], [-22.2, 26.5], [-24.0, 26.5], [-24.5, 26.0], [-26.3, 26.7], [-26.8, 27.0], [-27.2, 25.5], [-28.0, 24.5], [-27.5, 23.5], [-27.0, 22.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9BBE45", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_7f3fbec978955be94e44cad871b88279.bindTooltip(
+            polygon_9c91a71c97aeda57ddb9da9984a0c081.bindTooltip(
                 `<div>
                      North West: 15.6% conversion
                  </div>`,
@@ -698,13 +701,13 @@
             );
         
     
-            var polygon_1e81718ca97def49c8f6a80e6a84be04 = L.polygon(
+            var polygon_5f0538b14611f3f9d2249695bca91d49 = L.polygon(
                 [[-28.0, 24.5], [-27.2, 25.5], [-26.8, 27.0], [-26.8, 28.0], [-26.5, 29.0], [-27.5, 30.5], [-29.0, 30.5], [-30.5, 29.5], [-31.0, 28.5], [-31.0, 27.0], [-30.0, 25.5], [-29.5, 24.0], [-28.5, 24.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#66B947", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_1e81718ca97def49c8f6a80e6a84be04.bindTooltip(
+            polygon_5f0538b14611f3f9d2249695bca91d49.bindTooltip(
                 `<div>
                      Free State: 15.6% conversion
                  </div>`,
@@ -714,13 +717,13 @@
             );
         
     
-            var polygon_f77bd9388dae4b6912abb8284db69076 = L.polygon(
+            var polygon_e7901ae4260f062808dac8e628011642 = L.polygon(
                 [[-26.5, 29.5], [-27.5, 30.5], [-27.2, 31.5], [-26.5, 32.5], [-28.0, 32.9], [-29.5, 32.8], [-31.5, 31.5], [-31.5, 30.0], [-30.5, 29.5], [-29.0, 30.5], [-27.5, 30.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ED723D", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_f77bd9388dae4b6912abb8284db69076.bindTooltip(
+            polygon_e7901ae4260f062808dac8e628011642.bindTooltip(
                 `<div>
                      KwaZulu-Natal: 15.4% conversion
                  </div>`,
@@ -730,13 +733,13 @@
             );
         
     
-            var polygon_e080b145cb28f3dab61fda7e6bb01aa7 = L.polygon(
+            var polygon_42509251387ead5ba38a0de5e0b3a354 = L.polygon(
                 [[-29.5, 24.0], [-30.0, 25.5], [-31.0, 27.0], [-31.0, 28.5], [-30.5, 29.5], [-31.5, 30.0], [-31.5, 31.5], [-33.5, 30.0], [-34.0, 28.5], [-34.0, 26.5], [-33.5, 25.0], [-34.0, 22.5], [-33.5, 22.0], [-32.0, 23.0], [-30.5, 23.5], [-30.0, 24.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E83F3B", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_e080b145cb28f3dab61fda7e6bb01aa7.bindTooltip(
+            polygon_42509251387ead5ba38a0de5e0b3a354.bindTooltip(
                 `<div>
                      Eastern Cape: 15.3% conversion
                  </div>`,
@@ -746,13 +749,13 @@
             );
         
     
-            var polygon_701ec915cf82348b6547d7d2f4588566 = L.polygon(
+            var polygon_9a0b79a128a59ebaf33f127638ee4e64 = L.polygon(
                 [[-28.5, 16.5], [-27.5, 17.5], [-26.5, 20.0], [-25.5, 22.0], [-27.0, 22.0], [-27.5, 23.5], [-28.0, 24.5], [-28.5, 24.0], [-30.0, 24.0], [-30.5, 23.5], [-32.0, 23.0], [-34.0, 22.5], [-34.5, 19.0], [-33.5, 17.5], [-30.5, 16.5]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#52B747", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_701ec915cf82348b6547d7d2f4588566.bindTooltip(
+            polygon_9a0b79a128a59ebaf33f127638ee4e64.bindTooltip(
                 `<div>
                      Northern Cape: 15.7% conversion
                  </div>`,
@@ -762,13 +765,13 @@
             );
         
     
-            var polygon_fd2fddda0f1bf90988044f74c491033e = L.polygon(
+            var polygon_7de8716347255686325c27e19ca9e737 = L.polygon(
                 [[-33.5, 17.5], [-34.5, 19.0], [-34.0, 22.5], [-33.5, 25.0], [-34.5, 23.5], [-35.0, 20.5], [-34.8, 18.5], [-34.5, 17.0]],
                 {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EF8D3F", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
-            ).addTo(feature_group_67bee12f25cadd4d043aa38c2199580a);
+            ).addTo(feature_group_4b801026a6d4c69c0aea6ff3c86c574f);
         
     
-            polygon_fd2fddda0f1bf90988044f74c491033e.bindTooltip(
+            polygon_7de8716347255686325c27e19ca9e737.bindTooltip(
                 `<div>
                      Western Cape: 15.4% conversion
                  </div>`,
@@ -778,38 +781,38 @@
             );
         
     
-            var feature_group_43c42e548522e45b2ca6fdcef70dcf6d = L.featureGroup(
+            var feature_group_6b3a4bc138ebeb340d39d36ba21d522c = L.featureGroup(
                 {
 }
             );
         
     
-            var circle_marker_eb4296c1fd9485298b460bbf0204d183 = L.circleMarker(
+            var circle_marker_e4e549d3bf1af04c2b72b1746a0d7a32 = L.circleMarker(
                 [-23.5, 29.0],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.246, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#EB5F3C", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.246, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_00bbb54a170039453816549bb58a1722 = L.popup({
-  "maxWidth": 330,
+        var popup_658591aad67b7ce7223a32c826d42179 = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_ab05c8cd5ca596d28ed67071cf296069 = $(`<div id="html_ab05c8cd5ca596d28ed67071cf296069" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Limpopo</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#5 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#5 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">8,123</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">34,262</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:53%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.1%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R441,569</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,464/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,803/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.413</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.1%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#5 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.2%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#5 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.0 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#5 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_00bbb54a170039453816549bb58a1722.setContent(html_ab05c8cd5ca596d28ed67071cf296069);
+                var html_09ad6e2466dc4b4accd7fd3e36fbaaef = $(`<div id="html_09ad6e2466dc4b4accd7fd3e36fbaaef" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Limpopo</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#EB5F3C22;border:1px solid #EB5F3C;color:#EB5F3C;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#5 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#5 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">8,123</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">34,262</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#EB5F3C;">68.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#EB5F3C;width:76%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.1%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R441,569</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,464/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,803/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.413</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.1%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#5 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.2%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#5 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.0 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#5 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_658591aad67b7ce7223a32c826d42179.setContent(html_09ad6e2466dc4b4accd7fd3e36fbaaef);
             
         
 
-        circle_marker_eb4296c1fd9485298b460bbf0204d183.bindPopup(popup_00bbb54a170039453816549bb58a1722)
+        circle_marker_e4e549d3bf1af04c2b72b1746a0d7a32.bindPopup(popup_658591aad67b7ce7223a32c826d42179)
         ;
 
         
     
     
-            circle_marker_eb4296c1fd9485298b460bbf0204d183.bindTooltip(
+            circle_marker_e4e549d3bf1af04c2b72b1746a0d7a32.bindTooltip(
                 `<div>
-                     <b>Limpopo</b> — DTI 68.4% | 8,123 clients | Click for full stats
+                     <b>Limpopo</b> — DTI 68.4% | 8,123 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -817,49 +820,49 @@
             );
         
     
-            var marker_6ae4002cb5ab47e4a31f115623839e09 = L.marker(
+            var marker_0c1a198496b838c034ed0122a68aaf3c = L.marker(
                 [-23.5, 29.0],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_c7ae74030a908a0ebc34c27e7258b451 = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eLP\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_7310656a475dfa149f0639a8d1565915 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eLP\u003cbr\u003e68.4%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_6ae4002cb5ab47e4a31f115623839e09.setIcon(div_icon_c7ae74030a908a0ebc34c27e7258b451);
+                marker_0c1a198496b838c034ed0122a68aaf3c.setIcon(div_icon_7310656a475dfa149f0639a8d1565915);
             
     
-            var circle_marker_deee2190495022e1eab07afcbeedc765 = L.circleMarker(
+            var circle_marker_005ea8eab63e5cc0362a5f93a8d9494f = L.circleMarker(
                 [-25.8, 30.2],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.434, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#DBC542", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.434, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_6aefd149f5b937d58496b37600f67486 = L.popup({
-  "maxWidth": 330,
+        var popup_823c215b9385a4d2acb63805d957ff6b = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_96cc41e29be93cbc5dc882b14dc76597 = $(`<div id="html_96cc41e29be93cbc5dc882b14dc76597" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Mpumalanga</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#4 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#6 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">7,217</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">29,930</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.2%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.5%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R445,111</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,753/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,793/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.410</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.3%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#7 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.5%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.4%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#9 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.0 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#6 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_6aefd149f5b937d58496b37600f67486.setContent(html_96cc41e29be93cbc5dc882b14dc76597);
+                var html_c9b1315f3e12f5e7f511e499ae16e125 = $(`<div id="html_c9b1315f3e12f5e7f511e499ae16e125" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Mpumalanga</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#DBC54222;border:1px solid #DBC542;color:#DBC542;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#4 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#6 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">7,217</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">29,930</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#DBC542;">68.2%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#DBC542;width:45%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.5%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R445,111</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,753/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,793/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.410</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.3%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#7 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.5%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.4%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#9 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.0 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#6 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_823c215b9385a4d2acb63805d957ff6b.setContent(html_c9b1315f3e12f5e7f511e499ae16e125);
             
         
 
-        circle_marker_deee2190495022e1eab07afcbeedc765.bindPopup(popup_6aefd149f5b937d58496b37600f67486)
+        circle_marker_005ea8eab63e5cc0362a5f93a8d9494f.bindPopup(popup_823c215b9385a4d2acb63805d957ff6b)
         ;
 
         
     
     
-            circle_marker_deee2190495022e1eab07afcbeedc765.bindTooltip(
+            circle_marker_005ea8eab63e5cc0362a5f93a8d9494f.bindTooltip(
                 `<div>
-                     <b>Mpumalanga</b> — DTI 68.2% | 7,217 clients | Click for full stats
+                     <b>Mpumalanga</b> — DTI 68.2% | 7,217 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -867,49 +870,49 @@
             );
         
     
-            var marker_b0ecb01c908d873fd73a78e8da3fe324 = L.marker(
+            var marker_31d9416015e7037ef88fc1089b0323d9 = L.marker(
                 [-25.8, 30.2],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_57a5677cfbbc8f8c293065cf4f8a6db5 = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eMP\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_fb2396f925c5eceeedb95bf1b07203e4 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eMP\u003cbr\u003e68.2%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_b0ecb01c908d873fd73a78e8da3fe324.setIcon(div_icon_57a5677cfbbc8f8c293065cf4f8a6db5);
+                marker_31d9416015e7037ef88fc1089b0323d9.setIcon(div_icon_fb2396f925c5eceeedb95bf1b07203e4);
             
     
-            var circle_marker_27cb10d1d340f0b13188408531082118 = L.circleMarker(
+            var circle_marker_6862297109925ac9776dcbfe95761981 = L.circleMarker(
                 [-26.2, 27.9],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 58, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AEC044", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 58, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_fb80815055de5a0156df0f6bd24f115f = L.popup({
-  "maxWidth": 330,
+        var popup_5bf7733759237f8174da2299572959ef = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_fbdb6cc64561a07e74ff245c517d7986 = $(`<div id="html_fbdb6cc64561a07e74ff245c517d7986" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Gauteng</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#9 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#7 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">36,165</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">150,314</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.1%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.0%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R440,427</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,579/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,756/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.404</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#9 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:55%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.1%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#1 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.2 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#7 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_fb80815055de5a0156df0f6bd24f115f.setContent(html_fbdb6cc64561a07e74ff245c517d7986);
+                var html_7e0a4e27fbcee996effb0a479da219c7 = $(`<div id="html_7e0a4e27fbcee996effb0a479da219c7" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Gauteng</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#AEC04422;border:1px solid #AEC044;color:#AEC044;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#9 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#7 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">36,165</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">150,314</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#AEC044;">68.1%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#AEC044;width:34%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.0%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R440,427</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,579/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,756/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.404</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#9 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:55%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.1%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#1 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.2 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#7 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_5bf7733759237f8174da2299572959ef.setContent(html_7e0a4e27fbcee996effb0a479da219c7);
             
         
 
-        circle_marker_27cb10d1d340f0b13188408531082118.bindPopup(popup_fb80815055de5a0156df0f6bd24f115f)
+        circle_marker_6862297109925ac9776dcbfe95761981.bindPopup(popup_5bf7733759237f8174da2299572959ef)
         ;
 
         
     
     
-            circle_marker_27cb10d1d340f0b13188408531082118.bindTooltip(
+            circle_marker_6862297109925ac9776dcbfe95761981.bindTooltip(
                 `<div>
-                     <b>Gauteng</b> — DTI 68.1% | 36,165 clients | Click for full stats
+                     <b>Gauteng</b> — DTI 68.1% | 36,165 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -917,49 +920,49 @@
             );
         
     
-            var marker_33df0fa54aca77ad36f9556a0ececb03 = L.marker(
+            var marker_de1697ec5eacc6571a6537c9a9d37448 = L.marker(
                 [-26.2, 27.9],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_46e53f94f2b8cbaa08fa8b7a897e4b5a = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eGP\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_0126fa9adfcfb6da25a7157983f30665 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eGP\u003cbr\u003e68.1%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_33df0fa54aca77ad36f9556a0ececb03.setIcon(div_icon_46e53f94f2b8cbaa08fa8b7a897e4b5a);
+                marker_de1697ec5eacc6571a6537c9a9d37448.setIcon(div_icon_0126fa9adfcfb6da25a7157983f30665);
             
     
-            var circle_marker_3ea25c2534a0601c80ff698d28362a0e = L.circleMarker(
+            var circle_marker_7ff46df36e651102cb06c59e2db91480 = L.circleMarker(
                 [-25.8, 25.2],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#E8363B", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_2373482d7a200e9eeb72712924414fcd = L.popup({
-  "maxWidth": 330,
+        var popup_0ca2f3d90bcfeeafe5b4431df2a09ec5 = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_e19357766fcf49a8869277101b01133a = $(`<div id="html_e19357766fcf49a8869277101b01133a" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">North West</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#3 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#3 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">5,916</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">24,525</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.5%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:53%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.6%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R441,995</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,466/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,777/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.409</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#3 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.3%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#8 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.2 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#3 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_2373482d7a200e9eeb72712924414fcd.setContent(html_e19357766fcf49a8869277101b01133a);
+                var html_765acaf8c732f0f32fc5419b517a975f = $(`<div id="html_765acaf8c732f0f32fc5419b517a975f" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">North West</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#E8363B22;border:1px solid #E8363B;color:#E8363B;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#3 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#3 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">5,916</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">24,525</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">68.5%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#E8363B;width:86%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.6%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R441,995</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,466/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,777/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.409</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#3 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.3%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#8 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.2 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#3 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_0ca2f3d90bcfeeafe5b4431df2a09ec5.setContent(html_765acaf8c732f0f32fc5419b517a975f);
             
         
 
-        circle_marker_3ea25c2534a0601c80ff698d28362a0e.bindPopup(popup_2373482d7a200e9eeb72712924414fcd)
+        circle_marker_7ff46df36e651102cb06c59e2db91480.bindPopup(popup_0ca2f3d90bcfeeafe5b4431df2a09ec5)
         ;
 
         
     
     
-            circle_marker_3ea25c2534a0601c80ff698d28362a0e.bindTooltip(
+            circle_marker_7ff46df36e651102cb06c59e2db91480.bindTooltip(
                 `<div>
-                     <b>North West</b> — DTI 68.5% | 5,916 clients | Click for full stats
+                     <b>North West</b> — DTI 68.5% | 5,916 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -967,49 +970,49 @@
             );
         
     
-            var marker_9a9e4c92be0a2da24a54638984a4bb3b = L.marker(
+            var marker_a1f38252049d9c3cf4ed9be316054f11 = L.marker(
                 [-25.8, 25.2],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_32225075108265835e79a7632a1c7acf = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eNW\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_57d198d7a74cda9477b7d4f0f2c2d18c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eNW\u003cbr\u003e68.5%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_9a9e4c92be0a2da24a54638984a4bb3b.setIcon(div_icon_32225075108265835e79a7632a1c7acf);
+                marker_a1f38252049d9c3cf4ed9be316054f11.setIcon(div_icon_57d198d7a74cda9477b7d4f0f2c2d18c);
             
     
-            var circle_marker_a82a289d788654f2dc1c8705ccbe2673 = L.circleMarker(
+            var circle_marker_dcaa136ed12e8bd3adb7b8a9bcc39017 = L.circleMarker(
                 [-29.0, 27.2],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F5C842", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#52B748", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_f5e63129751638dbfaf30e55c5b1aa83 = L.popup({
-  "maxWidth": 330,
+        var popup_04df05c449e8ff031e7ccbe29375dc74 = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_bfeedd43180b8e9f1f26d3e999d0a8f3 = $(`<div id="html_bfeedd43180b8e9f1f26d3e999d0a8f3" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Free State</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F5C84222;border:1px solid #F5C842;color:#F5C842;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI ELEVATED</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#2 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#1 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">5,850</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">24,570</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F5C842;">68.0%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F5C842;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">71.7%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R436,533</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,462/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,672/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.408</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">60.8%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#2 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.7%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.2%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#6 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">532</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+1.5 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:2%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#1 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_f5e63129751638dbfaf30e55c5b1aa83.setContent(html_bfeedd43180b8e9f1f26d3e999d0a8f3);
+                var html_0aaff93ebed18aaeda6735fbe4bf1b5c = $(`<div id="html_0aaff93ebed18aaeda6735fbe4bf1b5c" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Free State</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#52B74822;border:1px solid #52B748;color:#52B748;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI ELEVATED</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#2 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#1 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">5,850</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">24,570</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#52B748;">68.0%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#52B748;width:14%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">71.7%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R436,533</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,462/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,672/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.408</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">60.8%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#2 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.7%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.2%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#6 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">532</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+1.5 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:2%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#1 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_04df05c449e8ff031e7ccbe29375dc74.setContent(html_0aaff93ebed18aaeda6735fbe4bf1b5c);
             
         
 
-        circle_marker_a82a289d788654f2dc1c8705ccbe2673.bindPopup(popup_f5e63129751638dbfaf30e55c5b1aa83)
+        circle_marker_dcaa136ed12e8bd3adb7b8a9bcc39017.bindPopup(popup_04df05c449e8ff031e7ccbe29375dc74)
         ;
 
         
     
     
-            circle_marker_a82a289d788654f2dc1c8705ccbe2673.bindTooltip(
+            circle_marker_dcaa136ed12e8bd3adb7b8a9bcc39017.bindTooltip(
                 `<div>
-                     <b>Free State</b> — DTI 68.0% | 5,850 clients | Click for full stats
+                     <b>Free State</b> — DTI 68.0% | 5,850 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -1017,49 +1020,49 @@
             );
         
     
-            var marker_1b29ec3839f9558686517f92ee68e1f3 = L.marker(
+            var marker_b7e2e582dae2f1450b9a9d33892a3b0d = L.marker(
                 [-29.0, 27.2],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_1c9d5d90b76ce030d6c5ac8e45d7c16e = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eFS\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_c332265655bc31ae6dc947e4aa382e2a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eFS\u003cbr\u003e68.0%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_1b29ec3839f9558686517f92ee68e1f3.setIcon(div_icon_1c9d5d90b76ce030d6c5ac8e45d7c16e);
+                marker_b7e2e582dae2f1450b9a9d33892a3b0d.setIcon(div_icon_c332265655bc31ae6dc947e4aa382e2a);
             
     
-            var circle_marker_4f65afdaf6f61fff22e612d231efb7ce = L.circleMarker(
+            var circle_marker_8b1ddf47518b2d7d6d140f703be05db8 = L.circleMarker(
                 [-28.8, 30.8],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 43.89, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F3B441", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 43.89, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_75cf56b4d07052b8c5f1fb48336228e8 = L.popup({
-  "maxWidth": 330,
+        var popup_a5fb2d7b8b9f89046496e4f25700621b = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_56f7fcedae160fb223ec3a331d81f669 = $(`<div id="html_56f7fcedae160fb223ec3a331d81f669" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">KwaZulu-Natal</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#8 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#4 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">21,945</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">91,471</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.4%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R439,638</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,350/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,748/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.405</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#6 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.2%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#4 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.1 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#4 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_75cf56b4d07052b8c5f1fb48336228e8.setContent(html_56f7fcedae160fb223ec3a331d81f669);
+                var html_fab67c29cb594200937c2cc175e0d6d0 = $(`<div id="html_fab67c29cb594200937c2cc175e0d6d0" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">KwaZulu-Natal</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F3B44122;border:1px solid #F3B441;color:#F3B441;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#8 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#4 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">21,945</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">91,471</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F3B441;">68.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F3B441;width:55%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.4%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R439,638</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,350/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,748/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.405</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#6 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.2%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#4 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.1 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#4 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_a5fb2d7b8b9f89046496e4f25700621b.setContent(html_fab67c29cb594200937c2cc175e0d6d0);
             
         
 
-        circle_marker_4f65afdaf6f61fff22e612d231efb7ce.bindPopup(popup_75cf56b4d07052b8c5f1fb48336228e8)
+        circle_marker_8b1ddf47518b2d7d6d140f703be05db8.bindPopup(popup_a5fb2d7b8b9f89046496e4f25700621b)
         ;
 
         
     
     
-            circle_marker_4f65afdaf6f61fff22e612d231efb7ce.bindTooltip(
+            circle_marker_8b1ddf47518b2d7d6d140f703be05db8.bindTooltip(
                 `<div>
-                     <b>KwaZulu-Natal</b> — DTI 68.3% | 21,945 clients | Click for full stats
+                     <b>KwaZulu-Natal</b> — DTI 68.3% | 21,945 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -1067,49 +1070,49 @@
             );
         
     
-            var marker_3f7c8de6a5df5ae58ff150930cb4d52a = L.marker(
+            var marker_011cea27df9cb8abc35ca6f68199175a = L.marker(
                 [-28.8, 30.8],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_e12dbfc8d0b6173e78fb220adacb925d = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eKZN\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_2b7df6f66f4159c447f6551096da3c4a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eKZN\u003cbr\u003e68.3%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_3f7c8de6a5df5ae58ff150930cb4d52a.setIcon(div_icon_e12dbfc8d0b6173e78fb220adacb925d);
+                marker_011cea27df9cb8abc35ca6f68199175a.setIcon(div_icon_2b7df6f66f4159c447f6551096da3c4a);
             
     
-            var circle_marker_bea8a7fe619ba249616bef35cfead913 = L.circleMarker(
+            var circle_marker_d81bb2c0d898d7e7e59409b4befabb74 = L.circleMarker(
                 [-32.0, 26.5],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.954, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F19F40", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.954, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_a8cf43a9f891a2589dfbd93f4de3efd6 = L.popup({
-  "maxWidth": 330,
+        var popup_6469bdbce793ab44c1e68d486813b534 = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_f74eb8032d8853f4ae3af4ff299e8c9d = $(`<div id="html_f74eb8032d8853f4ae3af4ff299e8c9d" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Eastern Cape</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#6 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#8 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">11,977</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">49,405</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.6%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R438,051</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,400/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,764/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.405</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.1%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#8 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.1%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#3 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.3 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#8 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_a8cf43a9f891a2589dfbd93f4de3efd6.setContent(html_f74eb8032d8853f4ae3af4ff299e8c9d);
+                var html_efd56a7e303c290e6b6ebeec69d27c95 = $(`<div id="html_efd56a7e303c290e6b6ebeec69d27c95" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Eastern Cape</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F19F4022;border:1px solid #F19F40;color:#F19F40;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#6 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#8 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">11,977</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">49,405</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F19F40;">68.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F19F40;width:60%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.6%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R438,051</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,400/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,764/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.405</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.1%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#8 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.1%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#3 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.3 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#8 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_6469bdbce793ab44c1e68d486813b534.setContent(html_efd56a7e303c290e6b6ebeec69d27c95);
             
         
 
-        circle_marker_bea8a7fe619ba249616bef35cfead913.bindPopup(popup_a8cf43a9f891a2589dfbd93f4de3efd6)
+        circle_marker_d81bb2c0d898d7e7e59409b4befabb74.bindPopup(popup_6469bdbce793ab44c1e68d486813b534)
         ;
 
         
     
     
-            circle_marker_bea8a7fe619ba249616bef35cfead913.bindTooltip(
+            circle_marker_d81bb2c0d898d7e7e59409b4befabb74.bindTooltip(
                 `<div>
-                     <b>Eastern Cape</b> — DTI 68.3% | 11,977 clients | Click for full stats
+                     <b>Eastern Cape</b> — DTI 68.3% | 11,977 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -1117,49 +1120,49 @@
             );
         
     
-            var marker_6309f80d45a5082a16b0871671ec1087 = L.marker(
+            var marker_1de3c755313f0376908fa461fc87f5d5 = L.marker(
                 [-32.0, 26.5],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_72b418a7dbd981bfe04a2523e7b96bb8 = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eEC\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_8cad0789de8efda1e2e1aab81a78ef57 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eEC\u003cbr\u003e68.3%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_6309f80d45a5082a16b0871671ec1087.setIcon(div_icon_72b418a7dbd981bfe04a2523e7b96bb8);
+                marker_1de3c755313f0376908fa461fc87f5d5.setIcon(div_icon_8cad0789de8efda1e2e1aab81a78ef57);
             
     
-            var circle_marker_2a6e131ef24ab67d4a251c7396e5f29e = L.circleMarker(
+            var circle_marker_5822473dc6c58e9d0835163e0b04731b = L.circleMarker(
                 [-30.0, 20.2],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#7EBB46", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_c66ba76b4ef88bd7c5e24486c08db043 = L.popup({
-  "maxWidth": 330,
+        var popup_a6f401c4bd5c770174ea059cbe1d92da = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_be6a6fddb7466cbee89483b708274d96 = $(`<div id="html_be6a6fddb7466cbee89483b708274d96" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Northern Cape</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#1 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#9 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">2,232</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">9,620</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.0%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.4%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R444,120</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,472/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,802/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.6</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.409</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.7%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">62.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#1 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:55%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.1%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#2 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.7 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#9 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_c66ba76b4ef88bd7c5e24486c08db043.setContent(html_be6a6fddb7466cbee89483b708274d96);
+                var html_91d73918c8de78149dbd734ec50920ea = $(`<div id="html_91d73918c8de78149dbd734ec50920ea" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Northern Cape</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#7EBB4622;border:1px solid #7EBB46;color:#7EBB46;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#1 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#9 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">2,232</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">9,620</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#7EBB46;">68.0%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#7EBB46;width:24%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.4%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R444,120</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,472/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,802/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.6</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.409</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.7%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">62.2%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#1 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.8%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:55%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.1%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#2 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">-0.7 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#9 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_a6f401c4bd5c770174ea059cbe1d92da.setContent(html_91d73918c8de78149dbd734ec50920ea);
             
         
 
-        circle_marker_2a6e131ef24ab67d4a251c7396e5f29e.bindPopup(popup_c66ba76b4ef88bd7c5e24486c08db043)
+        circle_marker_5822473dc6c58e9d0835163e0b04731b.bindPopup(popup_a6f401c4bd5c770174ea059cbe1d92da)
         ;
 
         
     
     
-            circle_marker_2a6e131ef24ab67d4a251c7396e5f29e.bindTooltip(
+            circle_marker_5822473dc6c58e9d0835163e0b04731b.bindTooltip(
                 `<div>
-                     <b>Northern Cape</b> — DTI 68.0% | 2,232 clients | Click for full stats
+                     <b>Northern Cape</b> — DTI 68.0% | 2,232 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -1167,49 +1170,49 @@
             );
         
     
-            var marker_693a3f6f95ed76f62f5b211cb1093aac = L.marker(
+            var marker_8c58ac46f6d62c4f20eaeb672ea05a25 = L.marker(
                 [-30.0, 20.2],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_3edcb39b59fc0171f76e473652db1bea = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eNC\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_72c01fe3f3ef10a3b4e7c3bf35996f26 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eNC\u003cbr\u003e68.0%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_693a3f6f95ed76f62f5b211cb1093aac.setIcon(div_icon_3edcb39b59fc0171f76e473652db1bea);
+                marker_8c58ac46f6d62c4f20eaeb672ea05a25.setIcon(div_icon_72c01fe3f3ef10a3b4e7c3bf35996f26);
             
     
-            var circle_marker_c8b75e7ca3884cdcd2b950195768766d = L.circleMarker(
+            var circle_marker_03b14cb3b1c953173032d956bcc73d7b = L.circleMarker(
                 [-33.8, 20.0],
-                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 41.15, "stroke": true, "weight": 2}
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F1A240", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 41.15, "stroke": true, "weight": 2}
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-        var popup_0eeccbdecfa245bd0a1e3c4ac4c65a8d = L.popup({
-  "maxWidth": 330,
+        var popup_5386e5662d59bef2a79971985a230cca = L.popup({
+  "maxWidth": 340,
 });
 
         
             
-                var html_3499c9f5f817a3a12e3663b0d38f90f9 = $(`<div id="html_3499c9f5f817a3a12e3663b0d38f90f9" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Western Cape</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F57C2D22;border:1px solid #F57C2D;color:#F57C2D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#7 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#2 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">20,575</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">85,903</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">68.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:52%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.4%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R441,803</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,530/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,761/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.406</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.1%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#4 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.3%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#7 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.2 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#2 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
-                popup_0eeccbdecfa245bd0a1e3c4ac4c65a8d.setContent(html_3499c9f5f817a3a12e3663b0d38f90f9);
+                var html_8380bc8cd727b021f4a167392d2f359e = $(`<div id="html_8380bc8cd727b021f4a167392d2f359e" style="width: 100.0%; height: 100.0%;"> <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">   <div style="background:#0A1E3D;color:white;padding:10px 14px;border-radius:8px 8px 0 0;               border-left:4px solid #E8363B;margin:-4px -4px 10px -4px;">     <div style="font-size:16px;font-weight:800;">Western Cape</div>     <div style="display:flex;gap:6px;margin-top:4px;">       <span style="background:#F1A24022;border:1px solid #F1A240;color:#F1A240;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">DTI HIGH</span>       <span style="background:#1E88E522;border:1px solid #1E88E5;color:#1E88E5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#7 by volume</span>       <span style="background:#00A99D22;border:1px solid #00A99D;color:#00A99D;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">#2 credit recovery</span>     </div>   </div>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin-bottom:4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Financial Stress</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Clients Assessed</td>         <td style="text-align:right;font-weight:700;">20,575</td></tr>     <tr><td style="color:#666;">Leads Generated</td>         <td style="text-align:right;font-weight:700;">85,903</td></tr>     <tr><td style="color:#666;">Avg DTI</td>         <td style="text-align:right;font-weight:700;color:#F1A240;">68.3%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F1A240;width:59%;height:6px;border-radius:3px;"></div></div>   <div style="font-size:9px;color:#aaa;margin-bottom:4px;">     SA range 68.0%–68.5% — colour shows relative position   </div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">72.4%</td></tr>     <tr><td style="color:#666;">Avg Total Debt</td>         <td style="text-align:right;font-weight:700;">R441,803</td></tr>     <tr><td style="color:#666;">Avg Gross Income</td>         <td style="text-align:right;font-weight:700;">R21,530/mo</td></tr>     <tr><td style="color:#666;">Avg Disposable Income</td>         <td style="text-align:right;font-weight:700;">R-2,761/mo</td></tr>     <tr><td style="color:#666;">Avg No. of Creditors</td>         <td style="text-align:right;font-weight:700;">6.5</td></tr>     <tr><td style="color:#666;">ML Risk Score</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.406</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Lead & Conversion</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Lead Conversion Rate</td>         <td style="text-align:right;font-weight:700;color:#1E88E5;">15.4%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#1E88E5;width:51%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Qualification Rate</td>         <td style="text-align:right;font-weight:700;">61.1%</td></tr>     <tr><td style="color:#666;">Rank (conversion)</td>         <td style="text-align:right;font-weight:700;">#4 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Payment Performance</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Avg Collection Rate</td>         <td style="text-align:right;font-weight:700;color:#F57C2D;">81.6%</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#F57C2D;width:54%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Missed Payment Rate</td>         <td style="text-align:right;font-weight:700;color:#E8363B;">16.3%</td></tr>     <tr><td style="color:#666;">Rank (collection)</td>         <td style="text-align:right;font-weight:700;">#7 of 9</td></tr>   </table>    <div style="font-size:11px;font-weight:700;color:#0A1E3D;text-transform:uppercase;               letter-spacing:0.8px;margin:8px 0 4px;border-bottom:1px solid #e8e8e8;               padding-bottom:3px;">Credit Recovery</div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;padding:1px 0;">Score at Intake</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Latest Score</td>         <td style="text-align:right;font-weight:700;">533</td></tr>     <tr><td style="color:#666;">Score Improvement</td>         <td style="text-align:right;font-weight:700;color:#52B748;">+0.2 pts</td></tr>   </table>   <div style="background:#e8e8e8;border-radius:3px;height:6px;margin:2px 0 4px;"><div style="background:#00A99D;width:0%;height:6px;border-radius:3px;"></div></div>   <table style="width:100%;font-size:12px;border-collapse:collapse;">     <tr><td style="color:#666;">Credit Utilisation</td>         <td style="text-align:right;font-weight:700;color:#52B748;">0.5%</td></tr>     <tr><td style="color:#666;">Avg Accounts in Arrears</td>         <td style="text-align:right;font-weight:700;">4.0</td></tr>     <tr><td style="color:#666;">Rank (credit recovery)</td>         <td style="text-align:right;font-weight:700;">#2 of 9</td></tr>   </table>    <div style="margin-top:8px;padding:7px 10px;border-radius:6px;font-size:11px;       background:#F0FFF4;       border-left:3px solid #52B748;">     &#10003; Within manageable range — maintain and optimise   </div> </div></div>`)[0];
+                popup_5386e5662d59bef2a79971985a230cca.setContent(html_8380bc8cd727b021f4a167392d2f359e);
             
         
 
-        circle_marker_c8b75e7ca3884cdcd2b950195768766d.bindPopup(popup_0eeccbdecfa245bd0a1e3c4ac4c65a8d)
+        circle_marker_03b14cb3b1c953173032d956bcc73d7b.bindPopup(popup_5386e5662d59bef2a79971985a230cca)
         ;
 
         
     
     
-            circle_marker_c8b75e7ca3884cdcd2b950195768766d.bindTooltip(
+            circle_marker_03b14cb3b1c953173032d956bcc73d7b.bindTooltip(
                 `<div>
-                     <b>Western Cape</b> — DTI 68.3% | 20,575 clients | Click for full stats
+                     <b>Western Cape</b> — DTI 68.3% | 20,575 clients | Click for 12 metrics
                  </div>`,
                 {
   "sticky": true,
@@ -1217,47 +1220,47 @@
             );
         
     
-            var marker_0f5c44e417e2b53e06f4e49f2381926a = L.marker(
+            var marker_f1c077dbd3f6ea866cc32fd30a4a99c2 = L.marker(
                 [-33.8, 20.0],
                 {
 }
-            ).addTo(feature_group_43c42e548522e45b2ca6fdcef70dcf6d);
+            ).addTo(feature_group_6b3a4bc138ebeb340d39d36ba21d522c);
         
     
-            var div_icon_33f412dc2ff59b54018c8c960ad2163c = L.divIcon({
-  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:64px;margin-left:-32px;pointer-events:none;\"\u003eWC\u003cbr\u003e68%\u003c/div\u003e",
-  "iconSize": [64, 30],
+            var div_icon_fbf2fa2d775ea1fe75245b654d20c3ea = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px;font-weight:800;color:white;text-shadow:1px 1px 3px #000;text-align:center;width:68px;margin-left:-34px;pointer-events:none;\"\u003eWC\u003cbr\u003e68.3%\u003c/div\u003e",
+  "iconSize": [68, 30],
   "className": "empty",
 });
         
     
-                marker_0f5c44e417e2b53e06f4e49f2381926a.setIcon(div_icon_33f412dc2ff59b54018c8c960ad2163c);
+                marker_f1c077dbd3f6ea866cc32fd30a4a99c2.setIcon(div_icon_fbf2fa2d775ea1fe75245b654d20c3ea);
             
     
-            feature_group_43c42e548522e45b2ca6fdcef70dcf6d.addTo(map_8cd9bbe73af862c9996989dad39c9b8d);
+            feature_group_6b3a4bc138ebeb340d39d36ba21d522c.addTo(map_44d8f20297fcc99dca671a5beb612d89);
         
     
-            var layer_control_7c13dd9b83c92343ae24e0d9746a866a_layers = {
+            var layer_control_1351524e288633c79d76fab5c844626a_layers = {
                 base_layers : {
-                    "cartodbpositron" : tile_layer_ada47abd47debcf6ea48190598b792bc,
+                    "cartodbpositron" : tile_layer_3d774956224c0100eb7041fd156c4d1f,
                 },
                 overlays :  {
-                    "\u0026#128308; DTI Severity" : feature_group_b053ff4e4090f4c507d61b5c75bbd545,
-                    "\u0026#128153; Credit Recovery" : feature_group_e0662c8871312736064883875947e416,
-                    "\u0026#128200; Collection Rate" : feature_group_c684a37db41b91020116286840166a90,
-                    "\u0026#128270; Lead Conversion" : feature_group_67bee12f25cadd4d043aa38c2199580a,
-                    "\u0026#9679; Province Bubbles" : feature_group_43c42e548522e45b2ca6fdcef70dcf6d,
+                    "\u0026#128308; DTI Severity" : feature_group_5edf035ca655d88fcfdb4daebc5139e6,
+                    "\u0026#128153; Credit Recovery" : feature_group_0710bbbf8e27783173dec6907243d78f,
+                    "\u0026#128200; Collection Rate" : feature_group_d6dcf9c3c3908aec1760c06d2688e465,
+                    "\u0026#128270; Lead Conversion" : feature_group_4b801026a6d4c69c0aea6ff3c86c574f,
+                    "\u0026#9679; Province Bubbles" : feature_group_6b3a4bc138ebeb340d39d36ba21d522c,
                 },
             };
-            let layer_control_7c13dd9b83c92343ae24e0d9746a866a = L.control.layers(
-                layer_control_7c13dd9b83c92343ae24e0d9746a866a_layers.base_layers,
-                layer_control_7c13dd9b83c92343ae24e0d9746a866a_layers.overlays,
+            let layer_control_1351524e288633c79d76fab5c844626a = L.control.layers(
+                layer_control_1351524e288633c79d76fab5c844626a_layers.base_layers,
+                layer_control_1351524e288633c79d76fab5c844626a_layers.overlays,
                 {
   "position": "topright",
   "collapsed": false,
   "autoZIndex": true,
 }
-            ).addTo(map_8cd9bbe73af862c9996989dad39c9b8d);
+            ).addTo(map_44d8f20297fcc99dca671a5beb612d89);
 
         
 </script>

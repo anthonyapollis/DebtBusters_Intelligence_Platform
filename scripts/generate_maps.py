@@ -392,7 +392,11 @@ CENTROIDS = {
 }
 
 # ── Colour helpers ────────────────────────────────────────────────────────────
-def dti_color(v):
+def dti_color(v, lo=None, hi=None):
+    # Relative scale when lo/hi supplied (avoids all-same colour on narrow synthetic range)
+    if lo is not None and hi is not None and (hi - lo) > 0.01:
+        return interp_color(v, lo, hi, low_c="#52B748", mid_c="#F5C842", hi_c="#E8363B")
+    # Absolute fallback
     if v >= 75:   return "#E8363B"
     elif v >= 68: return "#F57C2D"
     elif v >= 62: return "#F5C842"
@@ -421,7 +425,7 @@ def badge(txt, color):
             f'font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;">{txt}</span>')
 
 # ── Build rich popup HTML ─────────────────────────────────────────────────────
-def build_popup(pname, r):
+def build_popup(pname, r, dti_lo=60, dti_hi=80):
     dti     = r.get("avg_dti_pct", 0)
     n       = int(r.get("clients", 0))
     debt    = r.get("avg_debt", 0)
@@ -448,7 +452,7 @@ def build_popup(pname, r):
     rk_inc  = int(r.get("rank_avg_income", 0))
 
     sev_label = ("SEVERE" if dti>=75 else "HIGH" if dti>=68 else "ELEVATED" if dti>=62 else "MANAGEABLE")
-    sev_color = dti_color(dti)
+    sev_color = dti_color(dti, dti_lo, dti_hi)
 
     html = f"""
 <div style="font-family:'Segoe UI',Arial,sans-serif;width:310px;padding:4px;">
@@ -473,7 +477,10 @@ def build_popup(pname, r):
     <tr><td style="color:#666;">Avg DTI</td>
         <td style="text-align:right;font-weight:700;color:{sev_color};">{dti:.1f}%</td></tr>
   </table>
-  {bar(dti, 50, 85, sev_color)}
+  {bar(dti, dti_lo - 0.1, dti_hi + 0.1, sev_color)}
+  <div style="font-size:9px;color:#aaa;margin-bottom:4px;">
+    SA range {dti_lo:.1f}%–{dti_hi:.1f}% — colour shows relative position
+  </div>
   <table style="width:100%;font-size:12px;border-collapse:collapse;">
     <tr><td style="color:#666;padding:1px 0;">Over-Indebted Rate</td>
         <td style="text-align:right;font-weight:700;color:#E8363B;">{oi:.1f}%</td></tr>
@@ -587,17 +594,21 @@ nav_html = """
 """
 m.get_root().html.add_child(folium.Element(nav_html))
 
+# ── DTI relative range for colour scale ──────────────────────────────────────
+dti_lo = prov["avg_dti_pct"].min()
+dti_hi = prov["avg_dti_pct"].max()
+
 # ── Layer 1: DTI Severity (default ON) ───────────────────────────────────────
 dti_layer = folium.FeatureGroup(name="&#128308; DTI Severity", show=True)
 for pname, coords in POLYGONS.items():
     if pname not in prov.index: continue
     val   = prov.loc[pname, "avg_dti_pct"]
-    color = dti_color(val)
+    color = dti_color(val, dti_lo, dti_hi)
     folium.Polygon(
         locations=[[lat, lon] for lon, lat in coords],
         color="white", weight=1.5, fill=True,
         fill_color=color, fill_opacity=0.55,
-        tooltip=f"{pname}: DTI {val:.1f}%",
+        tooltip=f"{pname}: DTI {val:.1f}% (SA range {dti_lo:.1f}–{dti_hi:.1f}%)",
     ).add_to(dti_layer)
 dti_layer.add_to(m)
 
@@ -656,26 +667,26 @@ for pname, (lat, lon) in CENTROIDS.items():
     r      = prov.loc[pname].to_dict()
     dti    = r.get("avg_dti_pct", 0)
     n      = int(r.get("clients", 0))
-    color  = dti_color(dti)
+    color  = dti_color(dti, dti_lo, dti_hi)
     radius = max(14, min(58, n / 500))
 
     folium.CircleMarker(
         location=[lat, lon], radius=radius,
         color="white", weight=2,
         fill=True, fill_color=color, fill_opacity=0.85,
-        popup=folium.Popup(build_popup(pname, r), max_width=330),
-        tooltip=f"<b>{pname}</b> — DTI {dti:.1f}% | {n:,} clients | Click for full stats",
+        popup=folium.Popup(build_popup(pname, r, dti_lo, dti_hi), max_width=340),
+        tooltip=f"<b>{pname}</b> — DTI {dti:.1f}% | {n:,} clients | Click for 12 metrics",
     ).add_to(marker_layer)
 
-    # Label — pointer-events:none so clicks reach the CircleMarker
+    # 1dp label — pointer-events:none so clicks reach the CircleMarker
     folium.Marker(
         location=[lat, lon],
         icon=folium.DivIcon(
             html=(f'<div style="font-size:9px;font-weight:800;color:white;'
                   f'text-shadow:1px 1px 3px #000;text-align:center;'
-                  f'width:64px;margin-left:-32px;pointer-events:none;">'
-                  f'{ABBR.get(pname, pname[:2])}<br>{dti:.0f}%</div>'),
-            icon_size=(64, 30),
+                  f'width:68px;margin-left:-34px;pointer-events:none;">'
+                  f'{ABBR.get(pname, pname[:2])}<br>{dti:.1f}%</div>'),
+            icon_size=(68, 30),
         )
     ).add_to(marker_layer)
 marker_layer.add_to(m)
@@ -727,27 +738,30 @@ rank_panel = f"""
 m.get_root().html.add_child(folium.Element(rank_panel))
 
 # ── Legend ────────────────────────────────────────────────────────────────────
-legend_html = """
+legend_html = f"""
 <div style="position:fixed;bottom:20px;left:20px;z-index:9999;
      background:white;padding:12px 16px;border-radius:10px;
      border-left:4px solid #E8363B;font-family:'Segoe UI',Arial,sans-serif;
-     box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:12px;min-width:190px;">
-  <b style="color:#0A1E3D;display:block;margin-bottom:8px;font-size:12px;">
-    DTI Severity (Active Layer)
+     box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:12px;min-width:210px;">
+  <b style="color:#0A1E3D;display:block;margin-bottom:6px;font-size:12px;">
+    DTI Severity (Relative Scale)
   </b>
-  <div style="margin:3px 0;"><span style="background:#E8363B;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>&#8805;75% — Severe</div>
-  <div style="margin:3px 0;"><span style="background:#F57C2D;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>68–75% — High</div>
-  <div style="margin:3px 0;"><span style="background:#F5C842;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>62–68% — Elevated</div>
-  <div style="margin:3px 0;"><span style="background:#52B748;width:12px;height:12px;
-    display:inline-block;border-radius:50%;margin-right:7px;"></span>&lt;62% — Manageable</div>
-  <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;
-              font-size:10px;color:#888;line-height:1.5;">
+  <div style="font-size:10px;color:#888;margin-bottom:8px;line-height:1.4;">
+    What is DTI? <b>Debt-to-Income Ratio</b> — total monthly
+    debt repayments as a % of gross income. Above 60% = legally
+    over-indebted under the NCA. All provinces: {dti_lo:.1f}–{dti_hi:.1f}%.
+    Colours show <i>relative</i> position within this range.
+  </div>
+  <div style="background:linear-gradient(to right,#52B748,#F5C842,#E8363B);
+              height:8px;border-radius:4px;margin-bottom:4px;"></div>
+  <div style="display:flex;justify-content:space-between;font-size:10px;color:#666;">
+    <span>{dti_lo:.1f}% Lower</span><span>{dti_hi:.1f}% Higher</span>
+  </div>
+  <div style="margin-top:10px;padding-top:8px;border-top:1px solid #eee;
+              font-size:10px;color:#888;line-height:1.6;">
     Bubble size = client volume<br>
     <b>Click bubble</b> for 12 province metrics<br>
-    Toggle layers top-right &#9654;
+    Toggle 4 map layers top-right &#9654;
   </div>
 </div>
 """
@@ -764,5 +778,12 @@ os.makedirs(PUBLIC_DIR, exist_ok=True)
 pub_path = os.path.join(PUBLIC_DIR, "map.html")
 shutil.copy2(html_path, pub_path)
 print(f"  Mirrored: public/map.html")
+
+# Copy index.html into charts/ so nav links work when opening charts/ locally
+src_index  = os.path.join(PUBLIC_DIR, "index.html")
+dest_index = os.path.join(CHART_DIR,  "index.html")
+if os.path.exists(src_index):
+    shutil.copy2(src_index, dest_index)
+    print(f"  Copied:   charts/index.html (fixes local nav links)")
 
 print("\nAll maps generated.")

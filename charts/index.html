@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DebtBusters Intelligence Platform | Anthony Apollis</title>
+  <style>
+    :root {
+      --navy:   #0A1E3D;
+      --navy2:  #112240;
+      --navy3:  #1A2F50;
+      --red:    #E8363B;
+      --orange: #F57C2D;
+      --yellow: #F5C842;
+      --green:  #52B748;
+      --teal:   #00A99D;
+      --blue:   #1E88E5;
+      --purple: #8B4DC8;
+      --white:  #FFFFFF;
+      --grey:   #8896A8;
+      --light:  #E8F4FD;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--navy); color: var(--white); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(10,30,61,0.97);
+      border-bottom: 2px solid var(--red);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px; height: 56px;
+      backdrop-filter: blur(8px);
+    }
+    .nav-brand {
+      font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: 0.3px;
+    }
+    .nav-brand span { color: var(--red); }
+    .nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-links a {
+      color: var(--white); text-decoration: none;
+      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-links a:hover { background: var(--red); border-color: var(--red); }
+    .nav-links a.btn-primary { background: var(--red); border-color: var(--red); }
+    .nav-links a.btn-teal    { background: var(--teal); border-color: var(--teal); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, #0E2A50 100%);
+      padding: 60px 28px 48px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(232,54,59,0.08) 0%, transparent 60%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(232,54,59,0.15); border: 1px solid var(--red);
+      color: var(--red); font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
+    .hero h1 span { color: var(--red); }
+    .hero p { font-size: 15px; color: var(--grey); max-width: 680px; margin: 0 auto 32px; line-height: 1.7; }
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
+    .tech-badge {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      color: #CBD5E1; font-size: 11px; font-weight: 600;
+      padding: 4px 12px; border-radius: 12px;
+    }
+    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-red   { background: var(--red); color: white; }
+    .btn-red:hover { background: #C42D32; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+    .btn-teal2 { background: var(--teal); color: white; }
+    .btn-teal2:hover { background: #008C81; transform: translateY(-2px); }
+
+    /* ── KPI CARDS ── */
+    .section { padding: 48px 28px; max-width: 1300px; margin: 0 auto; }
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 8px;
+    }
+    .section-heading { font-size: clamp(20px,3vw,28px); font-weight: 700; margin-bottom: 32px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .kpi-card {
+      background: var(--navy2); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 24px 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-top: 3px solid transparent;
+    }
+    .kpi-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .kpi-card.red    { border-top-color: var(--red); }
+    .kpi-card.teal   { border-top-color: var(--teal); }
+    .kpi-card.blue   { border-top-color: var(--blue); }
+    .kpi-card.green  { border-top-color: var(--green); }
+    .kpi-card.orange { border-top-color: var(--orange); }
+    .kpi-card.purple { border-top-color: var(--purple); }
+    .kpi-value { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+    .kpi-label { font-size: 12px; color: var(--grey); font-weight: 500; }
+    .kpi-sub   { font-size: 11px; color: var(--grey); margin-top: 8px; opacity: 0.7; }
+
+    /* ── MAP SECTION ── */
+    .map-section {
+      background: var(--navy2);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 28px;
+    }
+    .map-section .inner { max-width: 1300px; margin: 0 auto; }
+    .map-container {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 16px 64px rgba(0,0,0,0.5);
+    }
+    .map-container iframe { display: block; width: 100%; height: 560px; border: none; }
+
+    /* ── ML MODELS ── */
+    .ml-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 16px; }
+    .ml-card {
+      background: var(--navy2); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .ml-model-name { font-size: 13px; font-weight: 700; color: var(--teal); }
+    .ml-algo { font-size: 11px; color: var(--grey); }
+    .ml-score-bar { background: rgba(255,255,255,0.08); border-radius: 4px; height: 6px; overflow: hidden; }
+    .ml-score-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+    .ml-score-label { font-size: 22px; font-weight: 800; }
+    .ml-metric { font-size: 11px; color: var(--grey); }
+    .ml-desc { font-size: 11px; color: #8896A8; line-height: 1.5; }
+
+    /* ── DELIVERABLES ── */
+    .del-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
+    .del-card {
+      background: var(--navy2); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 24px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .del-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .del-icon { font-size: 28px; }
+    .del-title { font-size: 15px; font-weight: 700; }
+    .del-desc  { font-size: 12px; color: var(--grey); line-height: 1.6; flex: 1; }
+    .del-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .del-btn-red  { background: rgba(232,54,59,0.15); color: var(--red); border: 1px solid rgba(232,54,59,0.3); }
+    .del-btn-red:hover { background: var(--red); color: white; }
+    .del-btn-teal { background: rgba(0,169,157,0.15); color: var(--teal); border: 1px solid rgba(0,169,157,0.3); }
+    .del-btn-teal:hover { background: var(--teal); color: white; }
+    .del-btn-blue { background: rgba(30,136,229,0.15); color: var(--blue); border: 1px solid rgba(30,136,229,0.3); }
+    .del-btn-blue:hover { background: var(--blue); color: white; }
+    .del-btn-green { background: rgba(82,183,72,0.15); color: var(--green); border: 1px solid rgba(82,183,72,0.3); }
+    .del-btn-green:hover { background: var(--green); color: white; }
+    .del-btn-purple { background: rgba(139,77,200,0.15); color: var(--purple); border: 1px solid rgba(139,77,200,0.3); }
+    .del-btn-purple:hover { background: var(--purple); color: white; }
+
+    /* ── ARCHITECTURE ── */
+    .arch-flow {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+      justify-content: center; margin: 24px 0;
+    }
+    .arch-step {
+      background: var(--navy2); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 16px 20px; text-align: center; min-width: 120px;
+    }
+    .arch-step-icon { font-size: 22px; margin-bottom: 6px; }
+    .arch-step-label { font-size: 12px; font-weight: 700; color: var(--white); }
+    .arch-step-sub { font-size: 10px; color: var(--grey); margin-top: 2px; }
+    .arch-arrow { font-size: 20px; color: var(--red); padding: 0 8px; }
+    .arch-step.bronze { border-top: 3px solid #CD7F32; }
+    .arch-step.silver { border-top: 3px solid #C0C0C0; }
+    .arch-step.gold   { border-top: 3px solid #FFD700; }
+    .arch-step.ml     { border-top: 3px solid var(--teal); }
+    .arch-step.bi     { border-top: 3px solid var(--blue); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060F1E; border-top: 2px solid var(--red);
+      padding: 32px 28px; text-align: center;
+    }
+    footer .footer-inner { max-width: 800px; margin: 0 auto; }
+    footer h3 { font-size: 16px; margin-bottom: 8px; }
+    footer p  { font-size: 12px; color: var(--grey); line-height: 1.8; margin-bottom: 16px; }
+    footer .footer-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    footer .footer-links a {
+      color: var(--grey); text-decoration: none; font-size: 12px;
+      padding: 4px 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+      transition: all 0.2s;
+    }
+    footer .footer-links a:hover { color: var(--teal); border-color: var(--teal); }
+    .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0 28px; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="nav-brand"><span>DebtBusters</span> Intelligence Platform</div>
+  <div class="nav-links">
+    <a href="#map">&#127758; Map</a>
+    <a href="#kpis">&#128200; KPIs</a>
+    <a href="#models">&#129302; ML Models</a>
+    <a href="#deliverables">&#128230; Deliverables</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform"
+       target="_blank" class="btn-primary">&#128279; GitHub</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-badge">&#127466;&#127462; South Africa · Databricks Azure · Confluent Group</div>
+  <h1>DebtBusters <span>Intelligence</span> Platform</h1>
+  <p>Enterprise data warehouse and ML solution for South Africa's leading debt counselling group.
+     80,000 clients · 3.96M rows · Medallion architecture · 5 validated ML models · 30-figure ebook.</p>
+  <div class="tech-stack">
+    <span class="tech-badge">Databricks Azure</span>
+    <span class="tech-badge">Delta Lake</span>
+    <span class="tech-badge">PySpark</span>
+    <span class="tech-badge">MLflow</span>
+    <span class="tech-badge">XGBoost</span>
+    <span class="tech-badge">LightGBM</span>
+    <span class="tech-badge">CatBoost</span>
+    <span class="tech-badge">Power BI</span>
+    <span class="tech-badge">Kimball Star Schema</span>
+    <span class="tech-badge">Folium</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#map" class="btn btn-red">&#127758; View Province Map</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/ebook/DebtBusters_Intelligence_Platform_Ebook_v7.docx"
+       class="btn btn-teal2" target="_blank">&#128218; Download Ebook</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform"
+       class="btn btn-outline" target="_blank">&#128279; View on GitHub</a>
+  </div>
+</section>
+
+<!-- ── KPI CARDS ── -->
+<div id="kpis">
+<div class="section">
+  <div class="section-title">Platform Scale</div>
+  <div class="section-heading">One Platform. 3.96 Million Data Points.</div>
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-value">80,000</div>
+      <div class="kpi-label">Total Clients Modelled</div>
+      <div class="kpi-sub">Across 9 SA provinces</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-value">3.96M</div>
+      <div class="kpi-label">Total Rows in DW</div>
+      <div class="kpi-sub">8 entities, Bronze → Gold</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-value">500K</div>
+      <div class="kpi-label">Lead Interactions</div>
+      <div class="kpi-sub">XGBoost AUC 0.74</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-value">1.5M</div>
+      <div class="kpi-label">Payment Transactions</div>
+      <div class="kpi-sub">PDA collection tracking</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-value">5</div>
+      <div class="kpi-label">ML Models Validated</div>
+      <div class="kpi-sub">XGBoost · LightGBM · CatBoost · RF · GBM</div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="kpi-value">0.74</div>
+      <div class="kpi-label">Best AUC Score</div>
+      <div class="kpi-sub">Lead Conversion — XGBoost</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-value">0.89</div>
+      <div class="kpi-label">Credit Score R²</div>
+      <div class="kpi-sub">3/6/12-month forecast</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-value">30</div>
+      <div class="kpi-label">Ebook Figures</div>
+      <div class="kpi-sub">Each with Audience/What/Why/Solutions</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── ARCHITECTURE ── -->
+<div class="section">
+  <div class="section-title">Data Architecture</div>
+  <div class="section-heading">Medallion Architecture on Databricks Azure</div>
+  <div class="arch-flow">
+    <div class="arch-step">
+      <div class="arch-step-icon">&#128240;</div>
+      <div class="arch-step-label">Source</div>
+      <div class="arch-step-sub">CRM · Bureau · PDA</div>
+    </div>
+    <div class="arch-arrow">&#8594;</div>
+    <div class="arch-step bronze">
+      <div class="arch-step-icon">&#129454;</div>
+      <div class="arch-step-label">Bronze</div>
+      <div class="arch-step-sub">Raw Delta + audit</div>
+    </div>
+    <div class="arch-arrow">&#8594;</div>
+    <div class="arch-step silver">
+      <div class="arch-step-icon">&#127910;</div>
+      <div class="arch-step-label">Silver</div>
+      <div class="arch-step-sub">Cleaned · Typed</div>
+    </div>
+    <div class="arch-arrow">&#8594;</div>
+    <div class="arch-step gold">
+      <div class="arch-step-icon">&#127775;</div>
+      <div class="arch-step-label">Gold</div>
+      <div class="arch-step-sub">Star schema · KPIs</div>
+    </div>
+    <div class="arch-arrow">&#8594;</div>
+    <div class="arch-step ml">
+      <div class="arch-step-icon">&#129302;</div>
+      <div class="arch-step-label">ML · MLflow</div>
+      <div class="arch-step-sub">5 models tracked</div>
+    </div>
+    <div class="arch-arrow">&#8594;</div>
+    <div class="arch-step bi">
+      <div class="arch-step-icon">&#128200;</div>
+      <div class="arch-step-label">Power BI</div>
+      <div class="arch-step-sub">8 dashboard pages</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── INTERACTIVE MAP ── -->
+<div id="map" class="map-section">
+  <div class="inner">
+    <div class="section-title">Geographic Intelligence</div>
+    <div class="section-heading" style="margin-bottom:8px;">
+      South Africa — Debt Counselling Province Map
+    </div>
+    <p style="font-size:13px; color:var(--grey); margin-bottom:24px; max-width:700px;">
+      Interactive province map showing average DTI severity, client volume, and risk scores
+      across all 9 South African provinces. <strong style="color:white">Click any bubble</strong>
+      for full province stats. Bubble size = client volume.
+    </p>
+    <div class="map-container">
+      <iframe src="map.html" title="SA Province Interactive Map" loading="lazy"></iframe>
+    </div>
+    <div style="display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;">
+      <div style="background:rgba(232,54,59,0.1); border:1px solid rgba(232,54,59,0.3);
+                  padding:10px 16px; border-radius:8px; font-size:12px;">
+        <strong style="color:var(--red)">&#9679;</strong> &ge;75% DTI — Severe over-indebtedness
+      </div>
+      <div style="background:rgba(245,124,45,0.1); border:1px solid rgba(245,124,45,0.3);
+                  padding:10px 16px; border-radius:8px; font-size:12px;">
+        <strong style="color:var(--orange)">&#9679;</strong> 68–75% — High DTI
+      </div>
+      <div style="background:rgba(245,200,66,0.1); border:1px solid rgba(245,200,66,0.3);
+                  padding:10px 16px; border-radius:8px; font-size:12px;">
+        <strong style="color:var(--yellow)">&#9679;</strong> 62–68% — Elevated
+      </div>
+      <div style="background:rgba(82,183,72,0.1); border:1px solid rgba(82,183,72,0.3);
+                  padding:10px 16px; border-radius:8px; font-size:12px;">
+        <strong style="color:var(--green)">&#9679;</strong> &lt;62% — Manageable
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ML MODELS ── -->
+<div id="models">
+<div class="section">
+  <div class="section-title">Machine Learning</div>
+  <div class="section-heading">5 Validated ML Models — Full MLflow Tracking</div>
+  <div class="ml-grid">
+    <div class="ml-card">
+      <div>
+        <div class="ml-model-name">Lead Conversion</div>
+        <div class="ml-algo">XGBoost · Hyperopt tuned</div>
+      </div>
+      <div class="ml-score-label" style="color:var(--teal)">0.74 AUC</div>
+      <div class="ml-score-bar"><div class="ml-score-fill" style="width:74%;background:var(--teal)"></div></div>
+      <div class="ml-desc">Prioritises call centre outreach — identifies 74% of convertible leads from 500K interactions.</div>
+    </div>
+    <div class="ml-card">
+      <div>
+        <div class="ml-model-name">Payment Default</div>
+        <div class="ml-algo">LightGBM · SHAP explained</div>
+      </div>
+      <div class="ml-score-label" style="color:var(--blue)">0.73 AUC</div>
+      <div class="ml-score-bar"><div class="ml-score-fill" style="width:73%;background:var(--blue)"></div></div>
+      <div class="ml-desc">Early-warning system — flags at-risk clients 30 days before missed PDA payment.</div>
+    </div>
+    <div class="ml-card">
+      <div>
+        <div class="ml-model-name">Product Recommendation</div>
+        <div class="ml-algo">Random Forest + Isotonic</div>
+      </div>
+      <div class="ml-score-label" style="color:var(--green)">85% Accuracy</div>
+      <div class="ml-score-bar"><div class="ml-score-fill" style="width:85%;background:var(--green)"></div></div>
+      <div class="ml-desc">Routes 85% of clients to the correct NCR product — reduces mis-sells and creditor disputes.</div>
+    </div>
+    <div class="ml-card">
+      <div>
+        <div class="ml-model-name">Credit Score Forecast</div>
+        <div class="ml-algo">Multi-output Gradient Boosting</div>
+      </div>
+      <div class="ml-score-label" style="color:var(--orange)">R² = 0.89</div>
+      <div class="ml-score-bar"><div class="ml-score-fill" style="width:89%;background:var(--orange)"></div></div>
+      <div class="ml-desc">Predicts credit score at 3, 6, and 12 months — powers the client counselling roadmap.</div>
+    </div>
+    <div class="ml-card">
+      <div>
+        <div class="ml-model-name">Client Churn</div>
+        <div class="ml-algo">CatBoost + Optuna</div>
+      </div>
+      <div class="ml-score-label" style="color:var(--purple)">0.72 AUC</div>
+      <div class="ml-score-bar"><div class="ml-score-fill" style="width:72%;background:var(--purple)"></div></div>
+      <div class="ml-desc">Detects withdrawal risk 30 days out — enables targeted retention calls for the top 200 at-risk clients monthly.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── DELIVERABLES ── -->
+<div id="deliverables">
+<div class="section">
+  <div class="section-title">Deliverables</div>
+  <div class="section-heading">Everything Included. Click to Download or Explore.</div>
+  <div class="del-grid">
+    <div class="del-card">
+      <div class="del-icon">&#128218;</div>
+      <div class="del-title">Intelligence Ebook (v7)</div>
+      <div class="del-desc">
+        Full platform narrative — 30 embedded figures, each with Audience / What It Shows /
+        Why It Matters / Solutions & Recommendations. Includes the Thandiwe data story,
+        10 strategic recommendations, and geographic intelligence maps.
+      </div>
+      <a class="del-btn del-btn-red"
+         href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/ebook/DebtBusters_Intelligence_Platform_Ebook_v7.docx"
+         target="_blank">&#11123; Download Ebook (.docx)</a>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">&#128202;</div>
+      <div class="del-title">Executive KPI Report</div>
+      <div class="del-desc">
+        907 KB Excel workbook with full KPI dashboards across Marketing, Operations,
+        Finance, Credit Risk, Client Outcomes, and Creditor Management. Built for
+        C-suite and Board presentation.
+      </div>
+      <a class="del-btn del-btn-green"
+         href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/excel/DebtBusters_Intelligence_Report.xlsx"
+         target="_blank">&#11123; Download KPI Report (.xlsx)</a>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">&#129302;</div>
+      <div class="del-title">ML Validation Report</div>
+      <div class="del-desc">
+        Full ML validation workbook — AUC/R² scores, feature importance tables,
+        cross-validation results, confusion matrices, and SHAP value summaries
+        for all 5 models.
+      </div>
+      <a class="del-btn del-btn-blue"
+         href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/excel/ML_Validation_Report.xlsx"
+         target="_blank">&#11123; Download ML Report (.xlsx)</a>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">&#127758;</div>
+      <div class="del-title">Interactive Province Map</div>
+      <div class="del-desc">
+        Folium-powered interactive HTML map of all 9 SA provinces. Click any province bubble
+        for full DTI, client volume, average debt, over-indebtedness rate, and risk score.
+        Colour-coded by DTI severity.
+      </div>
+      <a class="del-btn del-btn-teal" href="map.html" target="_blank">&#128064; Open Full Map</a>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">&#128190;</div>
+      <div class="del-title">GitHub Repository</div>
+      <div class="del-desc">
+        Full source code: 26 Databricks notebooks (Bronze/Silver/Gold/ML), Python data generation
+        scripts, DAX measures, Kimball star schema SQL DDL, chart generation, and ebook generation.
+      </div>
+      <a class="del-btn del-btn-purple"
+         href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform"
+         target="_blank">&#128279; View on GitHub</a>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">&#128203;</div>
+      <div class="del-title">Star Schema DDL</div>
+      <div class="del-desc">
+        Kimball-compliant DDL — 5 dimension tables and 6 fact tables with SHA-256 surrogate keys,
+        Z-ORDER clustering on Delta Lake, and NCA-aligned field naming for the debt counselling domain.
+      </div>
+      <a class="del-btn del-btn-red"
+         href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/blob/master/sql/create_schema.sql"
+         target="_blank">&#128064; View Schema SQL</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <h3>Anthony Apollis</h3>
+    <p>
+      Senior Data Engineer &amp; ML Architect · Portfolio Project 2026<br/>
+      Modelled on Confluent Financial Wellness Group (DebtBusters · JustMoney) ·
+      Databricks Azure · Kimball DW · 5 ML Models
+    </p>
+    <div class="footer-links">
+      <a href="https://github.com/anthonyapollis" target="_blank">GitHub Profile</a>
+      <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform" target="_blank">This Repo</a>
+      <a href="map.html" target="_blank">Interactive Map</a>
+      <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/ebook/DebtBusters_Intelligence_Platform_Ebook_v7.docx" target="_blank">Ebook v7</a>
+      <a href="mailto:anthony.apollis@gmail.com">Contact</a>
+    </div>
+    <p style="margin-top:20px; font-size:11px; opacity:0.5;">
+      &copy; 2026 Anthony Apollis · Data for demonstration purposes only
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
