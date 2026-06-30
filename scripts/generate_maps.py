@@ -333,16 +333,39 @@ m = folium.Map(
     width="100%", height="100%"
 )
 
-# Title
-title_html = """
-<div style="position:fixed; top:10px; left:50%; transform:translateX(-50%);
-     background:#0A1E3D; color:white; padding:12px 24px; border-radius:8px;
-     font-family:Calibri,Arial,sans-serif; font-size:16px; font-weight:bold;
-     z-index:1000; border-left:4px solid #E8363B; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
- DebtBusters Intelligence Platform — South Africa Province Map
+# Nav bar + title (pointer-events:none on title so it never blocks map clicks)
+nav_html = """
+<style>
+#db-nav{position:fixed;top:0;left:0;right:0;z-index:99999;
+  background:rgba(10,30,61,0.97);border-bottom:2px solid #E8363B;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;height:50px;font-family:'Segoe UI',Arial,sans-serif;
+  backdrop-filter:blur(6px);}
+#db-nav .brand{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;}
+#db-nav .brand span{color:#E8363B;}
+#db-nav .links{display:flex;gap:5px;flex-wrap:wrap;}
+#db-nav .links a{color:#fff;text-decoration:none;padding:5px 11px;
+  border-radius:16px;font-size:11px;font-weight:600;
+  border:1px solid rgba(255,255,255,0.2);transition:all 0.18s;white-space:nowrap;}
+#db-nav .links a:hover{background:#E8363B;border-color:#E8363B;}
+#db-nav .links a.primary{background:#E8363B;border-color:#E8363B;}
+#db-nav .links a.teal{background:#00A99D;border-color:#00A99D;}
+.folium-map{margin-top:50px!important;}
+</style>
+<div id="db-nav">
+  <div class="brand"><span>DebtBusters</span> Intelligence Platform</div>
+  <div class="links">
+    <a href="index.html">&#127968; Home</a>
+    <a href="index.html#kpis">&#128200; KPIs</a>
+    <a href="index.html#models">&#129302; ML</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/ebook/DebtBusters_Intelligence_Platform_Ebook_v7.docx" target="_blank" class="teal">&#128218; Ebook</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/excel/DebtBusters_Intelligence_Report.xlsx" target="_blank">&#128202; KPI Excel</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/excel/ML_Validation_Report.xlsx" target="_blank">&#129302; ML Excel</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform" target="_blank" class="primary">&#128279; GitHub</a>
+  </div>
 </div>
 """
-m.get_root().html.add_child(folium.Element(title_html))
+m.get_root().html.add_child(folium.Element(nav_html))
 
 # Colour function
 def risk_color(dti_pct):
@@ -399,12 +422,13 @@ for pname, (lat, lon) in CENTROIDS.items():
         tooltip=f"{pname}: DTI {dti:.1f}% | {n:,} clients",
     ).add_to(m)
 
+    # pointer-events:none is critical — lets clicks pass through to CircleMarker popup
     folium.Marker(
         location=[lat, lon],
         icon=folium.DivIcon(
             html=f'<div style="font-size:9px; font-weight:bold; color:white; '
                  f'text-shadow:1px 1px 2px #000; text-align:center; '
-                 f'width:60px; margin-left:-30px;">'
+                 f'width:60px; margin-left:-30px; pointer-events:none;">'
                  f'{ABBR.get(pname,pname[:2])}<br>{dti:.0f}%</div>',
             icon_size=(60, 30),
         )
@@ -429,5 +453,13 @@ m.get_root().html.add_child(folium.Element(legend_html))
 html_path = os.path.join(CHART_DIR, "sa_interactive_map.html")
 m.save(html_path)
 print(f"  Saved: sa_interactive_map.html")
+
+# Mirror to public/ so Netlify and the landing page iframe both stay current
+PUBLIC_DIR = os.path.join(os.path.dirname(__file__), "..", "public")
+os.makedirs(PUBLIC_DIR, exist_ok=True)
+pub_path = os.path.join(PUBLIC_DIR, "map.html")
+import shutil
+shutil.copy2(html_path, pub_path)
+print(f"  Mirrored: public/map.html")
 
 print("\nAll maps generated.")
