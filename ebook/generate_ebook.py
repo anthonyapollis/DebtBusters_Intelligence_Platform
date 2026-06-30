@@ -48,7 +48,7 @@ import copy
 
 OUT_DIR   = os.path.dirname(__file__)
 CHART_DIR = os.path.join(OUT_DIR, "..", "charts")
-OUT_PATH  = os.path.join(OUT_DIR, "DebtBusters_Intelligence_Platform_Ebook_v6.docx")
+OUT_PATH  = os.path.join(OUT_DIR, "DebtBusters_Intelligence_Platform_Ebook_v7.docx")
 
 # ── colour helpers ─────────────────────────────────────────────────────────────
 def rgb(hex_color):
@@ -1737,6 +1737,86 @@ charts_structured = [
       "High Risk clients (red) with >8 creditors and >80% DTI should be fast-tracked to senior counsellors and assessed for sequestration eligibility.",
       "Low Risk clients (green, low DTI) may be suitable for lighter-touch digital servicing rather than intensive counsellor engagement — this frees counsellor capacity.",
       "Run this chart quarterly using live data — if the High Risk cluster grows as a proportion of new intakes, it signals a deteriorating quality of leads coming from specific channels."]),
+
+    # ── GEOGRAPHIC INTELLIGENCE MAPS ─────────────────────────────────────────
+
+    ("15_sa_province_map.png",
+     "Figure 29: South Africa Province Map — DTI Severity & Client Volume",
+     "Executive team, Regional Managers, Strategy Director, and Board.",
+     "Two-panel geographic map of all 9 South African provinces. LEFT panel: provinces coloured "
+     "by average Debt-to-Income Ratio — a red-orange-yellow-green gradient where red indicates "
+     "the most over-indebted provinces; bubble overlays sized by client volume show where "
+     "volume concentrates relative to severity. RIGHT panel: provinces coloured by total client "
+     "volume (teal to purple); overlaid dots coloured by average risk score (red = high risk, "
+     "green = low risk) pinpoint the provinces where counsellor workload is highest and where "
+     "risk profiles demand the most intensive intervention.",
+     "A national debt counselling business that cannot see its geographic risk concentration "
+     "will allocate resources by historical habit rather than current demand. This map "
+     "simultaneously answers three strategic questions: WHERE are we acquiring most clients? "
+     "WHERE is the financial stress most acute? WHERE is the gap between volume and severity "
+     "largest? Provinces that appear small on the left panel (few clients) but dark red "
+     "(high DTI) represent underserved markets — exactly the kind of geographic signal that "
+     "drives community partnership strategy, regional counsellor hiring, and targeted digital "
+     "acquisition campaigns. The risk score overlay on the right panel flags whether a "
+     "high-volume province is also high-risk — a dangerous combination that strains both "
+     "counsellor capacity and the PDA payment pipeline.",
+     ["Commission a province-level strategic review annually: combine this map with market-size "
+      "data (SA Stats income quintiles by province) to quantify the addressable market in "
+      "underserved, high-DTI provinces.",
+      "Eastern Cape and Limpopo consistently show high DTI with lower client volumes — open "
+      "satellite counselling centres or partner with NGOs in these provinces to capture unmet demand.",
+      "Gauteng dominates volume: ensure counsellor-to-client ratios in GP never exceed 1:80, "
+      "and that the digital self-service portal is prominently promoted to lower-severity GP clients.",
+      "Use the risk score overlay to prioritise regional manager deployment: provinces with "
+      "both high volume AND high average risk require a senior regional manager, not a "
+      "junior territory coordinator.",
+      "Share the province DTI map with the Marketing Director quarterly: provinces trending "
+      "toward higher DTI should see increased awareness spend before the client population "
+      "becomes crisis-level and harder to convert.",
+      "The interactive HTML version of this map (sa_interactive_map.html) allows stakeholders "
+      "to click each province for full stats — deploy it on the internal Power BI portal "
+      "as a live geographic KPI layer."]),
+
+    ("16_sa_risk_profile_map.png",
+     "Figure 30: South Africa Province Map — Over-Indebtedness Rate & Credit Score at Intake",
+     "Risk Committee, Credit Bureau liaison, NCR Compliance team, and Social Impact reporting.",
+     "Two-panel geographic map. LEFT panel: provinces coloured by over-indebtedness rate "
+     "(percentage of assessed clients classified as legally over-indebted under the NCA) — "
+     "green = lower rate, red = higher rate; contour lines help distinguish gradients across "
+     "large provinces. RIGHT panel: provinces coloured by average credit score at intake "
+     "(red = lowest scores at entry, green = highest scores) — a red province means clients "
+     "are arriving with already-damaged credit histories, signalling that intervention has "
+     "been delayed and the rehabilitation journey will be longer and harder.",
+     "These two panels measure the severity of the debt crisis by province from two distinct "
+     "angles: the NCA legal classification (over-indebtedness rate) and the credit bureau "
+     "signal (intake credit score). They are not always correlated — a province might have "
+     "a high over-indebtedness rate but average credit scores (clients are formally in breach "
+     "of the NCA threshold, but credit bureaus have not yet downgraded them significantly). "
+     "That divergence is a window for early intervention. Conversely, a province where intake "
+     "credit scores are already sub-500 indicates clients are arriving too late — past the "
+     "point where their credit history is already severely damaged. The NCR, as the regulator, "
+     "also expects registered debt counsellors to understand where the crisis is most acute; "
+     "this map is the visual evidence base for that regulatory engagement. It also supports "
+     "ESG and social impact reporting — showing a Board or investor audience WHERE the "
+     "business is delivering the most measurable social value.",
+     ["Provinces with over-indebtedness rates above 80% should be flagged in the monthly "
+      "Board pack as 'Financial Stress Hotspots' — this drives regulatory dialogue with the NCR.",
+      "Where intake credit scores are sub-500 (severe damage at entry), implement a "
+      "'Credit Recovery Fast-Track': more frequent counsellor contact in months 1–6 and "
+      "a 3-month credit bureau review schedule rather than the standard 6-month cadence.",
+      "Partner with the NCR to publish a sanitised version of the over-indebtedness map "
+      "as part of annual compliance reporting — positions DebtBusters as a data-driven "
+      "voice in the national debt relief policy conversation.",
+      "Include the credit score intake map in the annual Social Impact Report alongside "
+      "clearance data — showing 'we serve the provinces with the most damaged credit' "
+      "is a powerful ESG narrative for institutional partners and funders.",
+      "Set province-level targets for intake credit score improvement: if a province's "
+      "average intake score improves by 20 points year-on-year, it indicates earlier "
+      "intervention — more leads being converted before crisis point.",
+      "Use the over-indebtedness rate divergence from the intake credit score to identify "
+      "emerging risk provinces — high NCA classification rate but still-reasonable credit "
+      "scores means the financial crisis is present but not yet fully reflected in bureau "
+      "data: act now, before scores crater."]),
 ]
 
 

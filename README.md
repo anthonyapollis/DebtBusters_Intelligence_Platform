@@ -132,8 +132,9 @@ Google Analytics / CRM / Call Centre / Credit Bureau / PDA Payments
 
 | Artefact | Description |
 |---|---|
-| `ebook/DebtBusters_Intelligence_Platform_Ebook_v6.docx` | Full platform narrative — 28 embedded figures, each with Audience / What / Why / Solutions analysis |
-| `charts/` | 14 business charts + 8 ML validation charts + 6 platform mockups (28 total) |
+| `ebook/DebtBusters_Intelligence_Platform_Ebook_v7.docx` | Full platform narrative — 30 embedded figures, each with Audience / What / Why / Solutions analysis |
+| `charts/` | 14 business charts + 8 ML validation charts + 6 platform mockups + 2 geographic maps (30 total) |
+| `charts/sa_interactive_map.html` | Interactive Folium map — click any province for full DTI / volume / risk stats |
 | `excel/DebtBusters_Intelligence_Report.xlsx` | Executive KPI report |
 | `excel/ML_Validation_Report.xlsx` | Full ML validation workbook |
 | `sql/create_schema.sql` | Kimball star schema DDL |
@@ -151,6 +152,8 @@ Google Analytics / CRM / Call Centre / Credit Bureau / PDA Payments
 | Fig 26 | Prediction Score Distributions (class separation) | ML Analytical |
 | Fig 27 | Credit Score Forecast — Predicted vs Actual (3/6/12M) | ML Analytical |
 | Fig 28 | Client Risk Segmentation (Income × DTI × Risk Quartile) | ML Analytical |
+| Fig 29 | SA Province Map — DTI Severity & Client Volume | Geographic |
+| Fig 30 | SA Province Map — Over-Indebtedness Rate & Credit Score | Geographic |
 
 ---
 
