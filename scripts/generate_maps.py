@@ -772,11 +772,16 @@ pub_path = os.path.join(PUBLIC_DIR, "map.html")
 shutil.copy2(html_path, pub_path)
 print(f"  Mirrored: public/map.html")
 
-# Copy index.html into charts/ so nav links work when opening charts/ locally
+# Copy index.html + map.html into charts/ so local nav links and iframe both work
 src_index  = os.path.join(PUBLIC_DIR, "index.html")
 dest_index = os.path.join(CHART_DIR,  "index.html")
 if os.path.exists(src_index):
     shutil.copy2(src_index, dest_index)
     print(f"  Copied:   charts/index.html (fixes local nav links)")
+
+# iframe in index.html uses src="map.html" — provide it in charts/ too
+dest_map = os.path.join(CHART_DIR, "map.html")
+shutil.copy2(html_path, dest_map)
+print(f"  Copied:   charts/map.html (fixes iframe in charts/index.html)")
 
 print("\nAll maps generated.")
