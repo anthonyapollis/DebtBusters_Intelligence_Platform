@@ -703,65 +703,58 @@ for pname in prov.sort_values("clients", ascending=False).index:
     imp = r.get("avg_score_improvement", 0)
     col = dti_color(dti)
     rank_rows += (
-        f'<tr><td style="font-weight:600;font-size:11px;">{ABBR.get(pname,pname[:2])}</td>'
-        f'<td style="text-align:right;font-size:11px;">{n:,}</td>'
-        f'<td style="text-align:right;font-size:11px;color:{col};">{dti:.1f}%</td>'
-        f'<td style="text-align:right;font-size:11px;color:{"#52B748" if imp>0 else "#E8363B"};">{"+" if imp>0 else ""}{imp:.0f}</td>'
+        f'<tr><td style="font-weight:600;font-size:10px;padding:1px 0;">{ABBR.get(pname,pname[:2])}</td>'
+        f'<td style="text-align:right;font-size:10px;">{n:,}</td>'
+        f'<td style="text-align:right;font-size:10px;color:{col};">{dti:.1f}%</td>'
+        f'<td style="text-align:right;font-size:10px;color:{"#52B748" if imp>0 else "#E8363B"};">{"+" if imp>0 else ""}{imp:.0f}</td>'
         f'</tr>'
     )
 
 rank_panel = f"""
-<div style="position:fixed;bottom:20px;right:20px;z-index:9999;
-     background:white;border-radius:10px;padding:12px 14px;
-     border-left:4px solid #0A1E3D;font-family:'Segoe UI',Arial,sans-serif;
-     box-shadow:0 4px 16px rgba(0,0,0,0.2);min-width:220px;">
-  <div style="font-size:11px;font-weight:800;color:#0A1E3D;
-              margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px;">
+<div style="position:fixed;bottom:12px;right:12px;z-index:9999;
+     background:white;border-radius:8px;padding:8px 10px;
+     border-left:3px solid #0A1E3D;font-family:'Segoe UI',Arial,sans-serif;
+     box-shadow:0 2px 10px rgba(0,0,0,0.15);min-width:190px;">
+  <div style="font-size:10px;font-weight:800;color:#0A1E3D;
+              margin-bottom:5px;text-transform:uppercase;letter-spacing:0.6px;">
     Province Rankings
   </div>
   <table style="width:100%;border-collapse:collapse;">
     <thead>
-      <tr style="border-bottom:1px solid #e8e8e8;">
-        <th style="text-align:left;font-size:10px;color:#888;padding-bottom:4px;">Province</th>
-        <th style="text-align:right;font-size:10px;color:#888;">Clients</th>
-        <th style="text-align:right;font-size:10px;color:#888;">DTI</th>
-        <th style="text-align:right;font-size:10px;color:#888;">Cr+</th>
+      <tr style="border-bottom:1px solid #f0f0f0;">
+        <th style="text-align:left;font-size:9px;color:#aaa;padding-bottom:2px;font-weight:600;">Prov</th>
+        <th style="text-align:right;font-size:9px;color:#aaa;font-weight:600;">Clients</th>
+        <th style="text-align:right;font-size:9px;color:#aaa;font-weight:600;">DTI</th>
+        <th style="text-align:right;font-size:9px;color:#aaa;font-weight:600;">Cr+</th>
       </tr>
     </thead>
     <tbody>{rank_rows}</tbody>
   </table>
-  <div style="font-size:9px;color:#aaa;margin-top:6px;">
-    Cr+ = avg credit score improvement pts
-  </div>
+  <div style="font-size:8px;color:#ccc;margin-top:4px;">Cr+ = credit score improvement pts</div>
 </div>
 """
 m.get_root().html.add_child(folium.Element(rank_panel))
 
 # ── Legend ────────────────────────────────────────────────────────────────────
 legend_html = f"""
-<div style="position:fixed;bottom:20px;left:20px;z-index:9999;
-     background:white;padding:12px 16px;border-radius:10px;
-     border-left:4px solid #E8363B;font-family:'Segoe UI',Arial,sans-serif;
-     box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:12px;min-width:210px;">
-  <b style="color:#0A1E3D;display:block;margin-bottom:6px;font-size:12px;">
-    DTI Severity (Relative Scale)
-  </b>
-  <div style="font-size:10px;color:#888;margin-bottom:8px;line-height:1.4;">
-    What is DTI? <b>Debt-to-Income Ratio</b> — total monthly
-    debt repayments as a % of gross income. Above 60% = legally
-    over-indebted under the NCA. All provinces: {dti_lo:.1f}–{dti_hi:.1f}%.
-    Colours show <i>relative</i> position within this range.
+<div style="position:fixed;bottom:12px;left:12px;z-index:9999;
+     background:white;padding:8px 10px;border-radius:8px;
+     border-left:3px solid #E8363B;font-family:'Segoe UI',Arial,sans-serif;
+     box-shadow:0 2px 10px rgba(0,0,0,0.15);font-size:11px;min-width:180px;max-width:200px;">
+  <b style="color:#0A1E3D;display:block;margin-bottom:4px;font-size:10px;
+            text-transform:uppercase;letter-spacing:0.6px;">DTI (Relative)</b>
+  <div style="font-size:9px;color:#999;margin-bottom:5px;line-height:1.3;">
+    Debt-to-Income Ratio — monthly debt as % of income.<br>
+    All SA provinces: {dti_lo:.1f}%–{dti_hi:.1f}%
   </div>
   <div style="background:linear-gradient(to right,#52B748,#F5C842,#E8363B);
-              height:8px;border-radius:4px;margin-bottom:4px;"></div>
-  <div style="display:flex;justify-content:space-between;font-size:10px;color:#666;">
-    <span>{dti_lo:.1f}% Lower</span><span>{dti_hi:.1f}% Higher</span>
+              height:6px;border-radius:3px;margin-bottom:3px;"></div>
+  <div style="display:flex;justify-content:space-between;font-size:9px;color:#888;margin-bottom:6px;">
+    <span>Lower</span><span>Higher</span>
   </div>
-  <div style="margin-top:10px;padding-top:8px;border-top:1px solid #eee;
-              font-size:10px;color:#888;line-height:1.6;">
-    Bubble size = client volume<br>
-    <b>Click bubble</b> for 12 province metrics<br>
-    Toggle 4 map layers top-right &#9654;
+  <div style="font-size:9px;color:#aaa;line-height:1.5;border-top:1px solid #f0f0f0;padding-top:5px;">
+    Bubble = client volume &nbsp;&#183;&nbsp; <b>Click</b> for 12 metrics<br>
+    4 layers: toggle top-right &#9654;
   </div>
 </div>
 """
