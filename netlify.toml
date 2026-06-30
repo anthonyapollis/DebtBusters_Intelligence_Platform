@@ -1,6 +1,5 @@
 [build]
   publish = "public"
-  command = "python scripts/build_public.py"
 
 [[redirects]]
   from = "/"
