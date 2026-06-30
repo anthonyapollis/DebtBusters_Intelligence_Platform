@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_efe1b80c2a04c9f9fadaaaa948b75260 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+
+<style id="db-nav-style">
+#db-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
+  background: rgba(10,30,61,0.97);
+  border-bottom: 2px solid #E8363B;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; height: 52px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  backdrop-filter: blur(8px);
+}
+#db-nav .brand {
+  font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap;
+}
+#db-nav .brand span { color: #E8363B; }
+#db-nav .links { display: flex; gap: 6px; flex-wrap: wrap; }
+#db-nav .links a {
+  color: #fff; text-decoration: none;
+  padding: 5px 13px; border-radius: 18px; font-size: 12px; font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.18s; white-space: nowrap;
+}
+#db-nav .links a:hover { background: #E8363B; border-color: #E8363B; }
+#db-nav .links a.primary { background: #E8363B; border-color: #E8363B; }
+#db-nav .links a.teal    { background: #00A99D; border-color: #00A99D; }
+/* Push leaflet map down to clear nav */
+.folium-map { margin-top: 52px !important; }
+body > div:first-of-type { padding-top: 52px; }
+</style>
+
+</head>
+<body>
+
+<div id="db-nav">
+  <div class="brand"><span>DebtBusters</span> Intelligence Platform</div>
+  <div class="links">
+    <a href="index.html">&#127968; Home</a>
+    <a href="index.html#kpis">&#128200; KPIs</a>
+    <a href="index.html#models">&#129302; ML Models</a>
+    <a href="index.html#deliverables">&#128230; Deliverables</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/ebook/DebtBusters_Intelligence_Platform_Ebook_v7.docx"
+       target="_blank" class="teal">&#128218; Ebook</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/excel/DebtBusters_Intelligence_Report.xlsx"
+       target="_blank">&#128202; KPI Excel</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform/raw/master/excel/ML_Validation_Report.xlsx"
+       target="_blank">&#129302; ML Excel</a>
+    <a href="https://github.com/anthonyapollis/DebtBusters_Intelligence_Platform"
+       target="_blank" class="primary">&#128279; GitHub</a>
+  </div>
+</div>
+
+    
+    
+<div style="position:fixed; top:10px; left:50%; transform:translateX(-50%);
+     background:#0A1E3D; color:white; padding:12px 24px; border-radius:8px;
+     font-family:Calibri,Arial,sans-serif; font-size:16px; font-weight:bold;
+     z-index:1000; border-left:4px solid #E8363B; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+ DebtBusters Intelligence Platform — South Africa Province Map
+</div>
+    
+<div style="position:fixed; bottom:30px; left:20px; z-index:1000;
+     background:white; padding:12px 16px; border-radius:8px;
+     border-left:4px solid #E8363B; font-family:Calibri,Arial,sans-serif;
+     box-shadow:0 2px 8px rgba(0,0,0,0.2); font-size:12px;">
+  <b style="color:#0A1E3D; display:block; margin-bottom:8px;">Average DTI by Province</b>
+  <div><span style="background:#E8363B; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>&ge;75% — Severe</div>
+  <div><span style="background:#F57C2D; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>68–75% — High</div>
+  <div><span style="background:#F5C842; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>62–68% — Elevated</div>
+  <div><span style="background:#52B748; width:14px; height:14px; display:inline-block; border-radius:50%; margin-right:6px;"></span>&lt;62% — Manageable</div>
+  <div style="margin-top:6px; font-size:10px; color:#888;">Bubble size = client volume<br>Click bubble for full stats</div>
+</div>
+    
+            <div class="folium-map" id="map_efe1b80c2a04c9f9fadaaaa948b75260" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_efe1b80c2a04c9f9fadaaaa948b75260 = L.map(
+                "map_efe1b80c2a04c9f9fadaaaa948b75260",
+                {
+                    center: [-29.0, 25.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_02277ee4a13cf89ffc10d5a23c864245 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_02277ee4a13cf89ffc10d5a23c864245.addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var circle_marker_a51fb92cdbfe9375beeae5cfb7cbf9e9 = L.circleMarker(
+                [-23.5, 29.0],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.246, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_b0c5251d10721a9c9e3d49fcbea185e4 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_078568ac519950531341a587dbb90026 = $(`<div id="html_078568ac519950531341a587dbb90026" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         Limpopo       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">8,123</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.4%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R441,569</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.1%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.413</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_b0c5251d10721a9c9e3d49fcbea185e4.setContent(html_078568ac519950531341a587dbb90026);
+            
+        
+
+        circle_marker_a51fb92cdbfe9375beeae5cfb7cbf9e9.bindPopup(popup_b0c5251d10721a9c9e3d49fcbea185e4)
+        ;
+
+        
+    
+    
+            circle_marker_a51fb92cdbfe9375beeae5cfb7cbf9e9.bindTooltip(
+                `<div>
+                     Limpopo: DTI 68.4% | 8,123 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_442e5c8984c09d197b69182e62f57be8 = L.marker(
+                [-23.5, 29.0],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_1c55af12e82b2678463408a5dcce21e8 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eLP\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_442e5c8984c09d197b69182e62f57be8.setIcon(div_icon_1c55af12e82b2678463408a5dcce21e8);
+            
+    
+            var circle_marker_a9148371c2223492cc50f40dd89fff33 = L.circleMarker(
+                [-25.8, 30.2],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_281094d85194041a1b3698a46a93a6c4 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_c92328c61e0eb53dac820b02addba666 = $(`<div id="html_c92328c61e0eb53dac820b02addba666" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         Mpumalanga       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">7,217</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.2%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R445,111</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.5%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.410</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_281094d85194041a1b3698a46a93a6c4.setContent(html_c92328c61e0eb53dac820b02addba666);
+            
+        
+
+        circle_marker_a9148371c2223492cc50f40dd89fff33.bindPopup(popup_281094d85194041a1b3698a46a93a6c4)
+        ;
+
+        
+    
+    
+            circle_marker_a9148371c2223492cc50f40dd89fff33.bindTooltip(
+                `<div>
+                     Mpumalanga: DTI 68.2% | 7,217 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_98a7f7a5d735ea23c5379a69812adc0a = L.marker(
+                [-25.8, 30.2],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_ebdf5415ca478aa8bba32d3b64239370 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eMP\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_98a7f7a5d735ea23c5379a69812adc0a.setIcon(div_icon_ebdf5415ca478aa8bba32d3b64239370);
+            
+    
+            var circle_marker_fc89fcf6d365cd3a1dfb7bb1fade12e8 = L.circleMarker(
+                [-26.2, 27.9],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 60, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_f23a6c7e4b8eea2bf74d243d2ea65cee = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_258253d618303a3b94a16548a116b678 = $(`<div id="html_258253d618303a3b94a16548a116b678" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         Gauteng       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">36,165</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.1%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R440,427</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.0%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.404</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_f23a6c7e4b8eea2bf74d243d2ea65cee.setContent(html_258253d618303a3b94a16548a116b678);
+            
+        
+
+        circle_marker_fc89fcf6d365cd3a1dfb7bb1fade12e8.bindPopup(popup_f23a6c7e4b8eea2bf74d243d2ea65cee)
+        ;
+
+        
+    
+    
+            circle_marker_fc89fcf6d365cd3a1dfb7bb1fade12e8.bindTooltip(
+                `<div>
+                     Gauteng: DTI 68.1% | 36,165 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a94292a68fbd4b5f409e189bd599efbf = L.marker(
+                [-26.2, 27.9],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_02e627e682b04ce5bac3c56594b09775 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eGP\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_a94292a68fbd4b5f409e189bd599efbf.setIcon(div_icon_02e627e682b04ce5bac3c56594b09775);
+            
+    
+            var circle_marker_453fb18985fb442e5ef2c0a73ce4255a = L.circleMarker(
+                [-25.8, 25.2],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_d7ee567ca0a29acb1628e5dd4df96518 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_3eeafce7b8e771740442a3f7e0e38bef = $(`<div id="html_3eeafce7b8e771740442a3f7e0e38bef" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         North West       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">5,916</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.5%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R441,995</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.6%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.409</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_d7ee567ca0a29acb1628e5dd4df96518.setContent(html_3eeafce7b8e771740442a3f7e0e38bef);
+            
+        
+
+        circle_marker_453fb18985fb442e5ef2c0a73ce4255a.bindPopup(popup_d7ee567ca0a29acb1628e5dd4df96518)
+        ;
+
+        
+    
+    
+            circle_marker_453fb18985fb442e5ef2c0a73ce4255a.bindTooltip(
+                `<div>
+                     North West: DTI 68.5% | 5,916 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ec2a38ed85a517acbe50bafadcdd41f6 = L.marker(
+                [-25.8, 25.2],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_4a3fbb6a3f748e3a884027c464f4b777 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eNW\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_ec2a38ed85a517acbe50bafadcdd41f6.setIcon(div_icon_4a3fbb6a3f748e3a884027c464f4b777);
+            
+    
+            var circle_marker_864d30a0e8b6da5255c7ea2e78755729 = L.circleMarker(
+                [-29.0, 27.2],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F5C842", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_35e6e4869ab4f898ec879d4bb26f3803 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_cddd2d07256f4fa6b47a489e8ce5bbbc = $(`<div id="html_cddd2d07256f4fa6b47a489e8ce5bbbc" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         Free State       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">5,850</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.0%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R436,533</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">71.7%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.408</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_35e6e4869ab4f898ec879d4bb26f3803.setContent(html_cddd2d07256f4fa6b47a489e8ce5bbbc);
+            
+        
+
+        circle_marker_864d30a0e8b6da5255c7ea2e78755729.bindPopup(popup_35e6e4869ab4f898ec879d4bb26f3803)
+        ;
+
+        
+    
+    
+            circle_marker_864d30a0e8b6da5255c7ea2e78755729.bindTooltip(
+                `<div>
+                     Free State: DTI 68.0% | 5,850 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_48c4923c90d017ab9a790f7a13750a9f = L.marker(
+                [-29.0, 27.2],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_fcec2489e14fb4bb4b9502d1e9a0d7c4 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eFS\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_48c4923c90d017ab9a790f7a13750a9f.setIcon(div_icon_fcec2489e14fb4bb4b9502d1e9a0d7c4);
+            
+    
+            var circle_marker_f4fe226f3dc6c37949dfec1e26b668e7 = L.circleMarker(
+                [-28.8, 30.8],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 43.89, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_87d526cee18f3deb708c7379fe063163 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_e0058fdd5d76a5888ea3d2eac30b8219 = $(`<div id="html_e0058fdd5d76a5888ea3d2eac30b8219" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         KwaZulu-Natal       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">21,945</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.3%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R439,638</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.4%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.405</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_87d526cee18f3deb708c7379fe063163.setContent(html_e0058fdd5d76a5888ea3d2eac30b8219);
+            
+        
+
+        circle_marker_f4fe226f3dc6c37949dfec1e26b668e7.bindPopup(popup_87d526cee18f3deb708c7379fe063163)
+        ;
+
+        
+    
+    
+            circle_marker_f4fe226f3dc6c37949dfec1e26b668e7.bindTooltip(
+                `<div>
+                     KwaZulu-Natal: DTI 68.3% | 21,945 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b50466397b4ffd1fd7b26f4a907c1e0f = L.marker(
+                [-28.8, 30.8],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_08be4b0f68750181e8c0d0478705defa = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eKZN\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_b50466397b4ffd1fd7b26f4a907c1e0f.setIcon(div_icon_08be4b0f68750181e8c0d0478705defa);
+            
+    
+            var circle_marker_2c1bd23d9bb1f63f10794d9dd26baa8b = L.circleMarker(
+                [-32.0, 26.5],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.954, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_852ab5d8306b21cb177c595d0da55009 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_32662de4815a0e4e943a71ce585fed80 = $(`<div id="html_32662de4815a0e4e943a71ce585fed80" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         Eastern Cape       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">11,977</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.3%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R438,051</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.6%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.405</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_852ab5d8306b21cb177c595d0da55009.setContent(html_32662de4815a0e4e943a71ce585fed80);
+            
+        
+
+        circle_marker_2c1bd23d9bb1f63f10794d9dd26baa8b.bindPopup(popup_852ab5d8306b21cb177c595d0da55009)
+        ;
+
+        
+    
+    
+            circle_marker_2c1bd23d9bb1f63f10794d9dd26baa8b.bindTooltip(
+                `<div>
+                     Eastern Cape: DTI 68.3% | 11,977 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8895d5d4282d352dbb11f191ba0691d7 = L.marker(
+                [-32.0, 26.5],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_689f7f96239e99a6048c91f96f7884f7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eEC\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_8895d5d4282d352dbb11f191ba0691d7.setIcon(div_icon_689f7f96239e99a6048c91f96f7884f7);
+            
+    
+            var circle_marker_d9d89ac26d06ed09c499a4cfdef065dc = L.circleMarker(
+                [-30.0, 20.2],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_d2fd6cd8ffc026d0a66052bcfc8ad6d7 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_8468efac59da34e6dfc6cf599df5259e = $(`<div id="html_8468efac59da34e6dfc6cf599df5259e" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         Northern Cape       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">2,232</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.0%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R444,120</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.4%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.409</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_d2fd6cd8ffc026d0a66052bcfc8ad6d7.setContent(html_8468efac59da34e6dfc6cf599df5259e);
+            
+        
+
+        circle_marker_d9d89ac26d06ed09c499a4cfdef065dc.bindPopup(popup_d2fd6cd8ffc026d0a66052bcfc8ad6d7)
+        ;
+
+        
+    
+    
+            circle_marker_d9d89ac26d06ed09c499a4cfdef065dc.bindTooltip(
+                `<div>
+                     Northern Cape: DTI 68.0% | 2,232 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a2b9a121ee09889cfe1a473f32fca54f = L.marker(
+                [-30.0, 20.2],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_a91b0ae55885e67b8445d37888baf399 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eNC\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_a2b9a121ee09889cfe1a473f32fca54f.setIcon(div_icon_a91b0ae55885e67b8445d37888baf399);
+            
+    
+            var circle_marker_326d483c306cd4d559a59d622122f6f1 = L.circleMarker(
+                [-33.8, 20.0],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#F57C2D", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 41.15, "stroke": true, "weight": 2}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+        var popup_545d91755180942c41316020a74a85b5 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_19695ffd458d80e666cddcc286c79fbf = $(`<div id="html_19695ffd458d80e666cddcc286c79fbf" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Calibri,Arial,sans-serif; min-width:220px;">       <h4 style="margin:0 0 8px; color:#0A1E3D; border-bottom:2px solid #E8363B; padding-bottom:4px;">         Western Cape       </h4>       <table style="width:100%; font-size:12px;">         <tr><td><b>Clients assessed</b></td><td style="text-align:right">20,575</td></tr>         <tr><td><b>Average DTI</b></td>             <td style="text-align:right; color:#52B748">68.3%</td></tr>         <tr><td><b>Average Debt</b></td>             <td style="text-align:right">R441,803</td></tr>         <tr><td><b>Over-Indebted</b></td>             <td style="text-align:right">72.4%</td></tr>         <tr><td><b>Avg Risk Score</b></td>             <td style="text-align:right">0.406</td></tr>       </table>       <div style="margin-top:8px; padding:6px; background:#f5f5f5; border-radius:4px;                   font-size:11px; color:#555;">         ✅ Within manageable DTI range       </div>     </div>     </div>`)[0];
+                popup_545d91755180942c41316020a74a85b5.setContent(html_19695ffd458d80e666cddcc286c79fbf);
+            
+        
+
+        circle_marker_326d483c306cd4d559a59d622122f6f1.bindPopup(popup_545d91755180942c41316020a74a85b5)
+        ;
+
+        
+    
+    
+            circle_marker_326d483c306cd4d559a59d622122f6f1.bindTooltip(
+                `<div>
+                     Western Cape: DTI 68.3% | 20,575 clients
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_75e798ef7e85b73febbd63b697795807 = L.marker(
+                [-33.8, 20.0],
+                {
+}
+            ).addTo(map_efe1b80c2a04c9f9fadaaaa948b75260);
+        
+    
+            var div_icon_fa09d4a144ea4dda1c7c7e406131c054 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:9px; font-weight:bold; color:white; text-shadow:1px 1px 2px #000; text-align:center; width:60px; margin-left:-30px;\"\u003eWC\u003cbr\u003e68%\u003c/div\u003e",
+  "iconSize": [60, 30],
+  "className": "empty",
+});
+        
+    
+                marker_75e798ef7e85b73febbd63b697795807.setIcon(div_icon_fa09d4a144ea4dda1c7c7e406131c054);
+            
+</script>
+</html>
