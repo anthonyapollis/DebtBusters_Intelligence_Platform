@@ -1178,7 +1178,7 @@ charts_structured = [
 
     ("mockup_01_databricks_notebook.png",
      "Figure 2: Databricks Notebook — Silver Layer Client Deduplication (PySpark)",
-     "Senior Data Engineers and technical hiring managers reviewing PySpark and Databricks proficiency.",
+     "Senior Data Engineers and technical reviewers reviewing PySpark and Databricks proficiency.",
      "The dark-themed Databricks notebook shows PySpark transformation code in the editor cell and "
      "execution output below. The ROW_NUMBER() window function, partitioned by client_id and ordered "
      "by created_date DESC, retains only the most recent record per client. Email validation applies "
@@ -1566,7 +1566,7 @@ charts_structured = [
 
     ("ml_01_roc_curves.png",
      "Figure 21: ML Validation — ROC Curves for All 5 Models",
-     "Data Scientists, CTO, Risk Officer, and technical hiring managers reviewing model performance.",
+     "Data Scientists, CTO, Risk Officer, and technical reviewers reviewing model performance.",
      "Each coloured curve = one ML model. X-axis = False Positive Rate (FPR — incorrectly flagging "
      "low-risk clients as high-risk). Y-axis = True Positive Rate (TPR — correctly identifying "
      "high-risk clients). The diagonal dashed line is a random classifier (AUC 0.50). The closer "
@@ -1575,7 +1575,7 @@ charts_structured = [
      "Credit Score R² 0.890 (teal), Client Churn AUC 0.720 (purple).",
      "ROC curves are the international standard for evaluating binary classifiers in financial "
      "services — they show model performance at all possible decision thresholds, not just one. "
-     "A hiring manager, CTO, or regulator can immediately see that all 5 models significantly "
+     "A CTO, regulator, or technical reviewer can immediately see that all 5 models significantly "
      "outperform random guessing. Importantly, the AUC values are honest — they are validated "
      "on a held-out test set, not training data. In South African banking and insurance, AUC "
      "values of 0.70–0.75 for behavioural models are considered production-ready.",
@@ -1641,7 +1641,7 @@ charts_structured = [
      "encountering new, unseen clients by training on 80% and testing on 20%, repeated 5 times "
      "across different splits. Low CV variance means the model is not memorising the training "
      "data — it has learned real patterns that will hold on the production book. This chart "
-     "is the evidence a technical interviewer or CTO needs to confirm the models are production-ready.",
+     "is the evidence a technical reviewer or CTO needs to confirm the models are production-ready.",
      ["Use the CV standard deviation as the confidence interval for each model's business case: Lead Conversion will deliver AUC 0.731 ± 0.018 on live data.",
       "If CV variance widens above 0.04 on retraining, investigate for data leakage (a feature correlated with the target that would not be available at prediction time).",
       "Schedule automated CV reporting monthly on the latest 3 months of live data — widening variance is the first symptom of concept drift.",

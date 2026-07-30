@@ -5,7 +5,7 @@
 
 ## Project Overview
 
-End-to-end data engineering and ML portfolio project modelled on the Confluent/IDM group (DebtBusters, JustMoney). Covers the full South African debt counselling and financial wellness lifecycle: lead acquisition → affordability assessment → debt review → payment distribution → credit monitoring → debt clearance.
+End-to-end data engineering and ML completed project modelled on the Confluent/IDM group (DebtBusters, JustMoney). Covers the full South African debt counselling and financial wellness lifecycle: lead acquisition → affordability assessment → debt review → payment distribution → credit monitoring → debt clearance.
 
 **Tech Stack:** Databricks (Azure) · Delta Lake · PySpark · MLflow · XGBoost · LightGBM · CatBoost · Power BI
 
@@ -157,4 +157,4 @@ Google Analytics / CRM / Call Centre / Credit Bureau / PDA Payments
 
 ---
 
-*Anthony Apollis · Portfolio Project 2026*
+*Anthony Apollis · Completed Project 2026*
