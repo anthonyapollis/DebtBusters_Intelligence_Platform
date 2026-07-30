@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DebtBusters &mdash; PDA Collection Reconciliation</title>
+<style>
+  :root{--bg:#060F1E;--panel:#0d1f38;--panel2:#0A1E3D;--line:#1c3050;--acc:#00A99D;--acc-d:#008C81;
+    --gold:#F5C842;--gold-d:#e0b02f;--orange:#F57C2D;--red:#E8363B;--green:#52B748;--text:#e6eefb;--muted:#8896A8;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Segoe UI',Tahoma,sans-serif;background:radial-gradient(1100px 460px at 88% -8%,rgba(0,169,157,.12),transparent 60%),radial-gradient(900px 400px at 6% 0,rgba(245,200,66,.07),transparent 55%),var(--bg);color:var(--text);padding:22px;min-height:100vh;}
+  .wrap{max-width:1280px;margin:0 auto;}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px;}
+  .brand{display:flex;align-items:center;gap:13px;}
+  .logo{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,var(--acc),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:900;color:#062;font-size:19px;box-shadow:0 0 26px rgba(0,169,157,.45);}
+  .brand h1{font-size:19px;font-weight:800;} .brand p{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .byline{text-align:right;font-size:12px;color:var(--muted);line-height:1.55;} .byline b{color:var(--text);} .byline a{color:var(--acc);text-decoration:none;font-weight:700;}
+  .gov{display:flex;gap:12px;background:linear-gradient(90deg,rgba(0,169,157,.10),transparent);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:12px;padding:13px 15px;margin-bottom:16px;font-size:13px;line-height:1.55;}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-bottom:12px;}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 14px;}
+  .kpi .n{font-size:20px;font-weight:900;letter-spacing:-.5px;} .kpi .l{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.4px;}
+  .kpi.teal .n{color:var(--acc);} .kpi.gold .n{color:var(--gold);} .kpi.red .n{color:var(--red);} .kpi.green .n{color:var(--green);}
+  .sumbar{display:flex;height:11px;border-radius:7px;overflow:hidden;margin-bottom:14px;border:1px solid var(--line);}
+  .sb-f{background:var(--acc);}.sb-p{background:var(--gold);}.sb-m{background:var(--red);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:11.5px;color:var(--muted);}
+  .chip b{color:var(--text);} .chip.red b{color:var(--red);} .chip.gold b{color:var(--gold);} .chip.teal b{color:var(--acc);}
+  .controls{display:flex;flex-wrap:wrap;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 16px;margin-bottom:14px;font-size:12.5px;color:var(--muted);}
+  .search{margin-left:auto;} .search input{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:20px;padding:7px 13px;font-size:12.5px;width:220px;}
+  .grid{display:grid;grid-template-columns:1fr 390px;gap:16px;} @media(max-width:1040px){.grid{grid-template-columns:1fr;}.kpis{grid-template-columns:repeat(3,1fr);}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;}
+  .card h2{font-size:13px;font-weight:800;padding:13px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .filters{display:flex;gap:6px;} .fbtn{font-size:11.5px;padding:5px 11px;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;}
+  .fbtn.active{background:var(--acc);color:#062;border-color:var(--acc);font-weight:800;}
+  table{width:100%;border-collapse:collapse;font-size:12px;} th{text-align:left;color:var(--muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;padding:9px 11px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);}
+  td{padding:9px 11px;border-bottom:1px solid rgba(28,48,80,.5);} tbody tr{cursor:pointer;} tbody tr:hover{background:rgba(0,169,157,.06);}
+  tbody tr.sel{background:rgba(0,169,157,.12);box-shadow:inset 3px 0 0 var(--acc);}
+  .mono{font-family:'Consolas',monospace;color:#a9c4e6;} .amt{text-align:right;font-family:'Consolas',monospace;}
+  .tblwrap{max-height:520px;overflow:auto;}
+  .pill{font-size:9px;font-weight:800;padding:3px 7px;border-radius:20px;white-space:nowrap;}
+  .t-Bank{background:rgba(0,169,157,.16);color:var(--acc);} .t-Retailer{background:rgba(245,200,66,.16);color:var(--gold);}
+  .t-default{background:rgba(136,150,168,.16);color:var(--muted);}
+  .rate-good{color:var(--acc);font-weight:700;} .rate-mid{color:var(--gold);font-weight:700;} .rate-bad{color:var(--red);font-weight:700;}
+  .ai .head{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid var(--line);}
+  .ai .dot{width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);animation:blink 1.6s infinite;} @keyframes blink{50%{opacity:.35;}}
+  .ai .body{padding:16px;min-height:380px;} .ai .empty{color:var(--muted);font-size:13px;line-height:1.65;}
+  .ai .verdict{font-size:14px;font-weight:800;margin-bottom:10px;} .ai p{font-size:13px;line-height:1.65;margin-bottom:12px;}
+  .prov{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:12px;margin-bottom:12px;}
+  .prov .h{font-size:9.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:7px;}
+  .prov .row{display:flex;justify-content:space-between;gap:10px;padding:3px 0;} .prov .row span:first-child{color:var(--muted);}
+  .action{font-size:12.5px;background:rgba(0,169,157,.07);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:9px;padding:10px 12px;line-height:1.5;}
+  .guard{margin-top:13px;font-size:11px;color:var(--muted);line-height:1.55;border-top:1px dashed var(--line);padding-top:11px;} .guard b{color:var(--acc);}
+  footer{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .real{color:var(--acc);font-weight:700;}
+</style></head><body>
+<div class="wrap">
+  <header>
+    <div class="brand"><div class="logo">DB</div>
+      <div><h1>DebtBusters &mdash; PDA Collection Reconciliation <span style="color:var(--gold);">&bull;</span> automatic</h1>
+      <p>Every debt-review instalment reconciled: expected plan amount vs collected vs distributed to creditors &middot; missed / short-paid exceptions &middot; runs on load</p></div></div>
+    <div class="byline"><b>Anthony Apollis</b> &middot; Senior BI Developer<br>DebtBusters Intelligence Platform &middot; Databricks<br><span>Governed reconciliation mart</span></div>
+  </header>
+  <div class="gov"><span>&#128737;&#65039;</span><div><b>Automatic &amp; governed &mdash; real data.</b> Reconciles the <b>real</b> <span class="mono">payments</span> fact (<b>1,500,000</b> debt-review instalments across <span id="ncr">23</span> creditors) &mdash; each client's court-accepted plan amount vs what the PDA actually collected and distributed. Every break cites its creditor and PDA references; a payment counts as collected only from the real actual-amount field.</div></div>
+
+  <div class="kpis" id="kpis"></div>
+  <div class="sumbar" id="sumbar"><div class="sb-f" style="width:0"></div><div class="sb-p" style="width:0"></div><div class="sb-m" style="width:0"></div></div>
+  <div class="chips" id="chips"></div>
+
+  <div class="controls">
+    <span style="font-weight:700;color:var(--text);">Creditor collection register</span>
+    <span id="status" style="color:var(--acc);font-weight:700;"></span>
+    <span class="search">&#128269; <input id="search" placeholder="Search creditor&hellip;"></span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Creditors <span style="font-weight:400;color:var(--muted);font-size:11px;">(live aggregate of all 1.5M instalments)</span>
+        <div class="filters" id="filters">
+          <button class="fbtn active" data-f="all">All</button>
+          <button class="fbtn" data-f="gap">Biggest gap</button>
+          <button class="fbtn" data-f="bank">Banks</button>
+        </div></h2>
+      <div class="tblwrap"><table>
+        <thead><tr><th>Creditor</th><th>Type</th><th class="amt">Instalments</th><th class="amt">Collection %</th><th class="amt">Expected R</th><th class="amt">Collected R</th><th class="amt">Shortfall R</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table></div>
+    </div>
+    <div class="card ai"><div class="head"><span class="dot"></span><b>AI Collection Agent</b></div>
+      <div class="body" id="ai"><div class="empty">Reconciliation ran automatically over all 1,500,000 instalments. Select any creditor &mdash; especially one with a low collection rate or large <b style="color:var(--red)">shortfall</b> &mdash; for a plain-language explanation with full provenance and a recommended action.</div></div>
+    </div>
+  </div>
+
+  <footer><span class="real">&#9679; Live reconciliation of the DebtBusters book &mdash; payments &times; creditors (PDA distribution).</span>
+  <span>DebtBusters Intelligence Platform &middot; Databricks &middot; Delta Lake &middot; governed AI</span></footer>
+</div>
+<script>
+const D = {"rows":[{"cid":"eca8e797-cfab-49b5-bb7e-9dcb87d77ccd","name":"Capitec","type":"Home Loan","ncr":true,"n":65666,"full":21926,"part":33093,"miss":10647,"exp":223800126.91,"act":182833125.68,"dist":175523933.03,"arr":42541423.94,"rate":81.7,"samples":["PDA-4551227","PDA-1767543","PDA-5926037","PDA-3848182"]},{"cid":"d9c20cfa-95cd-4b14-81ce-546043cb3dcf","name":"Wonga","type":"Micro Lender","ncr":true,"n":65509,"full":22039,"part":33073,"miss":10397,"exp":223274717.26,"act":183438211.3,"dist":176053155.62,"arr":41418882.92,"rate":82.2,"samples":["PDA-7210388","PDA-4300745","PDA-3933887","PDA-7055000"]},{"cid":"328ea77a-8165-40a7-aacf-724baf8b6bd8","name":"African Bank","type":"Bank","ncr":true,"n":65468,"full":21990,"part":32814,"miss":10664,"exp":222895862.48,"act":181852007.59,"dist":174590845.64,"arr":42598301.32,"rate":81.6,"samples":["PDA-4313310","PDA-5740502","PDA-6029237","PDA-3478395"]},{"cid":"549038ab-ab49-4246-b0e1-8d8b1d82c3cf","name":"MFC Vehicle Finance","type":"Vehicle Finance","ncr":true,"n":65393,"full":21996,"part":32916,"miss":10481,"exp":222891390.19,"act":182674599.45,"dist":175384884.72,"arr":41773599.68,"rate":82.0,"samples":["PDA-3709387","PDA-7436296","PDA-6644516","PDA-9709582"]},{"cid":"b6955df2-62b8-4b92-937c-68d14d9b58f5","name":"ABSA Bank","type":"Bank","ncr":true,"n":65449,"full":22113,"part":32804,"miss":10532,"exp":222757857.07,"act":181943826.63,"dist":174648341.08,"arr":42371491.68,"rate":81.7,"samples":["PDA-6082635","PDA-1572044","PDA-9446486","PDA-3533844"]},{"cid":"a9f2f700-ba7a-4bcd-89a7-e3db320b27dd","name":"Izwe Loans","type":"Micro Lender","ncr":true,"n":65498,"full":22098,"part":32847,"miss":10553,"exp":222726747.09,"act":182125731.62,"dist":174819660.13,"arr":42171130.32,"rate":81.8,"samples":["PDA-3930364","PDA-6498694","PDA-1019876","PDA-5409603"]},{"cid":"35dd7033-35dc-4fa1-9490-f4951802e4fb","name":"SA Home Loans","type":"Home Loan","ncr":true,"n":65416,"full":21898,"part":32968,"miss":10550,"exp":222476355.51,"act":181666733.95,"dist":174435210.42,"arr":42362289.48,"rate":81.7,"samples":["PDA-8417623","PDA-6270863","PDA-3874786","PDA-4016214"]},{"cid":"1b08d1a9-f512-48ac-b091-e1412f1bfb41","name":"ooba","type":"Home Loan","ncr":true,"n":65197,"full":21910,"part":32672,"miss":10615,"exp":222420240.29,"act":181573144.46,"dist":174303837.15,"arr":42395037.17,"rate":81.6,"samples":["PDA-7264369","PDA-5840141","PDA-4138664","PDA-5056913"]},{"cid":"a6a7ce60-65f6-4133-a47a-357a8d124b01","name":"Lime24","type":"Micro Lender","ncr":true,"n":65320,"full":21862,"part":32865,"miss":10593,"exp":222392663.82,"act":181870575.35,"dist":174581405.74,"arr":42076873.13,"rate":81.8,"samples":["PDA-8372204","PDA-7074316","PDA-1760107","PDA-2090201"]},{"cid":"6d73d419-13dd-4282-a23f-6ebe2263ba32","name":"FNB","type":"Bank","ncr":true,"n":65381,"full":21958,"part":32823,"miss":10600,"exp":222305103.74,"act":181735702.97,"dist":174483913.88,"arr":42115170.98,"rate":81.8,"samples":["PDA-7697509","PDA-1006457","PDA-6281864","PDA-1489025"]},{"cid":"fb9120c0-e951-4533-9d30-b67934a09e6e","name":"Boodle","type":"Micro Lender","ncr":true,"n":65377,"full":21757,"part":32822,"miss":10798,"exp":222085914.6,"act":180633057.92,"dist":173440263.85,"arr":42996617.66,"rate":81.3,"samples":["PDA-6893217","PDA-3696033","PDA-5935709","PDA-8895134"]},{"cid":"19455144-591c-47d7-aa47-40f9a53f241f","name":"Standard Bank","type":"Bank","ncr":true,"n":65424,"full":21919,"part":32768,"miss":10737,"exp":221931612.15,"act":180587535.79,"dist":173345685.29,"arr":42890511.75,"rate":81.4,"samples":["PDA-4430119","PDA-8834536","PDA-7957641","PDA-6262729"]},{"cid":"b35bdee0-6214-49b0-8506-2ec0c48f92f5","name":"Nedbank","type":"Bank","ncr":true,"n":65070,"full":21798,"part":32648,"miss":10624,"exp":221850806.09,"act":180716466.81,"dist":173503650.88,"arr":42687670.08,"rate":81.5,"samples":["PDA-9829514","PDA-1706777","PDA-8750805","PDA-9342150"]},{"cid":"41765330-ec56-4733-8779-f046c5222ba6","name":"DirectAxis","type":"Home Loan","ncr":true,"n":65205,"full":22007,"part":32620,"miss":10578,"exp":221598175.99,"act":180893575.52,"dist":173617565.07,"arr":42269150.99,"rate":81.6,"samples":["PDA-1631406","PDA-1852477","PDA-6146008","PDA-9275345"]},{"cid":"ff6a5075-ba5c-4068-a901-fcbe6b8138f2","name":"TymeBank","type":"Bank","ncr":true,"n":65051,"full":21712,"part":32790,"miss":10549,"exp":221594136.7,"act":181118551.75,"dist":173864822.35,"arr":42053414.01,"rate":81.7,"samples":["PDA-7403289","PDA-9605525","PDA-4042637","PDA-9913280"]},{"cid":"34cd9159-192b-47c0-9727-c0c98201b572","name":"WesBank","type":"Bank","ncr":true,"n":65083,"full":22025,"part":32745,"miss":10313,"exp":221524154.32,"act":181802878.33,"dist":174521836.77,"arr":41267870.82,"rate":82.1,"samples":["PDA-8294151","PDA-3362607","PDA-1254022","PDA-1936999"]},{"cid":"2d6fc443-ad07-419a-81aa-b96b8ca70e6c","name":"Discovery Bank","type":"Bank","ncr":true,"n":64984,"full":21743,"part":32654,"miss":10587,"exp":221402643.81,"act":180700814.08,"dist":173475736.42,"arr":42258038.72,"rate":81.6,"samples":["PDA-2662188","PDA-5014905","PDA-3224066","PDA-8404099"]},{"cid":"98283839-a3b6-4340-8d95-89e5cd5dc494","name":"Bayport","type":"Micro Lender","ncr":true,"n":65014,"full":21960,"part":32514,"miss":10540,"exp":221296985.62,"act":180787963.42,"dist":173528115.27,"arr":42054188.59,"rate":81.7,"samples":["PDA-6663969","PDA-5903241","PDA-2200011","PDA-4400246"]},{"cid":"7fd552c5-01ec-4a78-9e35-fd27a6fcdf34","name":"RCS","type":"Retailer","ncr":true,"n":65002,"full":21829,"part":32722,"miss":10451,"exp":221164676.74,"act":180890771.7,"dist":173616091.69,"arr":41821004.62,"rate":81.8,"samples":["PDA-5181993","PDA-4077961","PDA-3536530","PDA-6352612"]},{"cid":"dc9593ed-065f-48cd-9226-9adcec85d6be","name":"Sanlam Personal Loans","type":"Insurance","ncr":true,"n":64924,"full":21801,"part":32781,"miss":10342,"exp":221035918.06,"act":181070207.98,"dist":173839614.51,"arr":41516547.34,"rate":81.9,"samples":["PDA-6509775","PDA-9164726","PDA-3266681","PDA-7294280"]},{"cid":"ae212e1d-9858-4f7b-aaa3-51bf8ff0f314","name":"Old Mutual Finance","type":"Vehicle Finance","ncr":true,"n":64925,"full":21701,"part":32623,"miss":10601,"exp":220787970.25,"act":180261599.07,"dist":173018156.12,"arr":42067036.44,"rate":81.6,"samples":["PDA-9163778","PDA-6774562","PDA-6552973","PDA-6313123"]},{"cid":"32472675-41fd-49e9-89d5-3750b6e0509f","name":"Edgars Credit","type":"Retailer","ncr":true,"n":64848,"full":21762,"part":32558,"miss":10528,"exp":220480062.28,"act":180104631.31,"dist":172912208.39,"arr":41901521.35,"rate":81.7,"samples":["PDA-3071104","PDA-6191908","PDA-6970529","PDA-3379367"]},{"cid":"ab818ce5-8014-4815-b6ec-acfa25373e83","name":"Woolworths Financial","type":"Retailer","ncr":true,"n":64796,"full":21959,"part":32429,"miss":10408,"exp":219433214.04,"act":179842144.78,"dist":172617261.41,"arr":41145764.56,"rate":82.0,"samples":["PDA-4969199","PDA-7173854","PDA-3431114","PDA-2001588"]}],"kpi":{"n":1500000,"full":503763,"part":753549,"miss":242688,"exp":5104127335.01,"act":4171123857.46,"dist":4004126195.43,"arr":968753537.55,"creditors":23,"rate":81.7,"gap":933003477.55}};
+const K = D.kpi;
+const fmt=(n)=> n==null?'\u2014':Math.round(n).toLocaleString('en-ZA');
+const bn=(n)=> 'R'+(n/1e9).toFixed(2)+'bn';
+const mn=(n)=> Math.abs(n)>=1e9?bn(n):'R'+(n/1e6).toFixed(1)+'m';
+let FILTER='all', SEL=null, SEARCH='';
+document.getElementById('ncr').textContent=K.creditors;
+
+function rateCls(r){return r>=85?'rate-good':r>=75?'rate-mid':'rate-bad';}
+function typeCls(t){return t==='Bank'?'t-Bank':(t==='Retailer'?'t-Retailer':'t-default');}
+function renderKPIs(){
+  document.getElementById('kpis').innerHTML=`
+    <div class="kpi"><div class="n">${(K.n/1e6).toFixed(1)}M</div><div class="l">Instalments reconciled</div></div>
+    <div class="kpi teal"><div class="n">${K.rate}%</div><div class="l">Collection rate</div></div>
+    <div class="kpi"><div class="n">${bn(K.exp)}</div><div class="l">Expected (plans)</div></div>
+    <div class="kpi green"><div class="n">${bn(K.act)}</div><div class="l">Collected</div></div>
+    <div class="kpi gold"><div class="n">${bn(K.dist)}</div><div class="l">Distributed to creditors</div></div>
+    <div class="kpi red"><div class="n">${mn(K.gap)}</div><div class="l">Shortfall / arrears</div></div>`;
+  const sb=document.getElementById('sumbar').children;
+  sb[0].style.width=(K.full/K.n*100)+'%'; sb[1].style.width=(K.part/K.n*100)+'%'; sb[2].style.width=(K.miss/K.n*100)+'%';
+  document.getElementById('chips').innerHTML=`
+    <span class="chip teal">Paid in full: <b>${fmt(K.full)}</b></span>
+    <span class="chip gold">Partial / short-paid: <b>${fmt(K.part)}</b></span>
+    <span class="chip red">Missed: <b>${fmt(K.miss)}</b></span>
+    <span class="chip">Arrears carried: <b>${mn(K.arr)}</b></span>`;
+}
+function renderRows(){
+  let list=D.rows.map((r,i)=>({r,i}));
+  if(FILTER==='bank') list=list.filter(({r})=>r.type==='Bank');
+  if(SEARCH){const s=SEARCH.toLowerCase(); list=list.filter(({r})=>r.name.toLowerCase().includes(s));}
+  if(FILTER==='gap') list.sort((a,b)=>(b.r.exp-b.r.act)-(a.r.exp-a.r.act));
+  document.getElementById('rows').innerHTML=list.map(({r,i})=>`<tr data-i="${i}" class="${SEL===i?'sel':''}">
+    <td style="font-weight:700;color:var(--text)">${r.name}${r.ncr?' <span style="color:var(--acc);font-size:9px" title="NCR registered">&#9679;</span>':''}</td>
+    <td><span class="pill ${typeCls(r.type)}">${r.type}</span></td>
+    <td class="amt">${fmt(r.n)}</td>
+    <td class="amt ${rateCls(r.rate)}">${r.rate}%</td>
+    <td class="amt">${fmt(r.exp)}</td>
+    <td class="amt">${fmt(r.act)}</td>
+    <td class="amt" style="color:var(--red);font-weight:700">${fmt(r.exp-r.act)}</td></tr>`).join('') || '<tr><td colspan=7 style="padding:16px;color:var(--muted)">No creditors match.</td></tr>';
+  document.querySelectorAll('#rows tr[data-i]').forEach(tr=>tr.onclick=()=>{SEL=+tr.dataset.i;renderRows();renderAI();});
+}
+function renderAI(){
+  const el=document.getElementById('ai'); if(SEL===null)return; const r=D.rows[SEL];
+  const gap=r.exp-r.act; const c=r.rate>=85?'var(--acc)':r.rate>=75?'var(--gold)':'var(--red)';
+  const v=r.rate>=85?'\u2713 Strong collection for this creditor':(r.rate>=75?'\u25b3 Watch \u2014 elevated short-pay/missed':'\u2715 Weak collection \u2014 large shortfall');
+  const samp=(r.samples&&r.samples.length)?r.samples.map(s=>`<span class="mono">${s}</span>`).join(', '):'none captured';
+  el.innerHTML=`<div class="verdict" style="color:${c}">${v}</div>
+    <p><b>${r.name}</b> (${r.type}${r.ncr?', NCR-registered':''}) is owed across <b>${fmt(r.n)}</b> debt-review instalments totalling <b>${bn(r.exp)}</b>. The PDA collected <b>${bn(r.act)}</b> (<b>${r.rate}%</b>) and distributed <b>${bn(r.dist)}</b>, leaving a <b style="color:var(--red)">${mn(gap)}</b> shortfall. <b>${fmt(r.full)}</b> instalments paid in full, <b>${fmt(r.part)}</b> short-paid, <b>${fmt(r.miss)}</b> missed entirely.</p>
+    <div class="prov"><div class="h">Provenance \u2014 real aggregate</div>
+    <div class="row"><span>Creditor</span><span class="mono">${r.name}</span></div>
+    <div class="row"><span>Type / NCR</span><span class="mono">${r.type} / ${r.ncr?'registered':'no'}</span></div>
+    <div class="row"><span>Instalments</span><span class="mono">${fmt(r.n)}</span></div>
+    <div class="row"><span>Full / Partial / Missed</span><span class="mono">${fmt(r.full)} / ${fmt(r.part)} / ${fmt(r.miss)}</span></div>
+    <div class="row"><span>Expected</span><span class="mono">${bn(r.exp)}</span></div>
+    <div class="row"><span>Collected</span><span class="mono">${bn(r.act)} (${r.rate}%)</span></div>
+    <div class="row"><span>Distributed</span><span class="mono">${bn(r.dist)}</span></div>
+    <div class="row"><span>Shortfall</span><span class="mono" style="color:var(--red)">${mn(gap)}</span></div>
+    <div class="row"><span>Arrears carried</span><span class="mono">${mn(r.arr)}</span></div>
+    <div class="row" style="border-top:1px dashed var(--line);margin-top:5px;padding-top:6px;"><span>Sample PDA refs</span></div>
+    <div style="font-size:11px;line-height:1.7;color:var(--text)">${samp}</div></div>
+    <div class="action"><b>Recommended action:</b><br>${r.rate<75?'Escalate: re-present short-paid debit orders, flag missed instalments to the counsellor, and confirm the PDA distribution to '+r.name+' matches what was collected before the next NCR reporting cycle.':(r.part>r.full?'Chase the short-paid backlog \u2014 many instalments are underfunded; verify PDA distribution reconciles to collections.':'Collection is healthy \u2014 confirm PDA distribution ties out and monitor.')}</div>
+    <div class="guard"><b>Guardrail:</b> figures are a live aggregate of the real payment rows for this creditor and a deterministic status rule. Collected uses the actual-amount field only \u2014 an expected instalment is never assumed paid.</div>`;
+}
+function run(){ renderKPIs(); renderRows();
+  document.getElementById('status').textContent=`${K.creditors} creditors \u00b7 ${(K.n/1e6).toFixed(1)}M instalments \u00b7 ${mn(K.gap)} shortfall`; }
+document.getElementById('search').oninput=e=>{SEARCH=e.target.value;renderRows();};
+document.getElementById('filters').querySelectorAll('.fbtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');FILTER=b.dataset.f;renderRows();});
+run();
+</script></body></html>
