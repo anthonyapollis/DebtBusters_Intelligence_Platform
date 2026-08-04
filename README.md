@@ -128,6 +128,10 @@ Google Analytics / CRM / Call Centre / Credit Bureau / PDA Payments
 
 ---
 
+## Qlik Sense portfolio app
+
+The employer-ready **ClearPath Debt Wellness Intelligence** app is available in [`qlik/portfolio`](qlik/portfolio/README.md), including the QVF, installable extension, preview and local setup instructions. It contains six complete decision pages across acquisition, affordability, case operations, payments, outcomes and responsible ML.
+
 ## Deliverables
 
 | Artefact | Description |
