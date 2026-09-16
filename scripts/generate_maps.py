@@ -558,7 +558,8 @@ def build_popup(pname, r, dti_lo=60, dti_hi=80):
 
 # ── Base map ──────────────────────────────────────────────────────────────────
 m = folium.Map(location=[-29.0, 25.0], zoom_start=6,
-               tiles="CartoDB positron", width="100%", height="100%")
+               tiles="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+               attr="Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors", max_native_zoom=16, width="100%", height="100%")
 
 # ── Nav bar (injected once on the base map) ───────────────────────────────────
 nav_html = """
